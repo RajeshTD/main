@@ -109,7 +109,7 @@ UserModForProducerCode = "xpath=((//span[text()='Producer Code'])[1]//following:
 #Coverage
 Coverage = "xpath=(//button[@test-id='clearance-nav-Coverage'])[2]"
 EffectiveDate = "xpath=//button[@test-id='clearance-field-input-btn-Effective Date']"
-ExpirationDate = "xpath=//button[@test-id='clearance-field-input-btn-Expiration Date']"
+ExpirationDate = "xpath=(//button[@test-id='clearance-field-input-btn-Expiration Date'])[1]"
 ProductType = "xpath=//li[@test-id='clearance-field-list-{option}}']"
 
 
@@ -298,4 +298,5 @@ Rep_Office="xpath=(//button[@test-id='clearance-field-input-btn-Rep Office'])[1]
 Clearance_Product_Segment="xpath=(//button[@test-id='clearance-field-list-btn'])[2]"
 underwriter_reference_lookup="xpath=(//span[text()='Code'])//following::span[text()='Underwriter Reference Lookup']"
 Direct_Assumed="xpath=(//button[@test-id='clearance-field-input-btn-Direct or Assumed'])[1]"
-Producer_Phone_number="xpath=//input[@test-id='clearance-field-input-regular-Producer Phone Number']"
+Producer_Phone_number="xpath=//button[@test-id='clearance-field-input-btn-Producer Phone Number']"
+Facultative_Reinsurance_loc="xpath=(//button[@test-id='clearance-field-input-btn-Facultative Reinsurance'])[1]"

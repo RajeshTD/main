@@ -1632,8 +1632,8 @@ TC_E2E_053
     [Tags]    Email_files
 
     Run Keyword And Continue On Failure    Verify My Assignments Tab is displayed as a default tab
-    #   ${submission_id}    Create New Submission    ${TC_E2E_053['FileName']}    @{TC_E2E_006['SubmissionColumnNames']}
-    Select Submission using submission id     7ae74207-aaca-4b07-bd02-e92360e3acd0    @{TC_E2E_006['SubmissionColumnNames']}
+      ${submission_id}    Create New Submission    ${TC_E2E_053['FileName']}    @{TC_E2E_006['SubmissionColumnNames']}
+    Select Submission using submission id     ${submission_id}    @{TC_E2E_006['SubmissionColumnNames']}
     Run Keyword And Continue On Failure    verify the Email Body Document    ${TC_E2E_053['Expected_email_Msg']}
     Click Answers Tab
     Switch to Documents
@@ -1648,11 +1648,21 @@ TC_E2E_053
     Run Keyword And Continue On Failure    Verify datas in Underwriter Reference file    ${TC_E2E_053['Expected_UnderWriter_Value']}   
     Click and verify Clearance tab
     Run Keyword And Continue On Failure    Verify PDF Data in Insured Tab    ${TC_E2E_053['excepted_Insured_Value']}
-
+    # Scroll To    ${InsuredNAICSCode}    top
+    # Get Element States    ${InsuredNAICSCode}    validate    value & visible    'InsuredNAICSCode should be visible.'
+    # Click With Options    ${InsuredNAICSCode}    clickCount=2
+    # Sleep    2s
+    # Type Text    ${InsuredNAICSInput}    ${TC_E2E_053['excepted_Insured_Value']}
+    Click Processing Tab
+     Run Keyword And Continue On Failure    Fill the data for issue fields in processing    ${TC_E2E_053['UnderwriterName']}    ${TC_E2E_053['UnderwriterEmail']}    ${TC_E2E_053['OperationsName']}        ${TC_E2E_053['OperationsEmail']}    ${TC_E2E_053['UnderwrittingOffice']}    ${TC_E2E_053['Channel']}
+    Click Producer Tab
     Run Keyword And Continue On Failure    Verify EML PDF Data in Producer Tab    ${TC_E2E_053['expected_Producer_Value']}
     Click Coverage Tab
-     ${Product_Segment_Name}    Get Text    ${Clearance_Product_Segment}  
-    Run Keyword And Continue On Failure    Should Be Equal    ${TC_E2E_053['Property_Segment_value']}    ${Product_Segment_Name}
+    Run Keyword And Continue On Failure    Verify EML Data the Coverage Tab     ${TC_E2E_053['Coverage_eff_date']}     ${TC_E2E_053['Coverage_exp_date']}     ${TC_E2E_053['property_Value']}     ${TC_E2E_053['Property_Segment_value']}     ${TC_E2E_053['Facultative_Reinsurance_value']}
+     Click Finish Tab
+    Run Keyword And Continue On Failure    Verify and click the save and close button
+     Save Submission And verify popup
+    # Run Keyword And Continue On Failure    Verify Submission updated
 
 *** Keywords ***
 Run Pre-requiste Steps for Stage 1

@@ -1591,8 +1591,8 @@ Verify EML PDF Data in Producer Tab
     ...    The fields checked are hardcoded within the keyword.
     ...
     ...    *Arguments:*
-    ...    - `@{ExpectedPDFText}`: A list of strings containing the expected text for each verified field.
-    [Arguments]    @{ExpectedPDFText}
+    ...    - `${ExpectedPDFText}`: A list of strings containing the expected text for each verified field.
+    [Arguments]    ${ExpectedPDFText}
     @{locators}     Create List    ${Agency}    ${ProducerName}    ${ProducerAddress}    ${ProducerAddressStreet}    ${ProducerAddress2}    ${ProducerAddressCity}    ${ProducerAddressState}    ${ProducerPostalCode}    ${ProducerCountry}    ${ProducerCodeButton}    ${ProducerEmailButton}    ${Producer_Phone_number}
     @{ActualPDFText}    Create List
     FOR    ${locator}    IN    @{locators}
@@ -1604,4 +1604,28 @@ Verify EML PDF Data in Producer Tab
     Log    ${ExpectedPDFText}
     Log    ${ActualPDFText}
     Lists Should Be Equal    ${ExpectedPDFText}    ${ActualPDFText}    
+
+Verify EML Data the Coverage Tab
+    [Documentation]    Verifies the effective date, expiration date, and product type in the 'Coverage' tab.
+    ...
+    ...    *Arguments:*
+    ...    - `${data_expected_eff_date}`: The expected effective date.
+    ...    - `${data_expected_expiry_date}`: The expected expiration date.
+    ...    - `${data_expected_product}`: The expected product type.
+    ...    ${Property_Segment_value}`: The expected product segment type.
+    ...    ${Facultative_Reinsurance}`: The expected Facultative Reinsurance type.
+        [Arguments]    ${data_expected_eff_date}    ${data_expected_expiry_date}    ${data_expected_product}    ${Property_Segment_value}    ${Facultative_Reinsurance}    
+     Wait For Elements State    ${EffectiveDate}    visible    timeout=${element_timeout}
+     ${actualEffectiveDate}    Get Text    ${EffectiveDate}
+     ${trimEffectiveDate}    Strip String    ${actualEffectiveDate}
+     Run Keyword And Continue On Failure    Should Be Equal    ${data_expected_eff_date}    ${trimEffectiveDate}
+     ${actualExpirationDate}    Get Text    ${ExpirationDate}
+     ${trimExpirationDate}    Strip String    ${actualExpirationDate}
+     Run Keyword And Continue On Failure    Should Be Equal    ${data_expected_expiry_date}    ${trimExpirationDate}  
+     ${Product_Name}    Get Text    ${CoverageProductButton}  
+     Run Keyword And Continue On Failure    Should Be Equal    ${data_expected_product}    ${Product_Name} 
+     ${Product_Segment_Name}    Get Text    ${Clearance_Product_Segment}  
+     Run Keyword And Continue On Failure    Should Be Equal    ${Property_Segment_value}    ${Product_Segment_Name}  
+     ${Facultative_Reinsurance_Name}    Get Text    ${Facultative_Reinsurance_loc}  
+     Run Keyword And Continue On Failure    Should Be Equal    ${Facultative_Reinsurance}    ${Facultative_Reinsurance_Name}  
   

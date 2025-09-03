@@ -4104,6 +4104,18 @@ TC_E2E_053={
      "excepted_Field" :["Summary","Answers","Risk360","Documents","Clearance","Tasks","Email","Forms"],
      "excepted_Insured_Value":['GREAT WESTERN LUMBER','7636 GOODWIN RD, EVERSON, WA 98247, United States','7636 GOODWIN RD','EVERSON','WA','98247','WHATCOM','United States'],
      "expected_Producer_Value":['Crest Ins','Kerri Longo','5285 E WILLIAMS CIR, TUCSON, AZ 85711 United States','5285 E WILLIAMS CIR','STE 4500','TUCSON','AZ','85711','United States','5285','info@crestins.com','804-678-5027'],
+    "Coverage_eff_date":"12/01/2022",
+    "Coverage_exp_date":"12/01/2023",
+    "property_Value":"Worker's Compensation",
+   "Property_Segment_value":"Casualty",
+   "Facultative_Reinsurance_value":"No",
+    "UnderwriterName":"Test",
+    "UnderwriterEmail":"test@convr.com",
+    "UnderwrittingOffice":"test",
+    "Channel":"test",
+    "OperationsName":"test",
+    "OperationsEmail":"test@convr.com",
+    
 
 
 
