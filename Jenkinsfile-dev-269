@@ -1,0 +1,256 @@
+pipeline {
+    agent any
+
+    triggers {
+        cron('0 23 * * *') // 11:55 AM CDT
+    }
+
+    parameters {
+        choice(
+            name: 'ENVIRONMENT',
+            choices: ['dev', 'staging', 'prod'],
+            description: 'Select the environment type'
+        )
+        choice(
+            name: 'DEV_NUMBER',
+            choices: ['269', '270', '264'],
+            description: 'Dev environment number'
+        )
+        string(
+            name: 'INCLUDE_TYPE',
+            defaultValue: '--file',
+            description: 'Type of argument to pass to robot (e.g., --include, --test, --file)'
+        )
+        text(
+            name: 'INCLUDE_VALUES',
+            defaultValue: 'MSIG/E2E.robot',
+            description: 'Values for the argument (one per line or comma-separated). For tags: smoke,regression,smoke\nregression'
+        )
+        choice(
+            name: 'ENABLE_SCREENSHOT',
+            choices: ['false', 'true'],
+            description: 'Enable or disable screenshots (true/false)'
+        )
+        string(
+            name: 'BRANCH',
+            defaultValue: 'develop/test',
+            description: 'The git branch to build'
+        )
+    }
+
+    environment {
+        DOCKER_IMAGE = 'robot-tests-runner'
+        // Environment-specific URLs
+        DEV_URL = "https://dev-${params.DEV_NUMBER}.convr.in/#!/admin/users/list"
+        STAGING_URL = 'https://staging.convr.io/#!/admin/users/list'
+        PROD_URL = 'https://prod.convr.in/#!/admin/users/list'
+        
+        // Set the actual URL based on environment selection
+        ENV_URL = "${params.ENVIRONMENT == 'dev' ? DEV_URL : params.ENVIRONMENT == 'staging' ? STAGING_URL : PROD_URL}"
+        ENABLE_SCREENSHOT = "${params.ENABLE_SCREENSHOT}"
+        ENV_DISPLAY = "${params.ENVIRONMENT == 'dev' ? 'dev-' + params.DEV_NUMBER + '-build-' + env.BUILD_NUMBER : params.ENVIRONMENT == 'staging' ? 'staging-build-' + env.BUILD_NUMBER : 'prod-build-' + env.BUILD_NUMBER}"
+    }
+
+    stages {
+        stage('Schedule or Manual') {
+            steps {
+                script {
+                    def isScheduled = currentBuild.getBuildCauses('hudson.triggers.TimerTrigger$TimerTriggerCause').size() > 0
+                    if (isScheduled) {
+                        currentBuild.displayName = "Schedule Run (dev-269) (#${env.BUILD_NUMBER})"
+                        ['269'].each { devNum ->
+                            def branchName = 'develop/test'
+                            build job: env.JOB_NAME, parameters: [
+                                string(name: 'DEV_NUMBER', value: devNum),
+                                string(name: 'INCLUDE_TYPE', value: params.INCLUDE_TYPE),
+                                [$class: 'TextParameterValue', name: 'INCLUDE_VALUES', value: params.INCLUDE_VALUES],
+                                string(name: 'BRANCH', value: branchName),
+                                string(name: 'ENVIRONMENT', value: params.ENVIRONMENT),
+                                string(name: 'ENABLE_SCREENSHOT', value: 'false') // Force to false for scheduled runs
+                            ], wait: false
+                        }
+                        currentBuild.result = 'SUCCESS'
+                        return
+                    } else {
+                        currentBuild.displayName = "dev-${params.DEV_NUMBER}-build-${env.BUILD_NUMBER} (#${env.BUILD_NUMBER})"
+                    }
+                    echo "Pipeline running for: ${currentBuild.displayName} (Jenkins Build Number: ${env.BUILD_NUMBER})"
+                }
+            }
+        }
+        stage('Display Build Info') {
+            steps {
+                script {
+                    def isScheduled = currentBuild.getBuildCauses('hudson.triggers.TimerTrigger$TimerTriggerCause').size() > 0
+                    def prefix = isScheduled ? 'schedule-run-' : ''
+                    currentBuild.displayName = "${prefix}dev-${params.DEV_NUMBER}-build-${env.BUILD_NUMBER} (#${env.BUILD_NUMBER})"
+                    echo "Pipeline running for: ${prefix}dev-${params.DEV_NUMBER}-build-${env.BUILD_NUMBER} (Jenkins Build Number: ${env.BUILD_NUMBER})"
+                }
+            }
+        }
+        stage('Checkout') {
+            when {
+                expression {
+                    // Only run if NOT scheduled
+                    currentBuild.getBuildCauses('hudson.triggers.TimerTrigger$TimerTriggerCause').size() == 0
+                }
+            }
+            steps {
+                git url: 'git@dev-gitlab.convr.in:d3-test/robotframework-browser.git', branch: "${params.BRANCH}"
+            }
+        }
+
+        stage('Build Docker Image') {
+            when {
+                expression {
+                    // Only run if NOT scheduled
+                    currentBuild.getBuildCauses('hudson.triggers.TimerTrigger$TimerTriggerCause').size() == 0
+                }
+            }
+            steps {
+                script {
+                    // Build image with a unique tag per branch/build to avoid collisions across concurrent jobs
+                    def sanitizedBranch = (params.BRANCH ?: 'unknown').replaceAll(/[^a-zA-Z0-9_.-]/, '-')
+                    env.IMAGE_TAG = "${sanitizedBranch}-${env.BUILD_NUMBER}"
+                    docker.build("${env.DOCKER_IMAGE}:${env.IMAGE_TAG}", '.')
+                }
+            }
+        }
+
+        stage('Run Tests') {
+            when {
+                expression {
+                    // Only run if NOT scheduled
+                    currentBuild.getBuildCauses('hudson.triggers.TimerTrigger$TimerTriggerCause').size() == 0
+                }
+            }
+            steps {
+                script {
+                    sh "sudo rm -rf results-dev-269 || true && mkdir -p results-dev-269"
+                    script {
+                        // Parse multiple include values
+                        def includeArgs = ""
+                        if (params.INCLUDE_VALUES) {
+                            def values = params.INCLUDE_VALUES.split(/[,\n]/).collect { it.trim() }.findAll { it }
+                            values.each { value ->
+                                includeArgs += " ${params.INCLUDE_TYPE} ${value}"
+                            }
+                        }
+                        // Use the uniquely tagged image for this branch/build
+                        def sanitizedBranch = (params.BRANCH ?: 'unknown').replaceAll(/[^a-zA-Z0-9_.-]/, '-')
+                        def imageTag = env.IMAGE_TAG ?: "${sanitizedBranch}-${env.BUILD_NUMBER}"
+
+                        sh """
+                            docker run --rm --shm-size=10g \
+                            -v ${pwd()}/results-dev-269:/robot-tests/results \
+                            -e ENV_URL=${env.ENV_URL} \
+                            -e ENABLE_SCREENSHOT=${env.ENABLE_SCREENSHOT} \
+                            ${env.DOCKER_IMAGE}:${imageTag} \
+                            ${includeArgs}
+                        """
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            script {
+                def isScheduled = currentBuild.getBuildCauses('hudson.triggers.TimerTrigger$TimerTriggerCause').size() > 0
+                if (!isScheduled) {
+                    // Only run post actions for non-scheduled builds
+                    archiveArtifacts artifacts: 'results-dev-269/**/*', fingerprint: true
+
+                    robot(
+                        outputPath: "results-dev-269",
+                        passThreshold: 90.0,
+                        unstableThreshold: 70.0,
+                        disableArchiveOutput: false,
+                        outputFileName: "output.xml",
+                        logFileName: 'log.html',
+                        reportFileName: 'report.html',
+                        countSkippedTests: true,
+                        otherFiles: 'screenshot-*.png'
+                    )
+                    // Debug: List directory and show output.xml
+                    sh 'ls -l results-dev-269'
+                    sh 'cat results-dev-269/output.xml || echo "output.xml not found"'
+                    // Parse test results and write summary (corrected argument usage)
+                    sh 'python3 parse_robot_results.py results-dev-269/output.xml results-dev-269/test_summary.txt'
+                    // Show parser output
+                    sh 'cat results-dev-269/test_summary.txt'
+                    // Zip the report directory
+                    sh 'cd results-dev-269 && zip -r report.zip .'
+
+                    // Read summary from file and send email using CPS-safe readJSON
+                    def summary = readJSON file: 'results-dev-269/test_summary.txt'
+                    
+                    // Debug: Show what's in the summary
+                    echo "DEBUG: Summary content: ${summary}"
+                    if (summary.failedTests) {
+                        echo "DEBUG: Failed tests found: ${summary.failedTests.size()}"
+                        summary.failedTests.each { test ->
+                            echo "DEBUG: Failed test - Name: ${test.name}, Reason: ${test.reason}"
+                        }
+                    } else {
+                        echo "DEBUG: No failedTests array found in summary"
+                    }
+                    
+                    def body = """
+Hi Team,
+
+Please find the below latest Robot test results from the Jenkins job "${env.JOB_NAME}" (Build #${env.BUILD_NUMBER}).
+
+🏠 Build Details:
+=============
+🚀 Job Name:     ${env.JOB_NAME}
+🔢 Build Number: ${env.BUILD_NUMBER}
+🔍 Build Status: ${currentBuild.result ?: 'UNKNOWN'}
+🌐 Environment:  ${params.ENVIRONMENT}
+🌍 Server:   ${params.DEV_NUMBER}
+🔗 Environment URL: ${env.ENV_URL}
+🔗 Jenkins Piepline URL:    ${env.BUILD_URL}
+📅 Date & Time:  ${new Date().format("yyyy-MM-dd HH:mm:ss")}
+
+🔧 Configuration:
+=============
+🤖 Robot Version: ${summary.robotMetadata?.generator ?: 'Unknown'}
+🌐 Browser Type:  ${summary.browserInfo?.browser_type ?: 'Unknown'}
+🌌 Headless Mode: ${summary.browserInfo?.headless ?: 'Unknown'}
+
+Test Results Summary:
+===================
+✅ Passed:   ${summary.passed ?: '0'}
+❌ Failed:   ${summary.failed ?: '0'}
+⚪ Skipped:  ${summary.skipped ?: '0'}
+🔢 Total:    ${summary.total ?: '0'}
+🔍 Pass Rate: ${summary.passRate ?: '0'}%
+⏳ Duration: ${summary.duration ?: '-'}
+
+"""
+                    // Add failed test details if any
+                    if (summary.failedTests && summary.failedTests.size() > 0) {
+                        body += "\nFailed Test Details:\n"
+                        body += "==================\n"
+                        summary.failedTests.each { test ->
+                            body += "Test: ${test.name ?: '-'}\n"
+                            body += "Reason: ${test.reason ?: '-'}\n"
+                            body += "---\n"
+                        }
+                    }
+                    
+                    mail(
+                        subject: "Workbench Regression Test Results - dev-269(develop) - ${new Date().format("yyyy-MM-dd HH:mm:ss")}",
+                        body: body,
+                        to: 'Prabhakaran.Sundaram-gdt@convr.com'
+                    )
+                }
+            }
+        }
+
+        aborted {
+            mail body: 'robotframework-browser jenkins', from: 'noreply@convr.com', subject: 'robotframework-browser-tests: ABORTED', to: 'Prabhakaran.Sundaram-gdt@convr.com'
+        }
+    }
+}

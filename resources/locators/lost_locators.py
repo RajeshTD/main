@@ -1,0 +1,7 @@
+Lost = "xpath=//button//*[text()='Lost']"
+LostUpdateWorkflowStage = "xpath=//h2[text()='Update Workflow Stage']"
+LostDetails = "xpath=//textarea[@ng-model='$ctrl.workflowDetails']"
+LostAcceptButton = "xpath=(//div[@ng-show='$ctrl.showWorkflowPopup']//button//*[normalize-space()='Accept'])[1]"
+LostReason1 = "xpath=//div[text()='"
+LostReason2 = "']//preceding-sibling::input"
+LostTag = "xpath=//li//span[normalize-space()='Lost']"

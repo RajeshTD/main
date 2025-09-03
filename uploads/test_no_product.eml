@@ -1,0 +1,179 @@
+Return-Path: <austin.kilduff@convr.com>
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2104.outbound.protection.outlook.com [40.107.237.104])
+ by inbound-smtp.us-east-1.amazonaws.com with SMTP id 8v58j0dop3la8k30p37fge75bmu1g3hep3g74j01
+ for dev-218@convr.in;
+ Mon, 11 Aug 2025 16:17:14 +0000 (UTC)
+X-SES-Spam-Verdict: PASS
+X-SES-Virus-Verdict: PASS
+Received-SPF: pass (spfCheck: domain of convr.com designates 40.107.237.104 as permitted sender) client-ip=40.107.237.104; envelope-from=austin.kilduff@convr.com; helo=NAM12-BN8-obe.outbound.protection.outlook.com;
+Authentication-Results: amazonses.com;
+ spf=pass (spfCheck: domain of convr.com designates 40.107.237.104 as permitted sender) client-ip=40.107.237.104; envelope-from=austin.kilduff@convr.com; helo=NAM12-BN8-obe.outbound.protection.outlook.com;
+ dkim=pass header.i=@convr.com;
+ dmarc=pass header.from=convr.com;
+X-SES-RECEIPT: AEFBQUFBQUFBQUFFNVhNNm56a2ppTytISW5ZbjN4MjB6Um9YK21oTDVNcktaSWg1dGYxWDRManhTNVd0WGJ6U0FEUWhmRXV0QXk4czhHbWkrOWFiM2NiNCtYa2lkRlFnWUhtMlA3UFM3MUc3T0lrQ0NFNFVJQkQ4dlFPZFBmcHdKbmgrQnZnTk03ZCsxdzRIdk9CQTdFcGtMVVJ1R0NzY0RnUnltMXc4eHJmY0FGRnlZckYyTzI4Mys3ME1TNnR0THVRN3g3YnpjeUUrVjh4K1dxZkhRb1RaN0xtK1BINnJEMWFOMCttKzhLOGVnelBVc2ZTRHIrV0JtWm91YjVIdEwzSmFacTIzSThLWnBxZkZTVlVWZ2lRdUlpWGltOS9tZHkzV0QxOGZSczd0Q3FrM3BuUitKQ0E9PQ==
+X-SES-DKIM-SIGNATURE: a=rsa-sha256; q=dns/txt; b=o87LRt2ZbxDZrcwroZMf0uQaMJhkKwZUamX5IxBE0gkBYxpMob4g8OwO06f848Z48WpuIwZqUFXIQE7BWOjye1Ka9Io3KnUJiTsb1KVIwBcXHezvH8BtTy0jB0oh/3QnGEDzlOiLkl6vz6NA3yDE9rWVC9poZQIkrMhh+yvL1YE=; c=relaxed/simple; s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw; d=amazonses.com; t=1754929035; v=1; bh=5Dq+WxGT3FW3d4ABJRQ+j7ADqQFqi44s7/aDgeF1SLs=; h=From:To:Cc:Bcc:Subject:Date:Message-ID:MIME-Version:Content-Type:X-SES-RECEIPT;
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=c1pJdY2r3DRCh/XwUl3hYFqrKmfLaIaLMDi1+HaC4n9idkjHNv4uMxyQ7RAG2MtYf8r0Hj+Ifl8dZtlRNI3op2UmWyujP1iKmNcBAPGi5oFO055uvQcjLrQBvqrgWOEHcDQTrcYHJc+0lJXOoFy7Qq9lO2OcNN8MktzuSaxM04RJJ++JTFb7EFwRjM3yd9CBSSvI7tv6O3hxCjkubWSJWbyQv4o2F/tHtZ2/R9+aaiwIkW796j06QlI4VE8IiMZ8Fp70Mw7yCn+5kyNrAEXk9kCsH/MfP/dbV2qJE8PksgZu4PqskeSt4IhhtGGvQGvhczrRjdvC4GpmNI1ODRR/bQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=5Dq+WxGT3FW3d4ABJRQ+j7ADqQFqi44s7/aDgeF1SLs=;
+ b=xzKFyWbtHNFtybUZEpl0/BewJaMWqGggzkkIV6QRl9yqbmnbQOOZTLLpWwXt59yGTa60Ls0NQtF39Hv4umt1EDkv57C1Q2yWy+Dv6fdA155cMS5l3wjT833EOEqCKyNyc9aD4kvSeKDc138slp/BwrOda6a7rxm9cuvnyq/IY5Yki8hTzE1heBfogPyKPBgvLvoHZnFmPEUDacqxyqwfoJR+8HAwi/wfIs1e/IPXsuhd3LMVrLarxTE/ZM4aGl3JKQn5a3ydFitvuULA3h6Hw19wOkwhpPLkTShj2eqaQMb2teFIQjruKW2ICjMERXGadj/8GrEwXTGnRIC8Jpyrvg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=convr.com; dmarc=pass action=none header.from=convr.com;
+ dkim=pass header.d=convr.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=convr.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5Dq+WxGT3FW3d4ABJRQ+j7ADqQFqi44s7/aDgeF1SLs=;
+ b=JwdcEfyDckgU3kQYkGa90m8bhjk9flzx7wMO8pFg+DsMvbYPgKK4GE3m8rh0FKHDeoitRJwDJYQ178g1322YRfQUClsb2eZjVGg9Z6Y9i4otQuaxUUT4pMJkM5gdYRUljDKooWoblH95pbwuVtYsZch/MNarPim6V2JK4eBna1sZwpi+cUfW1+BxbMUB86GZ0WuswKbscCzoGppUzBspblxWwTDhXMXH3I7srR4Zi1o4Ln5ZWjLkXEiFVHsPTGcZzRGiJptcHPcarf/aguCpVZ44Nri09GK/HehyxUHIu0aL1iLbTJTchM5vSAS+rWi6jNxhwWdhKNmzIluEZJoEbw==
+Received: from PH3PPF960B3E6E3.namprd18.prod.outlook.com
+ (2603:10b6:518:1::cb6) by CH4PR18MB6269.namprd18.prod.outlook.com
+ (2603:10b6:610:222::12) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9009.21; Mon, 11 Aug
+ 2025 16:17:11 +0000
+Received: from PH3PPF960B3E6E3.namprd18.prod.outlook.com
+ ([fe80::acf1:7df3:aee9:3632]) by PH3PPF960B3E6E3.namprd18.prod.outlook.com
+ ([fe80::acf1:7df3:aee9:3632%4]) with mapi id 15.20.8901.024; Mon, 11 Aug 2025
+ 16:17:11 +0000
+From: Austin Kilduff <austin.kilduff@convr.com>
+To: "dev-218@convr.in" <dev-218@convr.in>
+Subject:
+Thread-Index: AQHcCttgpTpQlSXDa0K44gNamq0EQA==
+Date: Mon, 11 Aug 2025 16:17:11 +0000
+Message-ID:
+ <PH3PPF960B3E6E3EA5B62F3217F595FA83E9628A@PH3PPF960B3E6E3.namprd18.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-reactions: allow
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=convr.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PH3PPF960B3E6E3:EE_|CH4PR18MB6269:EE_
+x-ms-office365-filtering-correlation-id: b5cfe55f-1b09-40a8-1ac5-08ddd8f2872a
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|1800799024|376014|10070799003|366016|38070700018|8096899003;
+x-microsoft-antispam-message-info:
+ =?us-ascii?Q?djF6xXfymFD+i7Lhv3V/cJYA0f4JXfd/IBUB31znwVpvB5ASRa0RHJkV9KCx?=
+ =?us-ascii?Q?N8/g5A6afkNcEC9AjwGJZdFECjRs0NEHRjOKMb2bkM+jfT+MynqYN+6XCB7M?=
+ =?us-ascii?Q?OgxKfXsjkawOVTWAL3g4O5Mz0o/gZ1zOfELz/nzspgeVXUv5LxtGOcPgPU8n?=
+ =?us-ascii?Q?67Aw71no6sbixIHVE0UZ5hK5z0suafWg/U42HNal9WizJq4eyAHW7kstl0ld?=
+ =?us-ascii?Q?W4lCS7NxH4lL4Df8NslaH8jK0ytcT0/FXvHWqc74x8iiZIaAB04BnswDDDw7?=
+ =?us-ascii?Q?tQKMi5lKZLwvwFAGXtK+uE+ytq158LMFcqMptjgqDeC4XDml38qgw53q7PZi?=
+ =?us-ascii?Q?eLS6FWQFY1DYa1wJe0RMavy7mmUt8Y9lDWr/uFSmv8UfYcORhQFa/uQbBnQd?=
+ =?us-ascii?Q?+sJlLh39H5KO//4nNLkdFL+xAUoB8In/iZj95VqpNdmeI7z4RJYzYHctcibY?=
+ =?us-ascii?Q?YksmbclXQ7G1g7STkEmUT0Wza1y5D8GC1S0efNA7macxu9VvqCwzMNx20oHx?=
+ =?us-ascii?Q?d2P/TgzvgVQeyo/9jMxd+2axITDi0OTyUOQFbWfTV9xDURAz1mrg6y6nipdC?=
+ =?us-ascii?Q?lGMujYxo7kxTToQiECvto1pimAgKfNtbN2VzT+LsCWdo3JukM4tZW4dlEpoJ?=
+ =?us-ascii?Q?Uh2akn8LvvgGdYmrNS6P/tGsZI8oGeJUpgAXBDrH0djifHRYrqN9e4grGjfT?=
+ =?us-ascii?Q?VQbPQdL3ICdfssQGEEmcYd1PGKVvYJebXN99N46cNk7OXVX8OOHQ1e01kWlz?=
+ =?us-ascii?Q?k5KaK01frhIaP1BvV4fvtWUf7y7giI4/af357tsdKhI0kr81L27y0mSUlAri?=
+ =?us-ascii?Q?U21QVcfJqkTZma4Phd8piJiAljB4xL7ZzSRMvOd5RCAmLw0JYoetur09hxXp?=
+ =?us-ascii?Q?/QzoG6uWsvLOACzIrV0dhQpc5Ar4lAUp96iWTg7Feb9t8yMf5dlpaGfb1xsL?=
+ =?us-ascii?Q?vQrREBBGO4ogffkhXTrFcTSPMQgeYp+J3nrzVf5DKDJ5c2w9BlL/MphRQfrU?=
+ =?us-ascii?Q?s3/1KBaCDGsnaqUATXZ6vJJ/BXkmJVxVxPJMXZlY9Ut8BNUGQpgOn3AABlDk?=
+ =?us-ascii?Q?q8A+oxf6SuA19dym9Ehl7wWrbK/yU9/2LgROxSChwLjis58zGXo8qywftDRA?=
+ =?us-ascii?Q?lA1Z4WDDxY8GZ9OA4QSDhhHhdVzq9gxhrjJ7RxNBLNelVQEGgwtsnSa1mJOg?=
+ =?us-ascii?Q?ipNZUpMcG2COfeUCp7WxL+WBjXB5gp7GSIIB5EppniN0A08LO/tk3e049mDD?=
+ =?us-ascii?Q?cfgAlIMCaf9Rl2zUv2WUZCuU4pDetvXfoH1xlsFBg5IDYVqiLOHmrATe35xm?=
+ =?us-ascii?Q?7lShF1X3uhbNziJHMgFTMQ9aeXHTQSD04OKCOwPffSqg2yC+ALE2dwZkzfel?=
+ =?us-ascii?Q?fMbjDXWAs1WGC/Lf7fW4pm+6Tl31PKtoPnT5mZCUv4WJ4H9rjbKTUQ3fLHYp?=
+ =?us-ascii?Q?TQPavK4uiIRAfhJyiVF+TFh4CggYzw3oFH98oXtscMwiDnieBg1axQ=3D=3D?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH3PPF960B3E6E3.namprd18.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(10070799003)(366016)(38070700018)(8096899003);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?C7ZbuK7UBk7mTWspquXqnmFmZYy+b6QU1R3uDZW9qZItYcC4Uv8w7YLzo2Ny?=
+ =?us-ascii?Q?6UMNMcW1IHJ/KjocTnTNqR4dSdaMtNuq/WZeV7VDzpmAGzrC3EqagSO2pjlu?=
+ =?us-ascii?Q?8V/31uOSPjAS7VoIsWAKv44QO1cO+khaEJg3hYYd9Cp3wbtuDKi1gwcH+PEN?=
+ =?us-ascii?Q?tvzHKF2KTkywzYF2LKtOim45Aja0wdAazN/V4yHZ7Emlatjzo1DBfrkdbH8E?=
+ =?us-ascii?Q?0KsBoB1WG+CMF+MyPuc86mrXTXBtX0mFjMAIZqTw2G3LSBGYSPfTu/G+oQ4Z?=
+ =?us-ascii?Q?hKw3XlsWyYVaF+JyInDdBuYurghfkQMwBcv/M2tebyePe99Le442nWu6oV1E?=
+ =?us-ascii?Q?T0P2VS4b6D4DqhY4HVDYqa+8F3me8r6yCYBmYqpZmfOwIGd7IjnQYF/3mK92?=
+ =?us-ascii?Q?qsWaDEoEgIy/0UdfFBH+oKWBFayrWDMMXDaw6q3b7lXqzS29OqHOk6n4nJ4l?=
+ =?us-ascii?Q?UT9yMgvVoTwoZ2t5cyPSoFa4UjQ62S/IbR06qChW4lxswf6MIL1Sr0yEP/od?=
+ =?us-ascii?Q?ZK8HGf7WZ/+0oehNg2iNH3XBmUn7e+QzwahVHtBbm3mGq+T2fFipa15Rm/Eh?=
+ =?us-ascii?Q?L3Rg/KddiA9d/dlbmUspfRCG42CGPCIqREc3hysEmkdsCxAadEvpAp2F5aeb?=
+ =?us-ascii?Q?8GRIl3PwxIItvLjfgxYhUTUJTY56LjW0rtj1VQ5AFleSQ/IOPpTApv4jI6RR?=
+ =?us-ascii?Q?YIlh54HTP8R1b/dxYsnVGdbzmlPzIrhXS7iPCKRZNItah7A2Rvm5rUbb0I4Y?=
+ =?us-ascii?Q?mdFU/Y2EjRhgNLL4fs+8cFcNqsmRTzktlzDda92PPBHV57Z4XeCLHf6VHmky?=
+ =?us-ascii?Q?ducM+4fCJx+XmpVm95vluGiRJicbBOLMjnImADSYEYXjzKdC6GkfEsOFA3Lp?=
+ =?us-ascii?Q?A2fJdjQQkkPcdd0qPCLJA3LLRgem+UKlI/imwB85lt6MuBEZdd96ik+N5ar+?=
+ =?us-ascii?Q?88iwl5cKLsDapg39qLsBXWfm7HjUDrXeWMYGB1nCWnLr2gT+f7xumyuvegSg?=
+ =?us-ascii?Q?WCG6mPCxmwH64pS2a7/IcwW2l7KQ0S62rPt0mDGPST+7ALegi5BJqtqzO0lO?=
+ =?us-ascii?Q?pQl455qx4u8Iu4qkNWM3M7v10CedjaT2M5AtPoKjeIvumpkeQNhXrHngaF7L?=
+ =?us-ascii?Q?ZysPPkzk/1uzarGhxYZLMj7oo9Bh1Ft/PRmibaO9FiTf+w6FRKyl069TJtJo?=
+ =?us-ascii?Q?nck7tl5VYRD7OLSjjVrBVP3hNuMNKcsIF4y+al7YKP3jUZGaYJyYNVFfutiG?=
+ =?us-ascii?Q?/h5yOfepovO4O76WctS5FQFs41p6nc/UITxupNiTgdItAlpA0NWUhbDhAJfJ?=
+ =?us-ascii?Q?Q4/r4LjV6lFUkNzx3IjdANf1iApkvEWN3u0oURycAg9KbK+SksvlB4EdmacO?=
+ =?us-ascii?Q?OSBGoi7gf6M/EblQ31Zc8NeMJ/2l4mWkHQ65aIRQPJn4kpjv8fvh0sjXQj0U?=
+ =?us-ascii?Q?O3XlVhIyl7XIgVBdPzsXNLqXQYhbk7PhYF8x2MY0Nci3lAr3C116eupIfuQG?=
+ =?us-ascii?Q?M4/i3i9Sv7DXFPlH6tUxnp3e7DHbj/inxPUwSG6IJkcqgg9Pjk7u4hL1d5oJ?=
+ =?us-ascii?Q?HLGxnCHA/sTMZKWzZ1/HSofTfg3rWLAEFt/2WFz6Uxl/+YfbZMrJyi9XpHgM?=
+ =?us-ascii?Q?aYjLYF3zI0ii0zSiZwHZIXxBvXD3zyiZYDtuUU0rl3PE30IxuO1hhXUNVSZ2?=
+ =?us-ascii?Q?3IsRU06mmq9PbixrNjvBu6gdVV4=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_PH3PPF960B3E6E3EA5B62F3217F595FA83E9628APH3PPF960B3E6E3_"
+MIME-Version: 1.0
+X-OriginatorOrg: convr.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PH3PPF960B3E6E3.namprd18.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b5cfe55f-1b09-40a8-1ac5-08ddd8f2872a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Aug 2025 16:17:11.7690
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: cf0a377d-f9e1-4af5-ab23-eaa7ed7b3392
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: VR8BLZEtK8vX4xc0ORikk0xtNc6M8Rbxlk1O7UCFhoWOpPkdDNd73pu+iEC2NfUjeJz2x1msxchi2V6VHzhZuN0ot54uUp7Ly56qL2Znzn8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH4PR18MB6269
+
+--_000_PH3PPF960B3E6E3EA5B62F3217F595FA83E9628APH3PPF960B3E6E3_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+Insured Name: Rivian Automotive
+Underwriter Name: Gary Wood
+
+Confidentiality: This message and any attachments are intended only for the=
+ use of the addressee and may contain information that is privileged and co=
+nfidential. If the reader of the message is not the intended recipient or a=
+n authorized representative of the intended recipient, you are hereby notif=
+ied that any dissemination of this communication is strictly prohibited. If=
+ you have received this communication in error, notify the sender immediate=
+ly by return email and delete the message and any attachments from your sys=
+tem.
+
+--_000_PH3PPF960B3E6E3EA5B62F3217F595FA83E9628APH3PPF960B3E6E3_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+</head>
+<body>
+<span style=3D"font-family: Aptos, Arial, Helvetica, sans-serif; font-size:=
+ 12pt; color: rgb(0, 0, 0);">Insured Name: Rivian Automotive<br>
+Underwriter Name: Gary Wood</span>
+<div dir=3D"ltr" style=3D"font-family: Aptos, Arial, Helvetica, sans-serif;=
+ font-size: 12pt;">
+<br>
+</div>
+Confidentiality: This message and any attachments are intended only for the=
+ use of the addressee and may contain information that is privileged and co=
+nfidential. If the reader of the message is not the intended recipient or a=
+n authorized representative of the
+ intended recipient, you are hereby notified that any dissemination of this=
+ communication is strictly prohibited. If you have received this communicat=
+ion in error, notify the sender immediately by return email and delete the =
+message and any attachments from
+ your system.
+</body>
+</html>
+
+--_000_PH3PPF960B3E6E3EA5B62F3217F595FA83E9628APH3PPF960B3E6E3_--

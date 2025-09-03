@@ -1,0 +1,11 @@
+robotframework==7.3.2
+robotframework-assertion-engine==3.0.3
+robotframework-browser==19.7.2
+robotframework-datadriver==1.11.2
+robotframework-jsonlibrary==0.5
+robotframework-pabot==4.2.0
+openpyxl==3.1.5
+pandas==2.2.3
+xlrd==2.0.1
+deepdiff==8.5.0
+# No extra dependencies required for parse_robot_results.py (uses only Python standard library)
