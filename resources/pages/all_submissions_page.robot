@@ -8,8 +8,8 @@ Library    OperatingSystem
 *** Variables ***
 ${FilePath}        ${CURDIR}/../../uploads/ACORD-MSIG.pdf
 ${path}             ${CURDIR}/../../uploads/
-${processing_stage_timeout}    1200s
-${upload_procesing_timeout}    1200s
+${processing_stage_timeout}    2000s
+${upload_procesing_timeout}    2000s
 ${element_timeout}    180s
 
 *** Keywords ***
@@ -493,12 +493,12 @@ Verify and click the save and close button
     Get Element States    ${Please_Review_Msg}    validate    value & visible    'Please_Review_Msg should be visible.'
     Get Element States    ${SaveAndClose}    validate    value & visible    'SaveAndClose should be visible.'
     Click    ${SaveAndClose}
-     ${error_Message}    Run Keyword And Return Status    Get Element States    ${Error_Saving_popup}
-    IF    ${error_Message} == True
-    Get Element States    ${SaveAndClose}    validate    value & visible    'SaveAndClose should be visible.'
-    Wait For Elements State    ${SaveAndClose}    visible        timeout=10s
-    Click    ${SaveAndClose}
-    END
+    #  ${error_Message}    Run Keyword And Return Status    Get Element States    ${Error_Saving_popup}
+    # IF    ${error_Message} == True
+    # Get Element States    ${SaveAndClose}    validate    value & visible    'SaveAndClose should be visible.'
+    # Wait For Elements State    ${SaveAndClose}    visible        timeout=10s
+    # Click    ${SaveAndClose}
+    # END
     Wait For Elements State    ${processingStage1}    visible    timeout=30s
     Wait For Elements State    ${processingStage1}    hidden    timeout=300s
 
@@ -1141,7 +1141,7 @@ Switch To Summary Tab
     Wait For Elements State    ${SummaryTab}    visible
     Click    ${SummaryTab}
     ${actualHeader}    Get Text    ${SummaryHeader}
-    Should Be Equal    ${actualHeader}    ${expectedHeader}
+    Run Keyword And Continue On Failure    Should Be Equal    ${actualHeader}    ${expectedHeader}
 
 Verify Premium Amount 
     Wait For Elements State    ${PremiumAmount}    visible

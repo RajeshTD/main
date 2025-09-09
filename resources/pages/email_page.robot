@@ -234,7 +234,7 @@ Save and verify mail in Draft
     Should Be Equal    ${subjectText}    ${email_data['Subject']}
     Fill Text    ${EmailBody}    ${email_data['Body']}
     Click    ${SubmissionAssetsButton}
-    Set Viewport Size    2560    1440
+    # Set Viewport Size    2560    1440
     Wait For Elements State    ${Email_breadcrums}    visible
         FOR    ${file}    IN    @{email_data['FileNames']}
         Wait For Elements State    ${SubmissionAssetsDialog}    visible
@@ -242,7 +242,7 @@ Save and verify mail in Draft
         Check Checkbox    ${asset_name}
         END
         Click    ${Attach1AssetButton}
-        Set Viewport Size    1280    720
+        # Set Viewport Size    1280    720
         ${counter}=    Set Variable    1
         FOR    ${file}    IN    @{email_data['FileNames']}
         ${attachment_text_locator}=    Catenate    SEPARATOR=    ${AttachmentText_MultipleValues}    ${counter}    ]
@@ -329,7 +329,7 @@ Verify Discard Button visible
     Should Be Equal    ${subjectText}    ${email_data['Subject']}
     Fill Text    ${EmailBody}    ${email_data['Body']}
       Click    ${SubmissionAssetsButton}
-      Set Viewport Size    2560    1440
+    #   Set Viewport Size    2560    1440
     Wait For Elements State    ${Email_breadcrums}    visible
         FOR    ${file}    IN    @{email_data['FileNames']}
         Wait For Elements State    ${SubmissionAssetsDialog}    visible
@@ -337,7 +337,7 @@ Verify Discard Button visible
         Check Checkbox    ${asset_name}
         END
         Click    ${Attach1AssetButton}
-        Set Viewport Size    1280    720
+        # Set Viewport Size    1280    720
         ${counter}=    Set Variable    1
    
         FOR    ${file}    IN    @{email_data['FileNames']}

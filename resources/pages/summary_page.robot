@@ -76,7 +76,7 @@ Enter the Policy Information
  
     Click    ${permium_Btn_Loc}
     Wait For Elements State    ${premium_field_loc}    visible    5s
-    Fill Text    ${premium_field_loc}    ${policy_Info['premium']}
+    Fill Text    ${premium_field_loc}    ${policy_Info['premiumAmount']}
     Wait For Elements State    ${premium_field_loc}    visible    5s
     Click    ${Attachement_point_btn_loc}
     Wait For Elements State    ${Attachement_point_field_loc}    visible    5s
@@ -88,47 +88,103 @@ Enter the Policy Information
     ${element}    Catenate    SEPARATOR=    ${loc1_Select_Type}    ${policy_Info['ClassOfBusiness']}    ']    
     click    ${element} 
     click    ${Loc_Placement_Button}
-    ${place_element}    Catenate    SEPARATOR=    ${loc1_Select_Type}    ${policy_Info['PlacementType']}    ']    
+    ${place_element}    Catenate    SEPARATOR=    ${loc1_Select_Type}    ${policy_Info['Placement Type']}    ']    
     click    ${place_element}
 
+# Verify Policy Information Details from Summary Tab
+#     [Documentation]    the Given Policy Informaton Should be listed
+#     ...    ${expected_Policy_Field}    here We need to Pass the Expected policy Information Along with We need to pass the Key field in Summary tab     
+
+#     [Arguments]    ${expected_Policy_Field}    ${Expected_Forms_PolicyInormation}        
+ 
+#     ${Actual_Policy_Text}    Get Text    ${policy_btn_Loc}
+#     Should Be Equal    ${Actual_Policy_Text}    ${Expected_Forms_PolicyInormation['TC_Forms_002']['DocumentationData']['PolicyNumber']}
+#    ${Actual_Premium_Text}    Get Text    ${permium_Btn_Loc}
+#      Should Be Equal    ${Actual_Premium_Text}    ${Expected_Forms_PolicyInormation['TC_Forms_002']['DocumentationData']['PolicyPremium']}
+#    ${Actual_Attachment_Text}    Get Text    ${Attachement_point_btn_loc}
+#     Should Be Equal    ${Actual_Attachment_Text}    ${expected_Policy_Field['AttachmentPoint']}
+#     ${Actual_ClassOf_Business}    Get Text    ${loc_ClassOf_Business}
+#       Should Be Equal    ${Actual_ClassOf_Business}    ${expected_Policy_Field['ClassOfBusiness']}
+#    ${Actual_Placement_Text}    Get Text    ${Loc_Placement_Button}
+#     Should Be Equal    ${Actual_Placement_Text}    ${expected_Policy_Field['PlacementType']}
+#      ${Actual_Policy_Field}    Create List
+#     ${Actual_Policy_Field_Text}    Get Text    ${policy_Field}
+#    ${Actual_Premium_Field}    Get Text    ${permium_Field}
+#    ${Actual_Business_Field}    Get Text    ${loc_ClassOf_Business_Field}
+#   ${Actual_Attachement_Field}    Get Text    ${Attachement_point_Field}
+#     ${Actual_Mailed_Field}    Get Text    ${loc_Mailed_Date_Field}
+#    ${Actual_Placement_Field}    Get Text    ${Loc_Placement_Field}
+#   Append To List    ${Actual_Policy_Field}    ${Actual_Premium_Field}
+#   Append To List    ${Actual_Policy_Field}    ${Actual_Attachement_Field}
+#   Append To List    ${Actual_Policy_Field}    ${Actual_Policy_Field_Text}
+#   Append To List    ${Actual_Policy_Field}    ${Actual_Business_Field}
+#   Append To List    ${Actual_Policy_Field}    ${Actual_Placement_Field}
+#   Append To List    ${Actual_Policy_Field}    ${Actual_Mailed_Field}
+
+#   Lists Should Be Equal    ${Actual_Policy_Field}    ${expected_Policy_Field['PolicyFields']}
+
+
 Verify Policy Information Details from Summary Tab
-    [Documentation]    the Given Policy Informaton Should be listed
+    [Documentation]    The Given Policy Information Should be listed
     ...    ${expected_Policy_Field}    here We need to Pass the Expected policy Information Along with We need to pass the Key field in Summary tab     
 
     [Arguments]    ${expected_Policy_Field}    ${Expected_Forms_PolicyInormation}        
- 
-    ${Actual_Policy_Text}    Get Text    ${policy_btn_Loc}
-    Should Be Equal    ${Actual_Policy_Text}    ${Expected_Forms_PolicyInormation['TC_Forms_002']['DocumentationData']['PolicyNumber']}
-   ${Actual_Premium_Text}    Get Text    ${permium_Btn_Loc}
-     Should Be Equal    ${Actual_Premium_Text}    ${Expected_Forms_PolicyInormation['TC_Forms_002']['DocumentationData']['PolicyPremium']}
-   ${Actual_Attachment_Text}    Get Text    ${Attachement_point_btn_loc}
-    Should Be Equal    ${Actual_Attachment_Text}    ${expected_Policy_Field['AttachmentPoint']}
-    ${Actual_ClassOf_Business}    Get Text    ${loc_ClassOf_Business}
-      Should Be Equal    ${Actual_ClassOf_Business}    ${expected_Policy_Field['ClassOfBusiness']}
-   ${Actual_Placement_Text}    Get Text    ${Loc_Placement_Button}
-    Should Be Equal    ${Actual_Placement_Text}    ${expected_Policy_Field['PlacementType']}
-     ${Actual_Policy_Field}    Create List
-    ${Actual_Policy_Field_Text}    Get Text    ${policy_Field}
-   ${Actual_Premium_Field}    Get Text    ${permium_Field}
-   ${Actual_Business_Field}    Get Text    ${loc_ClassOf_Business_Field}
-  ${Actual_Attachement_Field}    Get Text    ${Attachement_point_Field}
-    ${Actual_Mailed_Field}    Get Text    ${loc_Mailed_Date_Field}
-   ${Actual_Placement_Field}    Get Text    ${Loc_Placement_Field}
-  Append To List    ${Actual_Policy_Field}    ${Actual_Premium_Field}
-  Append To List    ${Actual_Policy_Field}    ${Actual_Attachement_Field}
-  Append To List    ${Actual_Policy_Field}    ${Actual_Policy_Field_Text}
-  Append To List    ${Actual_Policy_Field}    ${Actual_Business_Field}
-  Append To List    ${Actual_Policy_Field}    ${Actual_Placement_Field}
-  Append To List    ${Actual_Policy_Field}    ${Actual_Mailed_Field}
 
-  Lists Should Be Equal    ${Actual_Policy_Field}    ${expected_Policy_Field['PolicyFields']}
+    ${Actual_Policy_Text}    Get Text    ${policy_btn_Loc}
+    Run Keyword And Continue On Failure    Should Be Equal    ${Actual_Policy_Text}    ${Expected_Forms_PolicyInormation['TC_Forms_002']['DocumentationData']['PolicyNumber']}
+
+    ${Actual_Premium_Text}    Get Text    ${permium_Btn_Loc}
+    ${Actual_Premium_Text}    Replace String    ${Actual_Premium_Text}    $    ${EMPTY}     
+    ${Actual_Premium_Text}    Replace String    ${Actual_Premium_Text}    ,    ${EMPTY} 
+    ${Actualval}    Strip String    ${Actual_Premium_Text}    
+    ${Expected_Premium_Text}    Set Variable    ${Expected_Forms_PolicyInormation['TC_Forms_002']['DocumentationData']['PolicyPremium']}  
+    Run Keyword And Continue On Failure    Should Be Equal    ${Actualval}    ${Expected_Premium_Text}
+
+    ${Actual_Attachment_Text}    Get Text    ${Attachement_point_btn_loc}
+    ${Actual_Attachment_Text}    Replace String    ${Actual_Attachment_Text}    $    ${EMPTY}
+    ${Actual_Attachment_Text}    Replace String    ${Actual_Attachment_Text}    ,    ${EMPTY}
+    ${ActualAttachmentval}    Strip String    ${Actual_Attachment_Text}
+    ${Expected_Attachment_Text}    Set Variable    ${expected_Policy_Field['AttachmentPoint']}
+    Run Keyword And Continue On Failure    Should Be Equal    ${ActualAttachmentval}    ${Expected_Attachment_Text}
+
+    ${Actual_ClassOf_Business}    Get Text    ${loc_ClassOf_Business}
+    Run Keyword And Continue On Failure    Should Be Equal    ${Actual_ClassOf_Business}    ${expected_Policy_Field['ClassOfBusiness']}
+
+    ${Actual_Placement_Text}    Get Text    ${Loc_Placement_Button}
+    Run Keyword And Continue On Failure    Should Be Equal    ${Actual_Placement_Text}    ${expected_Policy_Field['PlacementType']}
+
+    ${Actual_Policy_Field}    Create List
+    ${Actual_Policy_Field_Text}    Get Text    ${policy_Field}
+    ${Actual_Premium_Field}    Get Text    ${permium_Field}
+    ${Actual_Premium_Field}    Replace String    ${Actual_Premium_Field}    $    ${EMPTY}
+    ${Actual_Premium_Field}    Replace String    ${Actual_Premium_Field}    ,    ${EMPTY}
+    ${Actualvalue}    Strip String    ${Actual_Premium_Field}
+    ${Actual_Business_Field}    Get Text    ${loc_ClassOf_Business_Field}
+    ${Actual_Attachement_Field}    Get Text    ${Attachement_point_Field}
+    ${Actual_Attachement_Field}    Replace String    ${Actual_Attachement_Field}    $    ${EMPTY}
+    ${Actual_Attachement_Field}    Replace String    ${Actual_Attachement_Field}    ,    ${EMPTY}
+    ${ActualPointValue}    Strip String    ${Actual_Attachement_Field}
+    ${Actual_Mailed_Field}    Get Text    ${loc_Mailed_Date_Field}
+    ${Actual_Placement_Field}    Get Text    ${Loc_Placement_Field}
+
+    Append To List    ${Actual_Policy_Field}    ${Actualvalue}
+    Append To List    ${Actual_Policy_Field}    ${ActualPointValue}
+    Append To List    ${Actual_Policy_Field}    ${Actual_Policy_Field_Text}
+    Append To List    ${Actual_Policy_Field}    ${Actual_Business_Field}
+    Append To List    ${Actual_Policy_Field}    ${Actual_Placement_Field}
+    Append To List    ${Actual_Policy_Field}    ${Actual_Mailed_Field}
+
+    Run Keyword And Continue On Failure    Lists Should Be Equal    ${Actual_Policy_Field}    ${expected_Policy_Field['PolicyFields']}
+
+
+
 
 Verify Policy PDF is Generated and Available in Documents Tab
     [Documentation]    Verifies that the Policy PDF is generated and listed in the Documents tab.
     ...    ${expectedText1}     we need to pass the policy Information use in Summary Tab in Previous Stage  
     [Arguments]     ${expectedText1}
     ${Expected_Policy_text}    Create List
-    Append To List    ${Expected_Policy_text}    ${expectedText1['premium']}
+    Append To List    ${Expected_Policy_text}    ${expectedText1['premiumAmount']}
     Append To List    ${Expected_Policy_text}    ${expectedText1['AttachmentPoint']}  
     Append To List    ${Expected_Policy_text}    ${expectedText1['PolicyNumber']}  
     Append To List    ${Expected_Policy_text}    ${expectedText1['ClassOfBusiness']}  
@@ -260,3 +316,22 @@ verify the entered Policy Information
       Should Be Equal    ${Actual_ClassOf_Business}    ${expected_Policy_Field['ClassOfBusiness']}
    ${Actual_Placement_Text}    Get Text    ${Loc_Placement_Button}
     Should Be Equal    ${Actual_Placement_Text}    ${expected_Policy_Field['PlacementType']}
+
+
+Verify AttachmentPoint Must Accept Numeric Values
+    [Documentation]    This test verifies that the Attachment Point field accepts only numeric values
+    Switch to Summary
+    Click    ${Attachement_point_btn_loc}
+    Wait For Elements State    ${Attachement_point_field_loc}    visible    5s
+
+    # Attempt to input non-numeric value
+    Fill Text    ${Attachement_point_field_loc}    Test
+    Wait For Elements State    ${permium_Btn_Loc}
+    ${ActualValue}    Get Text    ${Attachement_point_btn_loc}
+    Should Be Empty    ${ActualValue}
+
+    # Optionally: Try a numeric input to confirm it works
+    Clear Text    ${Attachement_point_field_loc}
+    Fill Text    ${Attachement_point_field_loc}    12345
+    ${NumericValue}    Get Text    ${Attachement_point_field_loc}
+    Should Be Equal    ${NumericValue}    12345

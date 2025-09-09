@@ -299,4 +299,4 @@ Clearance_Product_Segment="xpath=(//button[@test-id='clearance-field-list-btn'])
 underwriter_reference_lookup="xpath=(//span[text()='Code'])//following::span[text()='Underwriter Reference Lookup']"
 Direct_Assumed="xpath=(//button[@test-id='clearance-field-input-btn-Direct or Assumed'])[1]"
 Producer_Phone_number="xpath=//button[@test-id='clearance-field-input-btn-Producer Phone Number']"
-Facultative_Reinsurance_loc="xpath=(//button[@test-id='clearance-field-input-btn-Facultative Reinsurance'])[1]"
+Facultative_Reinsurance_loc="xpath=(//button[@test-id='clearance-field-input-btn-Facultative Reinsurance']//span)[1]"
