@@ -22,9 +22,7 @@ Open Browser and Launch URL
     [Arguments]    ${url}=${url}    ${browser}=${BROWSER}    ${headless}=${HEADLESS}
     New Browser    ${browser}    headless=${headless}
     New Context    # Optionally, set viewport or other context options here
-    Set Browser Timeout    120s
-    New Page    ${url}    wait_until=load    
-    
+    New Page    ${url}    wait_until=load
 
 
 

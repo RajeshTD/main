@@ -317,10 +317,9 @@ verify the Email Body Document
     Click    ${Email_Body_Doc}
     ${text1}    Get Text    ${Email_Body_msg}
     ${actual_normalized}=    Replace String    ${text1}    \n    ${EMPTY}
-    ${Exceptedvalue}    Strip String    ${expected_body_Msg}
-    Log    ${Exceptedvalue}
+    Log    ${expected_body_Msg}
     Log    ${actual_normalized}
-    Run Keyword And Continue On Failure    Should Be Equal As Strings    ${Exceptedvalue.strip()}    ${actual_normalized.strip()}
+    Run Keyword And Continue On Failure    Should Be Equal    ${expected_body_Msg}    ${actual_normalized}
 
 
 # Verify The Email Body Document

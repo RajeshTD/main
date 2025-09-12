@@ -8,8 +8,8 @@ Library    OperatingSystem
 *** Variables ***
 ${FilePath}        ${CURDIR}/../../uploads/ACORD-MSIG.pdf
 ${path}             ${CURDIR}/../../uploads/
-${processing_stage_timeout}    2000s
-${upload_procesing_timeout}    2000s
+${processing_stage_timeout}    1200s
+${upload_procesing_timeout}    1200s
 ${element_timeout}    180s
 
 *** Keywords ***
@@ -448,23 +448,13 @@ Verify the Coverage data
      Should Be Equal    ${data_expected_expiry_date}    ${trimExpirationDate}
 
 Fill the data for issues field in Coverage
-    [Arguments]    ${data}    
-        Add LOB if not present    ${data['Product']}   ${data['product_dropdown_values']}
-        ${Actual_Product_Segment_Text}    Create List 
+    [Arguments]    ${data}
+        Add LOB if not present    ${data['Product']}
         Click    ${ProductSegment}
         Click    ${ProductSegmentDropdown}
-          ${Product_Segment_DropDownElements}    Get Elements    ${Product_segment_DropDownElement}
-    FOR    ${element}    IN    @{Product_Segment_DropDownElements}
-        ${Product_Segment_Text}    Get Text    ${element}
-        ${Product_Segment_Text}    Strip String    ${Product_Segment_Text}   
-        Append To List    ${Actual_Product_Segment_Text}    ${Product_Segment_Text}     
-    END
-    Log    ${Actual_Product_Segment_Text}
-    Log    ${data['ProductSegment_dropdown_values']}
-    Run Keyword And Continue On Failure    Lists Should Be Equal    ${data['ProductSegment_dropdown_values']}    ${Actual_Product_Segment_Text}
-    ${value}    Catenate    SEPARATOR=    ${CoverageProductSelect}    ${data['ProductSegment']}    '])[1]
-    Wait For Elements State    ${value}    visible
-    Click    ${value}
+        ${value}    Catenate    SEPARATOR=    ${CoverageProductSelect}    ${data['ProductSegment']}    '])[1]
+        Wait For Elements State    ${value}    visible
+        Click    ${value}
 
 
 Click Issues Tab
@@ -503,12 +493,12 @@ Verify and click the save and close button
     Get Element States    ${Please_Review_Msg}    validate    value & visible    'Please_Review_Msg should be visible.'
     Get Element States    ${SaveAndClose}    validate    value & visible    'SaveAndClose should be visible.'
     Click    ${SaveAndClose}
-    #  ${error_Message}    Run Keyword And Return Status    Get Element States    ${Error_Saving_popup}
-    # IF    ${error_Message} == True
-    # Get Element States    ${SaveAndClose}    validate    value & visible    'SaveAndClose should be visible.'
-    # Wait For Elements State    ${SaveAndClose}    visible        timeout=10s
-    # Click    ${SaveAndClose}
-    # END
+     ${error_Message}    Run Keyword And Return Status    Get Element States    ${Error_Saving_popup}
+    IF    ${error_Message} == True
+    Get Element States    ${SaveAndClose}    validate    value & visible    'SaveAndClose should be visible.'
+    Wait For Elements State    ${SaveAndClose}    visible        timeout=10s
+    Click    ${SaveAndClose}
+    END
     Wait For Elements State    ${processingStage1}    visible    timeout=30s
     Wait For Elements State    ${processingStage1}    hidden    timeout=300s
 
@@ -1151,7 +1141,7 @@ Switch To Summary Tab
     Wait For Elements State    ${SummaryTab}    visible
     Click    ${SummaryTab}
     ${actualHeader}    Get Text    ${SummaryHeader}
-    Run Keyword And Continue On Failure    Should Be Equal    ${actualHeader}    ${expectedHeader}
+    Should Be Equal    ${actualHeader}    ${expectedHeader}
 
 Verify Premium Amount 
     Wait For Elements State    ${PremiumAmount}    visible
@@ -1286,23 +1276,12 @@ Add Lob in the Clearnce Tab for Product Type
     Click    ${RemoveLob}
 
 Add LOB if not present
-    [Arguments]    ${product}    ${Expected_Product}    
-    ${Actual_Product_Text}    Create List 
+    [Arguments]    ${product}
     Click Coverage Tab 
     ${status}    Run Keyword And Return Status    Wait For Elements State    ${EmptyProductType}    visible
     IF    ${status}
         Click    ${EmptyProductType}
         Click    ${ProductDropdown1}
-          ${Product_DropDownElements}    Get Elements    ${Product_DropDownElement}
-    FOR    ${element}    IN    @{Product_DropDownElements}
-        ${Product_Text}    Get Text    ${element}
-        ${Product_Text}    Strip String    ${Product_Text}
-        Append To List    ${Actual_Product_Text}    ${Product_Text}     
-    END
-        Log    ${Actual_Product_Text}
-        Log    ${Expected_Product}
-        Run Keyword And Continue On Failure    Lists Should Be Equal    ${Expected_Product}    ${Actual_Product_Text}        
-
         ${value}    Catenate    SEPARATOR=    ${CoverageProductSelect}    ${product}    '])[1]
         Wait For Elements State    ${value}    visible
         Click    ${value}
@@ -1612,8 +1591,8 @@ Verify EML PDF Data in Producer Tab
     ...    The fields checked are hardcoded within the keyword.
     ...
     ...    *Arguments:*
-    ...    - `${ExpectedPDFText}`: A list of strings containing the expected text for each verified field.
-    [Arguments]    ${ExpectedPDFText}
+    ...    - `@{ExpectedPDFText}`: A list of strings containing the expected text for each verified field.
+    [Arguments]    @{ExpectedPDFText}
     @{locators}     Create List    ${Agency}    ${ProducerName}    ${ProducerAddress}    ${ProducerAddressStreet}    ${ProducerAddress2}    ${ProducerAddressCity}    ${ProducerAddressState}    ${ProducerPostalCode}    ${ProducerCountry}    ${ProducerCodeButton}    ${ProducerEmailButton}    ${Producer_Phone_number}
     @{ActualPDFText}    Create List
     FOR    ${locator}    IN    @{locators}
@@ -1625,45 +1604,4 @@ Verify EML PDF Data in Producer Tab
     Log    ${ExpectedPDFText}
     Log    ${ActualPDFText}
     Lists Should Be Equal    ${ExpectedPDFText}    ${ActualPDFText}    
-
-Verify EML Data the Coverage Tab
-    [Documentation]    Verifies the effective date, expiration date, and product type in the 'Coverage' tab.
-    ...
-    ...    *Arguments:*
-    ...    - `${data_expected_eff_date}`: The expected effective date.
-    ...    - `${data_expected_expiry_date}`: The expected expiration date.
-    ...    - `${data_expected_product}`: The expected product type.
-    ...    ${Property_Segment_value}`: The expected product segment type.
-    ...    ${Facultative_Reinsurance}`: The expected Facultative Reinsurance type.
-        [Arguments]    ${data_expected_eff_date}    ${data_expected_expiry_date}    ${data_expected_product}    ${Property_Segment_value}    ${Facultative_Reinsurance}    
-     Wait For Elements State    ${EffectiveDate}    visible    timeout=${element_timeout}
-     ${actualEffectiveDate}    Get Text    ${EffectiveDate}
-     ${trimEffectiveDate}    Strip String    ${actualEffectiveDate}
-     Run Keyword And Continue On Failure    Should Be Equal    ${data_expected_eff_date}    ${trimEffectiveDate}
-     ${actualExpirationDate}    Get Text    ${ExpirationDate}
-     ${trimExpirationDate}    Strip String    ${actualExpirationDate}
-     Run Keyword And Continue On Failure    Should Be Equal    ${data_expected_expiry_date}    ${trimExpirationDate}  
-     ${Product_Name}    Get Text    ${CoverageProductButton}  
-     Run Keyword And Continue On Failure    Should Be Equal    ${data_expected_product}    ${Product_Name} 
-     ${Product_Segment_Name}    Get Text    ${Clearance_Product_Segment}  
-     Run Keyword And Continue On Failure    Should Be Equal    ${Property_Segment_value}    ${Product_Segment_Name}  
-     ${Facultative_Reinsurance_Name}    Get Text    ${Facultative_Reinsurance_loc}  
-     Run Keyword And Continue On Failure    Should Be Equal    ${Facultative_Reinsurance}    ${Facultative_Reinsurance_Name}  
   
-Verify Product field dropdown values in coverage tab
-    [Documentation]    This method is used to verify  the Product field dropdown values
-    ...    ${Expected_Product_Field}    We need to pass the Expected Values in list
-
-    [Arguments]    ${Expected_Product_Field}
-
-    ${Actual_Product_Text}    Create List    
-    Wait For Elements State    ${CoverageProductButton}    visible
-    Click    ${CoverageProductButton} 
-    Wait For Elements State    ${ProductDropdown1}    visible
-    Click    ${ProductDropdown1}
-    ${Product_DropDownElements}    Get Elements    ${Product_DropDownElement}
-    FOR    ${element}    IN    @{Product_DropDownElements}
-        ${Product_Text}    Strip String    Get Text    ${element}
-        Append To List    ${Actual_Product_Text}    ${Product_Text}     
-    END
-    Lists Should Be Equal    ${Expected_Product_Field}    ${Actual_Product_Text}

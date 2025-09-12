@@ -21,12 +21,8 @@ Loc_Placement_Button="//div[text()='Policy Placement Type']/following-sibling::d
 
 loc1_Select_Type="//div[@data-slot='select-item']//span[text()='"
 PolicyDataModification = "xpath=(//a[normalize-space()='Policy Data Modification'])[2]"
-policy_locators_doc1 = "xpath =//*[@class='ace_line'][.//span[contains(text(),'"
-policy_locators_doc2 ="')]]/span[contains(@class,'ace_string') or contains(@class,'ace_numeric')]"
-policy_locators1 = "xpath =(//*[@class='ace_line'][.//span[contains(text(),'"     
+policy_locators1 = "xpath =//*[@class='ace_line'][.//span[contains(text(),'"     
 policy_locators2 ="')]]/span[contains(@class,'ace_string') or contains(@class,'ace_numeric')]"
-policy_locators3 = "|//*[@class='ace_line'][.//span[contains(text(),'"
-policy_locators4 ="')]]//ancestor::div[@class='ace_line_group']//following-sibling::div[1]//span[@class='ace_string'])[1]"
 Search_Bar_CtrlF="xpath=//input[@placeholder='Search for']"
 poloicy_Data_modification_page="xpath=//div[@class=' ace_editor ace-jsoneditor']"
 
