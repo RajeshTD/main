@@ -337,9 +337,9 @@ Verify Edit Icon is Clickable and Functional
 Verify Delete Icon is Clickable and Functional
     [Documentation]    verifying Edit,delete and complete task buttons are visible on the right side of task list
     [Arguments]    ${expected_taskdetails}
-    Wait For Elements State    ${TasksMenu}    visible    timeout=10s
-    Handle Future Dialogs    action=accept    
-    Click    ${TasksMenu}
+    # Wait For Elements State    ${TasksMenu}    visible    timeout=10s
+    # Handle Future Dialogs    action=accept    
+    # Click    ${TasksMenu}
     click Task delete icon
     Wait For Elements State    ${Cancel_del}
     Click    ${Cancel_del}

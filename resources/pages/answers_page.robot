@@ -136,7 +136,7 @@ Verify Company Website Link
         Switch Page    NEW
         Wait For Load State    load
         ${page_title}    Get Title
-        Should Be Equal    ${page_title}    ${expected_Title}
+        Run Keyword And Continue On Failure    Should Be Equal    ${page_title}    ${expected_Title}
         Close Page
         Switch Page    CURRENT
         Wait For Elements State    ${Answers}    visible    timeout=30s
