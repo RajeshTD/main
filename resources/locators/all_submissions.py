@@ -300,3 +300,9 @@ underwriter_reference_lookup="xpath=(//span[text()='Code'])//following::span[tex
 Direct_Assumed="xpath=(//button[@test-id='clearance-field-input-btn-Direct or Assumed'])[1]"
 Producer_Phone_number="xpath=//button[@test-id='clearance-field-input-btn-Producer Phone Number']"
 Facultative_Reinsurance_loc="xpath=(//button[@test-id='clearance-field-input-btn-Facultative Reinsurance']//span)[1]"
+
+# 
+Product_DropDownElement="(//div[@ng-show='$ctrl.open === $index'])[1]//button"
+Product_segment_DropDownElement="(//div[@ng-show='$ctrl.open === $index'])[2]//button"
+
+

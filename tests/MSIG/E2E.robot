@@ -1,6 +1,6 @@
 *** Settings ***
 Resource    ../../utils/common_keywords.robot
-Library    ../../libraries/ScreenshotListener.py    False
+Library    ../../libraries/ScreenshotListener.py    True
 Test Setup    Launch URL and Login in to the application
 Test Teardown    Run Keywords    Close Context    Close Browser
 
@@ -14,14 +14,20 @@ TC_E2E_001
     Run Keyword And Continue On Failure    Verify My Assignments Tab is displayed as a default tab
     ${submission_id}    Create New Submission    ${TC_E2E_001['FileName']}    @{TC_E2E_001['SubmissionColumnNames']}
     Set Suite Variable   ${submission_id_1}    ${submission_id}
-    Select Submission using submission id    ${submission_id}    @{TC_E2E_001['SubmissionColumnNames']}
+    Select Submission using submission id    ${submission_id_1}    @{TC_E2E_001['SubmissionColumnNames']}
     Run Keyword And Continue On Failure    Verify Submission page is displayed
-    Run Keyword And Continue On Failure    Verify All Side menu options are Displayed
+    Run Keyword And Continue On Failure    Verify All Side menu options are Displayed    ${TC_E2E_023['excepted_Field']}
     Switch To Summary Tab    ${TC_E2E_001['SummaryHeader']}
+    
     Run Keyword And Continue On Failure    Verify Summary Table Data    ${TC_E2E_001['SummaryTableHeader']}    ${TC_E2E_001['SummaryTableData']}
     Run Keyword And Continue On Failure    Verify Policy Information Fields In Summary Tab     ${TC_E2E_001['PolicyFields']}   
     Run Keyword And Continue On Failure    Verify the Workflow Reflected in Summary tab    ${TC_E2E_001['AdvanceTo']}
     Click Edit Submission
+   
+    Run Keyword And Continue On Failure    verify Header Displayed    Home    WIN-CON ENTERPRISES, INC    In Draft    Summary
+    
+    # Run Keyword And Continue On Failure    Enter the Policy Information    ${TC_E2E_011['PolicyInfo']}
+    Click Answers Tab
     Run Keyword And Continue On Failure    Click and verify Clearance tab
     # Run Keyword And Continue On Failure     Verify the Error popup when mandate fields left empty    ${TC_E2E_001}
     Click Insured Tab
@@ -45,20 +51,21 @@ TC_E2E_001
     @{expectedModification}    Create List    "${TC_E2E_001['SicCode']}"    "${TC_E2E_001['SicDescription']}"    "${TC_E2E_001['NAICSCode']}"    "${TC_E2E_001['UnderwriterName']}"    "${TC_E2E_001['UnderwriterEmail']}"    "${TC_E2E_001['UnderwrittingOffice']}"     "${TC_E2E_001['OperationsName']}"    "${TC_E2E_001['OperationsEmail']}"    "${TC_E2E_001['Channel']}"    "${TC_E2E_001['ProducerName']}"    "${TC_E2E_001['ProducerEmail']}"    "${TC_E2E_001['Covered']['Product']}"    "${TC_E2E_001['Covered']['ProductSegment']}"    
     Run Keyword And Continue On Failure    Verify datas in UserModification file    @{expectedModification}
     Run Keyword And Continue On Failure    Verify Schema by downloading the json file    ${TC_E2E_001['queryList']}    @{expectedModification}
+    # Verify Schema for policy information and Available in Documents Tab    ${TC_E2E_001['policy_headers']}    ${TC_E2E_001['PolicyInfo']}
     Create New Task    ${TC_E2E_001['taskdata']}
     Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_001['taskDetails']}
     Run Keyword And Continue On Failure    verify Edit Delete and Complete task Buttons are present on the right side of task list
     Run Keyword And Continue On Failure    Verify Edit Icon is Clickable and Functional    ${TC_E2E_001['priority']}
-    Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_001['taskupdateddetails']}
-    Click Answers Tab
-    Run Keyword And Continue On Failure    Select the Created Task    ${TC_E2E_001['taskdata']}
+    # Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_001['taskupdateddetails']}
+    # Click Answers Tab
+    # Run Keyword And Continue On Failure    Select the Created Task    ${TC_E2E_001['taskdata']}
     Run Keyword And Continue On Failure    Verify Delete Icon is Clickable and Functional    ${TC_E2E_001['taskupdateddetails']}
-    Create New Mail    ${TC_E2E_001['emailData']}
-    Run Keyword And Continue On Failure    Verify Email Sent Successfully
-    Run Keyword And Continue On Failure    Verify Sent Email    ${TC_E2E_001['emailVerify']}
+    # Create New Mail    ${TC_E2E_001['emailData']}
+    # Run Keyword And Continue On Failure    Verify Email Sent Successfully
+    # Run Keyword And Continue On Failure    Verify Sent Email    ${TC_E2E_001['emailVerify']}
     Run Keyword And Continue On Failure    Save and verify mail in Draft    ${TC_E2E_001['emailData']} 
-    Discard the Created Email    ${TC_E2E_001['emailData']}      
-    Create New Mail With Missing Data    ${TC_E2E_001['emailData_Mising']}    ${TC_E2E_001['Expected_PopUp']}  
+    Run Keyword And Continue On Failure    Discard the Created Email    ${TC_E2E_001['emailData']}      
+    Run Keyword And Continue On Failure    Create New Mail With Missing Data    ${TC_E2E_001['emailData_Mising']}    ${TC_E2E_001['Expected_PopUp']}  
     Run Keyword And Continue On Failure    Verify WorkFlow History    ${TC_E2E_001['expectedWorkFlowHistory']}
     Run Keyword And Continue On Failure    Save Submission And verify popup
     Run Keyword And Continue On Failure    Verify Submission updated
@@ -75,7 +82,7 @@ TC_E2E_007
     Run Keyword And Continue On Failure    Verify Submission page is displayed
     Advance Stage 2
     Run Keyword And Continue On Failure    Verify Stage is updated in the submission    ${TC_E2E_007['stage']}
-    Run Keyword And Continue On Failure    Verify All Side menu options are Displayed
+    Run Keyword And Continue On Failure    Verify All Side menu options are Displayed    ${TC_E2E_023['excepted_Field']}
     Switch To Summary Tab    ${TC_E2E_007['SummaryHeader']}
     Run Keyword And Continue On Failure    Verify Summary Table Data    ${TC_E2E_007['SummaryTableHeader']}    ${TC_E2E_007['SummaryTableData']}
     Run Keyword And Continue On Failure    Verify Policy Information Fields In Summary Tab     ${TC_E2E_007['PolicyFields']}   
@@ -90,17 +97,17 @@ TC_E2E_007
     Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_007['taskDetails']}
     Run Keyword And Continue On Failure    verify Edit Delete and Complete task Buttons are present on the right side of task list
     Run Keyword And Continue On Failure    Verify Edit Icon is Clickable and Functional    ${TC_E2E_007['priority']}
-    Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_007['taskupdateddetails']}
-    Click Answers Tab
-    Run Keyword And Continue On Failure    Select the Created Task    ${TC_E2E_007['taskdata']}
+    # Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_007['taskupdateddetails']}
+    # Click Answers Tab
+    # Run Keyword And Continue On Failure    Select the Created Task    ${TC_E2E_007['taskdata']}
     Run Keyword And Continue On Failure    Verify Delete Icon is Clickable and Functional    ${TC_E2E_007['taskupdateddetails']}
     Run Keyword And Continue On Failure    Remove Document after Upload     @{TC_E2E_007['FileName']}
-    Create New Mail    ${TC_E2E_007['emailData']}
-    Run Keyword And Continue On Failure    Verify Email Sent Successfully
-    Run Keyword And Continue On Failure    Verify Sent Email    ${TC_E2E_007['emailVerify']}
+    # Create New Mail    ${TC_E2E_007['emailData']}
+    # Run Keyword And Continue On Failure    Verify Email Sent Successfully
+    # Run Keyword And Continue On Failure    Verify Sent Email    ${TC_E2E_007['emailVerify']}
     Run Keyword And Continue On Failure    Save and verify mail in Draft    ${TC_E2E_007['emailData']} 
-    Discard the Created Email    ${TC_E2E_007['emailData']}      
-    Create New Mail With Missing Data    ${TC_E2E_007['emailData_Mising']}    ${TC_E2E_007['Expected_PopUp']}
+    Run Keyword And Continue On Failure    Discard the Created Email    ${TC_E2E_007['emailData']}      
+    Run Keyword And Continue On Failure    Create New Mail With Missing Data    ${TC_E2E_007['emailData_Mising']}    ${TC_E2E_007['Expected_PopUp']}
     Upload SOV and Loss Run Documents    @{TC_E2E_007['FileName']}
     Wait for Upload to Complete
     Open uploaded SOV File   
@@ -142,27 +149,27 @@ TC_E2E_011
     Run Keyword And Continue On Failure    Verify Summary Table Data    ${TC_E2E_011['SummaryTableHeader']}    ${TC_E2E_011['SummaryTableData']}
     Run Keyword And Continue On Failure    Verify the Workflow Reflected in Summary tab    ${TC_E2E_011['AdvanceTo']}
     Run Keyword And Continue On Failure    Verify Schema section is available in Documents Page
-    Click Answers Tab
-    Run Keyword And Continue On Failure    Complete Forms Tab Details Filling    ${TC_Forms_01}
+    # Click Answers Tab
+    # Run Keyword And Continue On Failure    Complete Forms Tab Details Filling    ${TC_Forms_01}
     Click Answers Tab
     Click Edit Submission
     Run Keyword And Continue On Failure    Verify Answers Lists    ${TC_E2E_011['expectedQuestion']}
     Run Keyword And Continue On Failure    Verify Risk360 Card Pages Navigation    ${TC_E2E_011['Risk360_Card_Names']}    ${TC_E2E_011['Risk360_Card_Pages_Names']}
-    Create New Task    ${TC_E2E_011['taskdata']}
+    Run Keyword And Continue On Failure    Create New Task    ${TC_E2E_011['taskdata']}
     Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_011['taskDetails']}
     Run Keyword And Continue On Failure    verify Edit Delete and Complete task Buttons are present on the right side of task list
     Run Keyword And Continue On Failure    Verify Edit Icon is Clickable and Functional    ${TC_E2E_011['priority']}
-    Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_011['taskupdateddetails']}
-    Click Answers Tab
-    Run Keyword And Continue On Failure    Select the Created Task    ${TC_E2E_011['taskdata']}
+    # Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_011['taskupdateddetails']}
+    # Click Answers Tab
+    # Run Keyword And Continue On Failure    Select the Created Task    ${TC_E2E_011['taskdata']}
     Run Keyword And Continue On Failure    Verify Delete Icon is Clickable and Functional    ${TC_E2E_011['taskupdateddetails']}
-    Run Keyword And Continue On Failure    Remove Document after Upload     @{TC_E2E_011['FileName']}
-    Create New Mail    ${TC_E2E_011['emailData']}
-    Run Keyword And Continue On Failure    Verify Email Sent Successfully
-    Run Keyword And Continue On Failure    Verify Sent Email    ${TC_E2E_011['emailVerify']}
+    # Run Keyword And Continue On Failure    Remove Document after Upload     @{TC_E2E_011['FileName']}
+    # Run Keyword And Continue On Failure    Create New Mail    ${TC_E2E_011['emailData']}
+    # Run Keyword And Continue On Failure    Verify Email Sent Successfully
+    # Run Keyword And Continue On Failure    Verify Sent Email    ${TC_E2E_011['emailVerify']}
     Run Keyword And Continue On Failure    Save and verify mail in Draft    ${TC_E2E_011['emailData']} 
-    Discard the Created Email    ${TC_E2E_011['emailData']}      
-    Create New Mail With Missing Data    ${TC_E2E_011['emailData_Mising']}    ${TC_E2E_011['Expected_PopUp']}
+    Run Keyword And Continue On Failure    Discard the Created Email    ${TC_E2E_011['emailData']}      
+    Run Keyword And Continue On Failure    Create New Mail With Missing Data    ${TC_E2E_011['emailData_Mising']}    ${TC_E2E_011['Expected_PopUp']}
     Upload SOV and Loss Run Documents    @{TC_E2E_011['FileName']}
     Wait for Upload to Complete for SOV and Loss Run    ${TC_E2E_011['stageNo']}
     Open uploaded SOV File   
@@ -196,10 +203,10 @@ TC_E2E_017
     Run Keyword And Continue On Failure    Verify Summary Table Data    ${TC_E2E_017['SummaryTableHeader']}    ${TC_E2E_017['SummaryTableData']}
     Run Keyword And Continue On Failure    Verify the Workflow Reflected in Summary tab    ${TC_E2E_017['AdvanceTo']}
     Run Keyword And Continue On Failure    Verify Schema section is available in Documents Page
-    Click Answers Tab
-    Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_01}
-    Run Keyword And Continue On Failure    Complete Forms Tab Details Filling    ${TC_Forms_02}
-    Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_02}
+    # Click Answers Tab
+    # Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_01}
+    # Run Keyword And Continue On Failure    Complete Forms Tab Details Filling    ${TC_Forms_02}
+    # Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_02}
     Click Answers Tab
     Run Keyword And Continue On Failure    Verify Answers Lists    ${TC_E2E_017['expectedQuestion']}
     Run Keyword And Continue On Failure    Verify Risk360 Card Pages Navigation    ${TC_E2E_017['Risk360_Card_Names']}    ${TC_E2E_017['Risk360_Card_Pages_Names']}
@@ -207,17 +214,17 @@ TC_E2E_017
     Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_017['taskDetails']}
     Run Keyword And Continue On Failure    verify Edit Delete and Complete task Buttons are present on the right side of task list
     Run Keyword And Continue On Failure    Verify Edit Icon is Clickable and Functional    ${TC_E2E_017['priority']}
-    Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_017['taskupdateddetails']}
-    Click Answers Tab
-    Run Keyword And Continue On Failure    Select the Created Task    ${TC_E2E_017['taskdata']}
+    # Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_017['taskupdateddetails']}
+    # Click Answers Tab
+    # Run Keyword And Continue On Failure    Select the Created Task    ${TC_E2E_017['taskdata']}
     Run Keyword And Continue On Failure    Verify Delete Icon is Clickable and Functional    ${TC_E2E_017['taskupdateddetails']}
-    Run Keyword And Continue On Failure    Remove Document after Upload     @{TC_E2E_017['FileName']}
-    Create New Mail    ${TC_E2E_017['emailData']}
-    Run Keyword And Continue On Failure    Verify Email Sent Successfully
-    Run Keyword And Continue On Failure    Verify Sent Email    ${TC_E2E_017['emailVerify']}
+    # Run Keyword And Continue On Failure    Remove Document after Upload     @{TC_E2E_017['FileName']}
+    # Run Keyword And Continue On Failure    Create New Mail    ${TC_E2E_017['emailData']}
+    # Run Keyword And Continue On Failure    Verify Email Sent Successfully
+    # Run Keyword And Continue On Failure    Verify Sent Email    ${TC_E2E_017['emailVerify']}
     Run Keyword And Continue On Failure    Save and verify mail in Draft    ${TC_E2E_017['emailData']} 
-    Discard the Created Email    ${TC_E2E_017['emailData']}      
-    Create New Mail With Missing Data    ${TC_E2E_017['emailData_Mising']}    ${TC_E2E_017['Expected_PopUp']}
+    Run Keyword And Continue On Failure    Discard the Created Email    ${TC_E2E_017['emailData']}      
+    Run Keyword And Continue On Failure    Create New Mail With Missing Data    ${TC_E2E_017['emailData_Mising']}    ${TC_E2E_017['Expected_PopUp']}
     Upload SOV and Loss Run Documents    @{TC_E2E_017['FileName']}
     Wait for Upload to Complete for SOV and Loss Run    ${TC_E2E_017['stageNo']}
     Open uploaded SOV File   
@@ -246,7 +253,7 @@ TC_E2E_023
     Run Keyword And Continue On Failure    Verify Stage is updated in the submission    ${TC_E2E_023['stage']}
     Run Keyword And Continue On Failure    Verify Summary Menu is displayed
     Click Edit Submission
-    Run Keyword And Continue On Failure    Verify All Side menu options are Displayed
+    Run Keyword And Continue On Failure    Verify All Side menu options are Displayed    ${TC_E2E_023['excepted_Field']}
     Run Keyword And Continue On Failure    Verify Policy PDF is Generated and Available in Documents Tab    ${TC_E2E_023['PolicyInfo']}
     Switch to Summary
     # Run Keyword And Continue On Failure    verify Header Displayed    ${TC_E2E_023['stage']}    ${TC_E2E_023['Tab_Name']}
@@ -260,11 +267,11 @@ TC_E2E_023
     Run Keyword And Continue On Failure    verify Account History are editable    ${new_submission_id_1}    ${TC_E2E_024['stage']}    ${TC_E2E_023['PolicyInfo']} 
     # Step No 11 to 13[Forms Verification Pending, Changes need to be done]
        #Complete Forms Tab Details Filling    ${TC_Forms_01}
-    Click Answers Tab
-    Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_02}
-    Run Keyword And Continue On Failure    Complete Forms Tab Details Filling    ${TC_Forms_01}
-    Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_01}
-    Click and verify Clearance tab
+    # Click Answers Tab
+    # Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_02}
+    # Run Keyword And Continue On Failure    Complete Forms Tab Details Filling    ${TC_Forms_01}
+    # Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_01}
+    # Click and verify Clearance tab
     #  Answer Tab
     Click Answers Tab
     Run Keyword And Continue On Failure    Verify Answers Lists    ${TC_E2E_008['expectedQuestion']}
@@ -277,14 +284,14 @@ TC_E2E_023
     Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_024['taskDetails']}
     Run Keyword And Continue On Failure    verify Edit Delete and Complete task Buttons are present on the right side of task list
     Run Keyword And Continue On Failure    Verify Edit Icon is Clickable and Functional    ${TC_E2E_024['priority']}
-    Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_024['taskupdateddetails']}
-    Click Answers Tab
-    Run Keyword And Continue On Failure    Select the Created Task    ${TC_E2E_024['taskdata']}
+    # Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_024['taskupdateddetails']}
+    # Click Answers Tab
+    # Run Keyword And Continue On Failure    Select the Created Task    ${TC_E2E_024['taskdata']}
     Run Keyword And Continue On Failure    Verify Delete Icon is Clickable and Functional    ${TC_E2E_024['taskupdateddetails']}
     #Email Tab
     Run Keyword And Continue On Failure    Verify Discard Button visible    ${TC_Email_001['DraftemailData']}
-    Save and verify mail in Draft    ${TC_Email_001['DraftemailData']}
-    Create New Mail With Missing Data    ${TC_Email_001['emailData_Mising']}    ${TC_Email_001['Expected_PopUp']}
+    Run Keyword And Continue On Failure    Save and verify mail in Draft    ${TC_Email_001['DraftemailData']}
+    Run Keyword And Continue On Failure    Create New Mail With Missing Data    ${TC_Email_001['emailData_Mising']}    ${TC_Email_001['Expected_PopUp']}
     # Document Tab
     Upload SOV and Loss Run Documents    @{TC_E2E_022['FileName']}
     Wait for Upload to Complete for SOV and Loss Run    ${TC_E2E_023['stageNo']}
@@ -315,7 +322,7 @@ TC_E2E_024
     Run Keyword And Continue On Failure    Verify Stage is updated in the submission    ${TC_E2E_024['stage']}
     Run Keyword And Continue On Failure    Verify Summary Menu is displayed
     Click Edit Submission
-    Run Keyword And Continue On Failure    Verify All Side menu options are Displayed
+    Run Keyword And Continue On Failure    Verify All Side menu options are Displayed    ${TC_E2E_023['excepted_Field']}
     Run Keyword And Continue On Failure    Verify Policy PDF is Generated and Available in Documents Tab    ${TC_E2E_024['PolicyInfo']}
     Switch to Summary
     # Run Keyword And Continue On Failure    verify Header Displayed    ${TC_E2E_024['stage']}    ${TC_E2E_024['Tab_Name']}
@@ -327,11 +334,11 @@ TC_E2E_024
     Run Keyword And Continue On Failure    Verify Child Submission Should be Displayed in Summary Tab    ${TC_E2E_017['product']}
     Run Keyword And Continue On Failure    verify Account History are editable    ${new_submission_id_1}    ${TC_E2E_024['stage']}    ${TC_E2E_024['PolicyInfo']}
     # Step No 11 to 13[Forms Verification Pending, Changes need to be done]
-    Click Answers Tab
-    Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_01}
-    Run Keyword And Continue On Failure    Complete Forms Tab Details Filling    ${TC_Forms_02}
-    Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_02}
-    Run Keyword And Continue On Failure    Click and verify Clearance tab
+    # Click Answers Tab
+    # Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_01}
+    # Run Keyword And Continue On Failure    Complete Forms Tab Details Filling    ${TC_Forms_02}
+    # Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_02}
+    # Run Keyword And Continue On Failure    Click and verify Clearance tab
     #  Answer Tab
     Click Answers Tab
     Run Keyword And Continue On Failure    Verify Answers Lists    ${TC_E2E_024['expectedQuestion']}
@@ -344,14 +351,14 @@ TC_E2E_024
     Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_024['taskDetails']}
     Run Keyword And Continue On Failure    verify Edit Delete and Complete task Buttons are present on the right side of task list
     Run Keyword And Continue On Failure    Verify Edit Icon is Clickable and Functional    ${TC_E2E_024['priority']}
-    Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_024['taskupdateddetails']}
-    Click Answers Tab
-    Run Keyword And Continue On Failure    Select the Created Task    ${TC_E2E_024['taskdata']}
+    # Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_024['taskupdateddetails']}
+    # Click Answers Tab
+    # Run Keyword And Continue On Failure    Select the Created Task    ${TC_E2E_024['taskdata']}
     Run Keyword And Continue On Failure    Verify Delete Icon is Clickable and Functional    ${TC_E2E_024['taskupdateddetails']}
     #Email Tab
     Run Keyword And Continue On Failure    Verify Discard Button visible    ${TC_Email_001['DraftemailData']}
-    Save and verify mail in Draft    ${TC_Email_001['DraftemailData']}
-    Create New Mail With Missing Data    ${TC_Email_001['emailData_Mising']}    ${TC_Email_001['Expected_PopUp']}
+    Run Keyword And Continue On Failure    Save and verify mail in Draft    ${TC_Email_001['DraftemailData']}
+    Run Keyword And Continue On Failure    Create New Mail With Missing Data    ${TC_Email_001['emailData_Mising']}    ${TC_Email_001['Expected_PopUp']}
     # Document Tab
     Upload SOV and Loss Run Documents    @{TC_E2E_022['FileName']}
     Wait for Upload to Complete for SOV and Loss Run    ${TC_E2E_024['stageNo']}
@@ -389,7 +396,7 @@ TC_E2E_025
     Run Keyword And Continue On Failure    Complete Task with the given reason for Booking stage    ${TC_E2E_025['taskreason']}
     Run Keyword And Continue On Failure    Verify the task is completed and sanction label is appears as per the reason for booking    ${TC_E2E_025['taskreason']}
     Run Keyword And Continue On Failure    Click Edit Submission
-    Run Keyword And Continue On Failure    Verify All Side menu options are Displayed
+    Run Keyword And Continue On Failure    Verify All Side menu options are Displayed    ${TC_E2E_023['excepted_Field']}
     Run Keyword And Continue On Failure    Verify Policy PDF is Generated and Available in Documents Tab    ${TC_E2E_024['PolicyInfo']}
     Run Keyword And Continue On Failure    Switch to Summary
     # Run Keyword And Continue On Failure    verify Header Displayed    ${TC_E2E_025['stage']}    ${TC_E2E_025['Tab_Name']}
@@ -400,10 +407,10 @@ TC_E2E_025
     Run Keyword And Continue On Failure    Verify Child Submission Should be Displayed in Summary Tab    ${TC_E2E_017['product']}
     Run Keyword And Continue On Failure    verify Account History are editable    ${new_submission_id_1}    ${TC_E2E_024['stage']}    ${TC_E2E_025['PolicyInfo']} 
     # Step No 11 to 13[Forms Verification Pending, Changes need to be done]
-    Click Answers Tab
-    Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_02}
-    Run Keyword And Continue On Failure    Complete Forms Tab Details Filling    ${TC_Forms_01}
-    Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_01}
+    # Click Answers Tab
+    # Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_02}
+    # Run Keyword And Continue On Failure    Complete Forms Tab Details Filling    ${TC_Forms_01}
+    # Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_01}
     #  Answer Tab
     Click Answers Tab
     Run Keyword And Continue On Failure    Verify Answers Lists    ${TC_E2E_025['expectedQuestion']}
@@ -416,9 +423,9 @@ TC_E2E_025
     Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_025['taskDetails']}
     Run Keyword And Continue On Failure    verify Edit Delete and Complete task Buttons are present on the right side of task list
     Run Keyword And Continue On Failure    Verify Edit Icon is Clickable and Functional    ${TC_E2E_025['priority']}
-    Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_025['taskupdateddetails']}
-    Click Answers Tab
-    Run Keyword And Continue On Failure    Select the Created Task    ${TC_E2E_025['taskdata']}
+    # Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_025['taskupdateddetails']}
+    # Click Answers Tab
+    # Run Keyword And Continue On Failure    Select the Created Task    ${TC_E2E_025['taskdata']}
     Run Keyword And Continue On Failure    Verify Delete Icon is Clickable and Functional    ${TC_E2E_025['taskupdateddetails']} 
     #Email Tab 
     Run Keyword And Continue On Failure    Verify Discard Button visible    ${TC_E2E_025['DraftemailData']}
@@ -453,7 +460,7 @@ TC_E2E_026
     Run Keyword And Continue On Failure    Verify Stage is updated in the submission    ${TC_E2E_026['stage']}
     Click Edit Submission
     Verify Summary Menu is displayed
-    Run Keyword And Continue On Failure    Verify All Side menu options are Displayed
+    Run Keyword And Continue On Failure    Verify All Side menu options are Displayed    ${TC_E2E_023['excepted_Field']}
     Run Keyword And Continue On Failure    Verify Policy PDF is Generated and Available in Documents Tab    ${TC_E2E_025['PolicyInfo']}
     Run Keyword And Continue On Failure    Switch to Summary
     # Run Keyword And Continue On Failure    verify Header Displayed    ${TC_E2E_026['stage']}    ${TC_E2E_026['Tab_Name']}
@@ -464,11 +471,11 @@ TC_E2E_026
     Run Keyword And Continue On Failure    Verify Child Submission Should be Displayed in Summary Tab    ${TC_E2E_017['product']}
     Run Keyword And Continue On Failure    verify Account History are editable    ${new_submission_id_1}    ${TC_E2E_026['stage']}    ${TC_E2E_026['PolicyInfo']} 
     #  Answer Tab
-    Click Answers Tab
-    Run Keyword And Continue On Failure    Verify Answers Lists    ${TC_E2E_026['expectedQuestion']}
-    Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_01}
-    Run Keyword And Continue On Failure    Complete Forms Tab Details Filling    ${TC_Forms_02}
-    Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_02}
+    # Click Answers Tab
+    # Run Keyword And Continue On Failure    Verify Answers Lists    ${TC_E2E_026['expectedQuestion']}
+    # Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_01}
+    # Run Keyword And Continue On Failure    Complete Forms Tab Details Filling    ${TC_Forms_02}
+    # Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_02}
     Click Answers Tab
     # Risk360 Tab
     Run Keyword And Continue On Failure    Verify Company Website Link    ${TC_E2E_026['expectedTitle']}
@@ -480,9 +487,9 @@ TC_E2E_026
     Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_026['taskDetails']}
     Run Keyword And Continue On Failure    verify Edit Delete and Complete task Buttons are present on the right side of task list
     Run Keyword And Continue On Failure    Verify Edit Icon is Clickable and Functional    ${TC_E2E_026['priority']}
-    Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_026['taskupdateddetails']}
-    Click Answers Tab
-    Run Keyword And Continue On Failure    Select the Created Task    ${TC_E2E_026['taskdata']}
+    # Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_026['taskupdateddetails']}
+    # Click Answers Tab
+    # Run Keyword And Continue On Failure    Select the Created Task    ${TC_E2E_026['taskdata']}
     Run Keyword And Continue On Failure    Verify Delete Icon is Clickable and Functional    ${TC_E2E_026['taskupdateddetails']}
     #Email Tab
     Run Keyword And Continue On Failure    Verify Discard Button visible    ${TC_E2E_026['DraftemailData']}

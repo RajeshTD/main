@@ -18,29 +18,36 @@ Verify All Side menu options are Displayed
        Log To Console    The Field is : ${summary_list} 
    END
    Run Keyword And Continue On Failure    Lists Should Be Equal    ${summary_list}    ${expected_Value}
-Verify Header Displayed 
-     [Documentation]    verify that All Header Are Displayed 
+verify Header Displayed
+     [Documentation]    verify that All Header Are Displayed
     ...
     ...    *Arguments:*
+    ...       The Excepted page ${expected_Home}
+    ...       The Expected companyname    ${Expected_Company_name}
     ...       The Expected Stage ${expected_Stage}
     ...       The Expected Tab  ${Expected_Tab}
-    [Arguments]   ${expected_Stage}    ${Expected_Tab}
+    [Arguments]   ${expected_Home}    ${Expected_Company_name}    ${expected_Stage}    ${Expected_Tab}
+    ${acutual_Header_List}    Create List
+    ${expected_Header_List}    Create List
    ${headers}    Get Elements    ${Headers_Loc}
    ${lenth}    Get Length   ${Headers_Loc}
    Log To Console    the lenth is : ${lenth}
-   FOR    ${counter}    IN    @{headers} 
+   FOR    ${counter}    IN    @{headers}
        ${headerName}=    Get Text    ${counter}
-       Append To List    ${TC_Summary_001['acutual_Header_List']}     ${headerName}
-       Log    The field is : ${TC_Summary_001['acutual_Header_List']}
-       Log To Console    The Field is : ${TC_Summary_001['acutual_Header_List']}
+       Append To List    ${acutual_Header_List}     ${headerName}
+       Log    The field is : ${acutual_Header_List}
+       Log To Console    The Field is : ${acutual_Header_List}
+       
    END
-    ${Header_Text}    Get Text    ${Loc_Header_Status}
-    ${Header_Text1}    Get Text    ${page_header_Loc}
-    Append To List    ${TC_Summary_001['acutual_Header_List']}    ${Header_Text}   
-    Append To List    ${TC_Summary_001['acutual_Header_List']}    ${Header_Text1}     
-    Append To List    ${TC_Summary_001['excepted_Headers']}    ${expected_Stage}   
-    Append To List    ${TC_Summary_001['excepted_Headers']}    ${Expected_Tab}     
-    Lists Should Be Equal    ${TC_Summary_001['excepted_Headers']}    ${TC_Summary_001['acutual_Header_List']}       
+       ${Header_Text}    Get Text    ${Loc_Header_Status}
+        ${Header_Text1}    Get Text    ${page_header_Loc}
+    Append To List    ${acutual_Header_List}    ${Header_Text}  
+    Append To List    ${acutual_Header_List}    ${Header_Text1}    
+    Append To List    ${expected_Header_List}   ${expected_Home}
+    Append To List    ${expected_Header_List}   ${Expected_Company_name}  
+    Append To List    ${expected_Header_List}   ${expected_Stage}  
+    Append To List    ${expected_Header_List}    ${Expected_Tab}    
+    Lists Should Be Equal    ${expected_Header_List}    ${acutual_Header_List}         
 
 Switch to Summary
     [Documentation]  Switch to Summary        
@@ -76,7 +83,7 @@ Enter the Policy Information
  
     Click    ${permium_Btn_Loc}
     Wait For Elements State    ${premium_field_loc}    visible    5s
-    Fill Text    ${premium_field_loc}    ${policy_Info['premiumAmount']}
+    Fill Text    ${premium_field_loc}    ${policy_Info['premium']}
     Wait For Elements State    ${premium_field_loc}    visible    5s
     Click    ${Attachement_point_btn_loc}
     Wait For Elements State    ${Attachement_point_field_loc}    visible    5s
@@ -88,7 +95,7 @@ Enter the Policy Information
     ${element}    Catenate    SEPARATOR=    ${loc1_Select_Type}    ${policy_Info['ClassOfBusiness']}    ']    
     click    ${element} 
     click    ${Loc_Placement_Button}
-    ${place_element}    Catenate    SEPARATOR=    ${loc1_Select_Type}    ${policy_Info['Placement Type']}    ']    
+    ${place_element}    Catenate    SEPARATOR=    ${loc1_Select_Type}    ${policy_Info['PlacementType']}    ']    
     click    ${place_element}
 
 # Verify Policy Information Details from Summary Tab
@@ -198,7 +205,7 @@ Verify Policy PDF is Generated and Available in Documents Tab
     Click    ${last_Element}
     # ${Length}    Get Length    ${TC_Summary_001['Doc_Loc']}
     FOR    ${element}    IN    @{TC_Summary_001['Doc_Loc']}
-     ${ele_Loc}    Catenate    SEPARATOR=    ${policy_locators1}    ${element}    ${policy_locators2}
+     ${ele_Loc}    Catenate    SEPARATOR=    ${policy_locators_doc1}    ${element}    ${policy_locators_doc2}
      Sleep    1s
      Click     ${poloicy_Data_modification_page}
     Press Keys    xpath=//*[@class='ace_content']        Control+f
@@ -335,3 +342,35 @@ Verify AttachmentPoint Must Accept Numeric Values
     Fill Text    ${Attachement_point_field_loc}    12345
     ${NumericValue}    Get Text    ${Attachement_point_field_loc}
     Should Be Equal    ${NumericValue}    12345
+
+Verify Schema for policy information and Available in Documents Tab
+    [Documentation]    Verifies that the Policy PDF is generated and listed in the Documents tab.
+    ...    ${expectedText1}     we need to pass the policy Information use in Summary Tab in Previous Stage  
+    [Arguments]     ${expected_headers}    ${expectedText1}
+    ${Expected_Policy_text}    Create List
+    Append To List    ${Expected_Policy_text}    ${expectedText1['premium']}
+    Append To List    ${Expected_Policy_text}    ${expectedText1['AttachmentPoint']}  
+    Append To List    ${Expected_Policy_text}    ${expectedText1['PolicyNumber']}  
+    Append To List    ${Expected_Policy_text}    ${expectedText1['ClassOfBusiness']}  
+    Append To List    ${Expected_Policy_text}    ${expectedText1['PlacementType']}  
+    @{actual_Policy_text}    Create List
+    Switch To Documents
+    Click    ${SchemaSection}
+    FOR    ${element}    IN    @{expected_headers}
+     ${ele_Loc}    Catenate    SEPARATOR=    ${policy_locators1}    ${element}    ${policy_locators2}
+     ${ele_Loc}    Catenate    SEPARATOR=    ${ele_Loc}    ${policy_locators3}
+     ${ele_Loc}    Catenate    SEPARATOR=    ${ele_Loc}    ${element}    ${policy_locators4}
+     Sleep    1s
+     Click     ${poloicy_Data_modification_page}
+    Press Keys    xpath=//*[@class='ace_content']        Control+f
+    Type Text    ${Search_Bar_CtrlF}    ${element}
+        ${result}    Get Text    ${ele_Loc}
+         IF    '"' in '''${result}'''  
+         ${cleaned}=    Evaluate    ${result}.replace('"', '')    modules=builtins
+            Append To List    ${actual_Policy_text}    ${cleaned}
+        ELSE
+             Append To List    ${actual_Policy_text}    ${result}
+        END    
+    END
+    Log    ${actual_Policy_text}
+    Lists Should Be Equal    ${actual_Policy_text}    ${Expected_Policy_text}    
