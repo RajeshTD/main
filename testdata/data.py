@@ -15,6 +15,19 @@ NewUser = {
     "data_task_id": "c28412ff-a336-433d-8403-cc288df29f78",
     "new_task_name": "",
 }
+Dowload_path={
+    "DOWNLOAD_DIR": "${EXECDIR}${/}downloads"
+}
+ColourCode={
+      "ColourName": {
+    "rgb(0,128,0)": "green",
+    "rgb(255,0,0)": "red",
+    "rgb(0,0,255)": "blue",
+    "rgb(79, 70, 229)": "indigo",
+    "rgb(63, 63, 70)": "grayish-blue",
+  },
+ 
+}
 
 ReferralUser = {
     "search_user":"MSIG TEST1",
@@ -125,7 +138,7 @@ TC_E2E_001 = {
      "Expected_PopUp":['At least one recipient is required','Message body is required'],
      "taskdata":{
         "TaskNameDropdown":"Custom",
-        "customName": "prabhakaran.sundaram",
+        "customName": "Test Automation",
         "taskName":"Test Automation",
         "taskDetails":"Test",
         "taskReason":"Complete",
@@ -156,7 +169,7 @@ TC_E2E_001 = {
     },
     "policy_info_list":['1000','TRS3423','3123232','Contractor','Excess'],
     "policy_headers":["policy_premium","attachment_point","policy_number","business_type","policy_placement_type"],    
-                
+     "ExceptedReprocessPopup":"Reprocessing submission"           
 }
 
 TC_E2E_002 = {
@@ -2432,7 +2445,7 @@ TC_E2E_023={
     "PlacementType":"Excess",
     "MailedDate":"Edit",  
     "expectedWorkFlowHistory":['Bind', 'MSIG TEST', 'Task Created', 'Task Test Automation was Created', 'Bind', 'System', 'Task Created', 'Task Test Automation was Created','Cleared', 'MSIG TEST', 'Stage Update', 'Stage updated from In Draft to Cleared'],
-    "excepted_Field" :["Summary","Answers","Risk360","Documents","Clearance","Tasks","Email","Forms"],
+    
 },
 "expectedWorkFlowHistory":[
 'Bind','MSIG TEST','Task Deleted','Task Test Automation was Deleted',
@@ -2460,6 +2473,7 @@ TC_E2E_023={
         'In Draft','MSIG TEST','Task Created','Task Test Automation was Created',
         'In Draft','System','Task Edited','Test Automation: Status updated from Created to Pending.'
 ],
+"excepted_Field" :["Summary","Answers","Risk360","Documents","Clearance","Tasks","Email","Forms"],
 }
 TC_E2E_024={
     "stage":"Bound",
@@ -5064,4 +5078,12 @@ TC_E2E_059 = {
     "CardName":["Total Claims", "Frequency (claims / year)","Average Severity","Total Incurred"],
     "expectedAnalysisData":["3", "1.5","$1,123,228","$3,369,685"],
     "expectedTableData":["2021","$3,298,876","$0","$0","$3,655","1","2022","$70,809","$0","$0","$18,563","2"],
+}
+
+TC_E2E_060 = {
+    "stage": "Bind",
+    "productName":"General Liability",
+    "stageNo":"5",
+    "SummaryHeader":"GREAT WESTERN LUMBER",
+    "SummaryTableData1":['-\nCurrent','-\nCurrent','Rejected','10/01/2017','10/01/2018','-','-','HYLANT GROUP, INC.'],
 }

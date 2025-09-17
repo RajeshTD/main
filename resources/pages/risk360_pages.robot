@@ -27,3 +27,24 @@ Verify Risk360 Card Pages Navigation
         Click    ${Risk360_Cards_Pages_Close_Button}
     END    
 
+Verify NAICS is ReUpdated in Risk360 Tab
+ 
+    [Documentation]    This method verifies that after deleting and reprocessing, the NAICS returns to the same state
+    [Arguments]    ${Value}
+    Wait For Elements State    ${NAIC_Delete}    visible
+    Click    ${NAIC_Delete}
+ 
+    Wait For Elements State    ${NAIC_Reprocess}    visible
+    Click    ${NAIC_Reprocess}
+ 
+    ${Actual_popup}    Get text    ${Reprocess_Popup}
+    Should Be Equal    ${Value['ExceptedReprocessPopup']}    ${Actual_popup}
+    Sleep    180s
+    
+
+Switch to Risk360 tab
+ 
+    Wait For Elements State    ${Side_Bar_Risk360_Button}    visible
+    Click    ${Side_Bar_Risk360_Button}
+     
+

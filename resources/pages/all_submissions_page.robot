@@ -1667,3 +1667,19 @@ Verify Product field dropdown values in coverage tab
         Append To List    ${Actual_Product_Text}    ${Product_Text}     
     END
     Lists Should Be Equal    ${Expected_Product_Field}    ${Actual_Product_Text}
+
+
+Get Colour Name
+    [Arguments]    ${rgb_value}
+   
+    # ${colour_name}=    Set Variable    ${ColourCode['ColourName']['${rgb_value}']}
+    # [Return]    ${colour_name}
+
+     
+    # ${colour_name}    Catenate    SEPARATOR=    ${    ColourCode['ColourName']    ['    ${rgb_value}    ']}
+    
+    ${colour_map}=    Get From Dictionary    ${ColourCode}    ColourName
+    ${colour_name}=   Get From Dictionary    ${colour_map}    ${rgb_value}
+    [Return]    ${colour_name}
+
+

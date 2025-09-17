@@ -386,3 +386,30 @@ Verify the task is completed and sanction label is appears as per the reason for
    
     ${actual_reason}    Get Text    ${Task_completed}
     Should Be Equal    ${actual_reason}    ${reason}
+
+Complete Task without the reason 
+    [Documentation]    Completes the task without the reason 
+    ...
+    Wait For Elements State    ${CompleteTaskButton}    visible
+    Click    ${CompleteTaskButton}
+    Wait For Elements State    ${TaskCompleteDialog}    visible       
+    Click    ${CompleteTaskButtonInDialog}
+    Wait For Elements State    ${TaskCompleteDialog}    detached   
+
+
+upload file on created task
+    [Documentation]    this method is used to uploads document in the Attachment tab 
+    [Arguments]    ${file_name}    ${taskdata}        
+    ${AbsolutePath}=    Normalize Path    ${path}${file_name}
+    # Select the Created Task    ${taskdata['taskName']}
+    Scroll To    ${Task_Attachement_loc}
+    Click    ${Task_Attachement_loc}
+    Upload File By Selector    ${UploadFile}   ${AbsolutePath}
+    Sleep    2s
+    Run Keyword And Continue On Failure    Get Element States    ${Task_Attachement_upload_file_Name}    validate    value & visible
+    ${Actual_file_name}    Get Text    ${Task_Attachement_upload_file_Name}
+    Run Keyword And Continue On Failure    Should Be Equal    ${file_name}    ${Actual_file_name}
+    click    ${Task_Attachement_delete_file}
+    Run Keyword And Continue On Failure    Get Element Count    ${Task_Attachement_upload_file_Name}    ==    0
+
+            
