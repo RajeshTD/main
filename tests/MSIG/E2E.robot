@@ -12,64 +12,79 @@ TC_E2E_001
     # Create User If the User is not present    ${ReferralUser}
     # Select Impersonate option from the actions    ${NewUser['email']}    ${NewUser['search_user']}
     Run Keyword And Continue On Failure    Verify My Assignments Tab is displayed as a default tab
-    ${submission_id}    Create New Submission    ${TC_E2E_001['FileName']}    @{TC_E2E_001['SubmissionColumnNames']}
-    Set Suite Variable   ${submission_id_1}    ${submission_id}
+    # ${submission_id}    Create New Submission    ${TC_E2E_001['FileName']}    @{TC_E2E_001['SubmissionColumnNames']}
+    Set Suite Variable   ${submission_id_1}    2bf1636d-5e0d-49f1-81a6-00a86a269028
     Select Submission using submission id    ${submission_id_1}    @{TC_E2E_001['SubmissionColumnNames']}
     Run Keyword And Continue On Failure    Verify Submission page is displayed
     Run Keyword And Continue On Failure    Verify All Side menu options are Displayed    ${TC_E2E_023['excepted_Field']}
-    Switch To Summary Tab    ${TC_E2E_001['SummaryHeader']}
-    
-    Run Keyword And Continue On Failure    Verify Summary Table Data    ${TC_E2E_001['SummaryTableHeader']}    ${TC_E2E_001['SummaryTableData']}
-    Run Keyword And Continue On Failure    Verify Policy Information Fields In Summary Tab     ${TC_E2E_001['PolicyFields']}   
-    Run Keyword And Continue On Failure    Verify the Workflow Reflected in Summary tab    ${TC_E2E_001['AdvanceTo']}
-    Click Edit Submission
+    # Switch To Summary Tab    ${TC_E2E_001['SummaryHeader']}
+    # Run Keyword And Continue On Failure    verify Account History are editable    ${TC_E2E_011['PolicyInfo']}
+    Switch to Risk360 tab
+    Run Keyword And Continue On Failure    Verify NAICS is ReUpdated in Risk360 Tab    ${TC_E2E_001}
+    Click Answers Tab
+    # Run Keyword And Continue On Failure    Verify Answers Lists    ${TC_E2E_007['expectedQuestion']}
+    Switch to Summary
+    Enter the Policy Information    ${TC_E2E_011['PolicyInfo']}
    
-    Run Keyword And Continue On Failure    verify Header Displayed    Home    WIN-CON ENTERPRISES, INC    In Draft    Summary
+    # Run Keyword And Continue On Failure    Verify Summary Table Data    ${TC_E2E_001['SummaryTableHeader']}    ${TC_E2E_001['SummaryTableData']}
+    # Run Keyword And Continue On Failure    Verify Policy Information Fields In Summary Tab     ${TC_E2E_001['PolicyFields']}   
+    # Run Keyword And Continue On Failure    Verify the Workflow Reflected in Summary tab    ${TC_E2E_001['AdvanceTo']}
+    # Click Edit Submission
+   
+    # Run Keyword And Continue On Failure    verify Header Displayed    Home    WIN-CON ENTERPRISES, INC    In Draft    Summary
     
     # Run Keyword And Continue On Failure    Enter the Policy Information    ${TC_E2E_011['PolicyInfo']}
-    Click Answers Tab
-    Run Keyword And Continue On Failure    Click and verify Clearance tab
+
+    # Click Answers Tab
+    # Run Keyword And Continue On Failure    Click and verify Clearance tab
     # Run Keyword And Continue On Failure     Verify the Error popup when mandate fields left empty    ${TC_E2E_001}
-    Click Insured Tab
-    Run Keyword And Continue On Failure    Verify PDF Data in Insured Tab    @{TC_E2E_001['expectedPDFText']}
-    Fill the data for issue fields    ${TC_E2E_001['SicCode']}    ${TC_E2E_001['SicDescription']}    ${TC_E2E_001['NAICSCode']}
-    Run Keyword And Continue On Failure    Verify User Mod is message for updated fields
-    Click Processing Tab                    
-    Fill the data for issue fields in processing    ${TC_E2E_001['UnderwriterName']}    ${TC_E2E_001['UnderwriterEmail']}    ${TC_E2E_001['OperationsName']}        ${TC_E2E_001['OperationsEmail']}    ${TC_E2E_001['UnderwrittingOffice']}    ${TC_E2E_001['Channel']}
-    Click Producer Tab
-    Run Keyword And Continue On Failure    Verify PDF Data in Producer Tab    @{TC_E2E_001['expectedTextInProducer']}
-    Fill the data for issues field in Producer    ${TC_E2E_001['ProducerName']}      ${TC_E2E_001['ProducerEmail']} 
-    Click Coverage Tab
-    Run Keyword And Continue On Failure    Verify the Coverage data    ${TC_E2E_001['EffectiveDate']}     ${TC_E2E_001['ExpirationDate']}     ${TC_E2E_001['Product']}
-    Fill the data for issues field in Coverage    ${TC_E2E_001['Covered']}    
-    Click Issues Tab
-    @{expectedIssues}    Create List    ${TC_E2E_001['SicCode']}    ${TC_E2E_001['SicDescription']}    ${TC_E2E_001['NAICSCode']}    ${TC_E2E_001['UnderwriterName']}    ${TC_E2E_001['UnderwriterEmail']}    ${TC_E2E_001['UnderwrittingOffice']}     ${TC_E2E_001['OperationsName']}    ${TC_E2E_001['OperationsEmail']}    ${TC_E2E_001['Channel']}    ${TC_E2E_001['ProducerName']}
-    Run Keyword And Continue On Failure    Verify updated datas in Issues Tab    @{expectedIssues}
-    Click Finish Tab
-    Run Keyword And Continue On Failure    Verify and click the save and close button
-    Switch to Documents
+    # Click Insured Tab
+    # Run Keyword And Continue On Failure    Verify PDF Data in Insured Tab    @{TC_E2E_001['expectedPDFText']}
+    # Fill the data for issue fields    ${TC_E2E_001['SicCode']}    ${TC_E2E_001['SicDescription']}    ${TC_E2E_001['NAICSCode']}
+    # Run Keyword And Continue On Failure    Verify User Mod is message for updated fields
+    # Click Processing Tab                    
+    # Fill the data for issue fields in processing    ${TC_E2E_001['UnderwriterName']}    ${TC_E2E_001['UnderwriterEmail']}    ${TC_E2E_001['OperationsName']}        ${TC_E2E_001['OperationsEmail']}    ${TC_E2E_001['UnderwrittingOffice']}    ${TC_E2E_001['Channel']}
+    # Click Producer Tab
+    # Run Keyword And Continue On Failure    Verify PDF Data in Producer Tab    @{TC_E2E_001['expectedTextInProducer']}
+    # Fill the data for issues field in Producer    ${TC_E2E_001['ProducerName']}      ${TC_E2E_001['ProducerEmail']} 
+    # Click Coverage Tab
+    # Run Keyword And Continue On Failure    Verify the Coverage data    ${TC_E2E_001['EffectiveDate']}     ${TC_E2E_001['ExpirationDate']}     ${TC_E2E_001['Product']}
+    # Fill the data for issues field in Coverage    ${TC_E2E_001['Covered']}    
+    # Click Issues Tab
+    # @{expectedIssues}    Create List    ${TC_E2E_001['SicCode']}    ${TC_E2E_001['SicDescription']}    ${TC_E2E_001['NAICSCode']}    ${TC_E2E_001['UnderwriterName']}    ${TC_E2E_001['UnderwriterEmail']}    ${TC_E2E_001['UnderwrittingOffice']}     ${TC_E2E_001['OperationsName']}    ${TC_E2E_001['OperationsEmail']}    ${TC_E2E_001['Channel']}    ${TC_E2E_001['ProducerName']}
+    # Run Keyword And Continue On Failure    Verify updated datas in Issues Tab    @{expectedIssues}
+    # Click Finish Tab
+    # Run Keyword And Continue On Failure    Verify and click the save and close button
+    # Switch to Documents
     @{expectedModification}    Create List    "${TC_E2E_001['SicCode']}"    "${TC_E2E_001['SicDescription']}"    "${TC_E2E_001['NAICSCode']}"    "${TC_E2E_001['UnderwriterName']}"    "${TC_E2E_001['UnderwriterEmail']}"    "${TC_E2E_001['UnderwrittingOffice']}"     "${TC_E2E_001['OperationsName']}"    "${TC_E2E_001['OperationsEmail']}"    "${TC_E2E_001['Channel']}"    "${TC_E2E_001['ProducerName']}"    "${TC_E2E_001['ProducerEmail']}"    "${TC_E2E_001['Covered']['Product']}"    "${TC_E2E_001['Covered']['ProductSegment']}"    
     Run Keyword And Continue On Failure    Verify datas in UserModification file    @{expectedModification}
-    Run Keyword And Continue On Failure    Verify Schema by downloading the json file    ${TC_E2E_001['queryList']}    @{expectedModification}
-    # Verify Schema for policy information and Available in Documents Tab    ${TC_E2E_001['policy_headers']}    ${TC_E2E_001['PolicyInfo']}
-    Create New Task    ${TC_E2E_001['taskdata']}
-    Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_001['taskDetails']}
-    Run Keyword And Continue On Failure    verify Edit Delete and Complete task Buttons are present on the right side of task list
-    Run Keyword And Continue On Failure    Verify Edit Icon is Clickable and Functional    ${TC_E2E_001['priority']}
-    # Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_001['taskupdateddetails']}
-    # Click Answers Tab
-    # Run Keyword And Continue On Failure    Select the Created Task    ${TC_E2E_001['taskdata']}
-    Run Keyword And Continue On Failure    Verify Delete Icon is Clickable and Functional    ${TC_E2E_001['taskupdateddetails']}
-    # Create New Mail    ${TC_E2E_001['emailData']}
-    # Run Keyword And Continue On Failure    Verify Email Sent Successfully
-    # Run Keyword And Continue On Failure    Verify Sent Email    ${TC_E2E_001['emailVerify']}
-    Run Keyword And Continue On Failure    Save and verify mail in Draft    ${TC_E2E_001['emailData']} 
-    Run Keyword And Continue On Failure    Discard the Created Email    ${TC_E2E_001['emailData']}      
-    Run Keyword And Continue On Failure    Create New Mail With Missing Data    ${TC_E2E_001['emailData_Mising']}    ${TC_E2E_001['Expected_PopUp']}  
-    Run Keyword And Continue On Failure    Verify WorkFlow History    ${TC_E2E_001['expectedWorkFlowHistory']}
-    Run Keyword And Continue On Failure    Save Submission And verify popup
-    Run Keyword And Continue On Failure    Verify Submission updated
-    Run Keyword And Continue On Failure    Verify WorkFlow Options Advance Stage and Reject
+    # Run Keyword And Continue On Failure    Verify Schema by downloading the json file    ${TC_E2E_001['queryList']}    @{expectedModification}
+    #    (need to add ) Verify Schema for policy information and Available in Documents Tab    ${TC_E2E_001['policy_headers']}    ${TC_E2E_001['PolicyInfo']}
+    # Click    ${TasksMenu}
+    # Create New Task    ${TC_E2E_001['taskdata']}
+    # upload file on created task    ${TC_E2E_001['FileName']}    ${TC_E2E_001['taskdata']}
+    # Complete Task without the reason
+    
+    # verify the colour of the processed and archived
+       
+    # Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_001['taskDetails']}
+    
+    # Run Keyword And Continue On Failure    verify Edit Delete and Complete task Buttons are present on the right side of task list
+    # Run Keyword And Continue On Failure    Verify Edit Icon is Clickable and Functional    ${TC_E2E_001['priority']}
+    # # Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_001['taskupdateddetails']}
+    # # Click Answers Tab
+    # # Run Keyword And Continue On Failure    Select the Created Task    ${TC_E2E_001['taskdata']}
+    # Run Keyword And Continue On Failure    Verify Delete Icon is Clickable and Functional    ${TC_E2E_001['taskupdateddetails']}
+    # # Create New Mail    ${TC_E2E_001['emailData']}
+    # # Run Keyword And Continue On Failure    Verify Email Sent Successfully
+    # # Run Keyword And Continue On Failure    Verify Sent Email    ${TC_E2E_001['emailVerify']}
+    # Run Keyword And Continue On Failure    Save and verify mail in Draft    ${TC_E2E_001['emailData']} 
+    # Run Keyword And Continue On Failure    Discard the Created Email    ${TC_E2E_001['emailData']}      
+    # Run Keyword And Continue On Failure    Create New Mail With Missing Data    ${TC_E2E_001['emailData_Mising']}    ${TC_E2E_001['Expected_PopUp']}  
+    # Run Keyword And Continue On Failure    Verify WorkFlow History    ${TC_E2E_001['expectedWorkFlowHistory']}
+    # Run Keyword And Continue On Failure    Save Submission And verify popup
+    # Run Keyword And Continue On Failure    Verify Submission updated
+    # Run Keyword And Continue On Failure    Verify WorkFlow Options Advance Stage and Reject
 
 TC_E2E_007
     [Tags]    E2E-WithoutSov    
@@ -335,10 +350,10 @@ TC_E2E_024
     Run Keyword And Continue On Failure    verify Account History are editable    ${new_submission_id_1}    ${TC_E2E_024['stage']}    ${TC_E2E_024['PolicyInfo']}
     # Step No 11 to 13[Forms Verification Pending, Changes need to be done]
     # Click Answers Tab
-    # Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_01}
-    # Run Keyword And Continue On Failure    Complete Forms Tab Details Filling    ${TC_Forms_02}
-    # Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_02}
-    # Run Keyword And Continue On Failure    Click and verify Clearance tab
+    Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_01}
+    Run Keyword And Continue On Failure    Complete Forms Tab Details Filling    ${TC_Forms_02}
+    Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_02}
+    Run Keyword And Continue On Failure    Click and verify Clearance tab
     #  Answer Tab
     Click Answers Tab
     Run Keyword And Continue On Failure    Verify Answers Lists    ${TC_E2E_024['expectedQuestion']}
@@ -1921,6 +1936,30 @@ TC_E2E_059
     Run Keyword And Continue On Failure    Verify Submission updated in the Current Stage    ${TC_E2E_059['stageNo']}
     Run Keyword And Continue On Failure    Verify Advance Stage is InActive
    
+
+TC_BUG_FIX_202
+
+    [Documentation]    The bug fix 202 keywords 
+     # Create User If the User is not present    ${NewUser}
+    # Create User If the User is not present    ${ReferralUser}
+    # Select Impersonate option from the actions    ${NewUser['email']}    ${NewUser['search_user']}
+    Run Keyword And Continue On Failure    Verify My Assignments Tab is displayed as a default tab
+    # ${submission_id}    Create New Submission    ${TC_E2E_001['FileName']}    @{TC_E2E_001['SubmissionColumnNames']}
+    Set Suite Variable   ${submission_id_1}    16d56555-5e24-4827-a36e-c9f42a4cf446
+    Select Submission using submission id    ${submission_id_1}    @{TC_E2E_001['SubmissionColumnNames']}
+    Run Keyword And Continue On Failure    Verify Submission page is displayed
+    Run Keyword And Continue On Failure    Verify All Side menu options are Displayed    ${TC_E2E_023['excepted_Field']}
+    # Switch To Summary Tab    ${TC_E2E_001['SummaryHeader']}
+    # Run Keyword And Continue On Failure    verify Account History are editable    ${TC_E2E_011['PolicyInfo']}
+    
+    Click Answers Tab
+    # Switch to Summary
+    # verify the Msg file dowload in msg format    Great_Western_Lumber_effective    .msg
+    Reject Submission via summary tab    ${TC_E2E_002['FailureReasons']}    ${TC_E2E_002['FailureDetails']}    ${TC_E2E_002['Action']}
+    Verify Summary Table Data    ${TC_E2E_056['SummaryTableHeader']}    ${TC_E2E_060['SummaryTableData1']}
+    Reactive the Submission via summary tab    ${TC_E2E_002['FailureDetails']}    ${TC_E2E_002['Action']}
+    
+    
 
 *** Keywords ***
 Run Pre-requiste Steps for Stage 1

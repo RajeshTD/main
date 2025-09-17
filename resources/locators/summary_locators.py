@@ -47,3 +47,16 @@ Convr_Home_Btn="//div[@data-slot='sidebar-header']"
 Workflow_Lists="//submission-sidebar-workflow//li"
 Summary_Workflow_Lists="//div[@data-slot='dropdown-menu-content']//div[@role='menuitem']"
 
+
+# 
+Excepted_parent_product_type="xpath=(//tbody/tr//a[text()='General Liability'])[1]"
+
+# new 
+Summary_Reject_option="xpath=//div[@data-slot='dropdown-menu-content']//div[text()='Reject']"
+Summary_ReasonForReject1="xpath=//label[text()='"
+Summary_Sumbit="xpath=//button[text()='Submit']"
+Summary_detials="xpath=//textarea[@data-slot='form-control']"
+Summary_reactive="xpath=//div[text()='Reactivate']"
+Summary_accept="xpath=//button[text()='Accept']"
+summary_cancel="xpath=//button[text()='Cancel']"
+Summary_reactive_error_msg="xpath=//p[text()='Please provide a reason for reactivation']"

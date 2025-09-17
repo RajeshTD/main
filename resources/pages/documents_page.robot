@@ -6,6 +6,7 @@ Variables     ../locators/documents_locators.py
 ${path}             ${CURDIR}/../../uploads/
 ${DownloadPath}     ${CURDIR}/../../downloads/
 ${testDataPath}     ${CURDIR}/../../testdata/
+${ActualMsgFileName}    ActualMsg.msg
 ${ActualClaimsFileName}     ActualClaims.xlsx
 ${ExpectedClaimsFileName}     ExpectedClaims.xlsx
 ${ActualPoliciesFileName}     ActualPolicies.csv
@@ -337,6 +338,52 @@ verify the Email Body Document
 #     ${expected_normalized}=    Evaluate    re.sub(r"\s+", " ", """${expected_body_Msg}""").strip()    re
 #     ${actual_normalized}=    Replace String    ${actual_normalized}    \n    ${EMPTY}
 #     Run Keyword And Continue On Failure    Should Contain    ${expected_normalized}    ${actual_normalized}
+
+
+verify the colour of the processed and archived
+    [Documentation]    This method is used to verify the colour of the processed and archived in document tab
+
+    Switch to Documents
+    ${Colour}=    Get Style    ${Doc_Processed_loc}    color
+    ${Colour_name}    Get Colour Name    ${Colour}    
+    Run Keyword And Continue On Failure    Should Be Equal    ${Colour_name}    indigo
+    ${Colour}=    Get Style    ${Doc_Archived_loc}    color
+    Log    ${Colour}
+    ${Colour_name}    Get Colour Name    ${Colour}    
+    Run Keyword And Continue On Failure    Should Be Equal    ${Colour_name}    grayish-blue
+     ${Colour}=    Get Style    ${Doc_External_links_loc}    color
+    Log    ${Colour}
+    ${Colour_name}    Get Colour Name    ${Colour}    
+    Run Keyword And Continue On Failure    Should Be Equal    ${Colour_name}    grayish-blue
+    Click    ${Doc_Archived_loc} 
+    Click    ${Search_file_loc} 
+    ${Colour}=    Get Style    ${Doc_Archived_loc}    color
+    ${Colour_name}    Get Colour Name    ${Colour}    
+    Run Keyword And Continue On Failure    Should Be Equal    ${Colour_name}    indigo
+    ${Colour}=    Get Style    ${Doc_Processed_loc}    color
+    ${Colour_name}    Get Colour Name    ${Colour}    
+    Run Keyword And Continue On Failure    Should Be Equal    ${Colour_name}    grayish-blue 
+     ${Colour}=    Get Style    ${Doc_External_links_loc}    color
+    Log    ${Colour}
+    ${Colour_name}    Get Colour Name    ${Colour}    
+    Run Keyword And Continue On Failure    Should Be Equal    ${Colour_name}    grayish-blue
+
+verify the Msg file dowload in msg format 
+    [Documentation]     This method is used to verify the msg file dowloded in the .msg format   
+    ...    ${filename}    we need to pass the file name 
+    ...    ${extension} ew need to pass the file format (eg : .msg , .eml ,.pdf)
+    [Arguments]    ${filename}    ${extension}
+     Switch to Documents
+    Scroll To    ${Email_body_more_option} 
+     Wait For Elements State    ${Email_body_more_option}    visible
+    Click    ${Email_body_more_option}
+    Wait For Elements State    ${Email_body_dowload_option}    visible
+    ${promise}    Promise To Wait For Download    ${DownloadPath}${ActualMsgFileName}
+    Click    ${Email_body_dowload_option}
+    ${fileObject}    Wait For     ${promise}
+    File Should Exist    ${fileObject}[saveAs]
+    Should Contain    ${fileObject}[suggestedFilename]    ${filename}  
+    Should Contain    ${fileObject}[suggestedFilename]    ${extension}  
 
 
 

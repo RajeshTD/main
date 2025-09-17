@@ -25,3 +25,11 @@ Acord_125_loc="xpath=//a[@data-cy='asset-card-file-ACORD 125 (2013/01)']"
 Acord_140_loc="xpath=//a[@data-cy='asset-card-file-ACORD 140 (2007/09)']"
 Broker_form_loc="xpath=//a[@data-cy='asset-card-file-Broker Form']"
 Loss_run_EASTERNALLIANCE="xpath=//a[@data-cy='asset-card-file-Loss Run (EASTERNALLIANCE)']"
+
+#new bug fix 200
+Doc_Processed_loc="xpath=(//ng-transclude[contains(normalize-space(), 'Processed')])[2]"
+Doc_Archived_loc="xpath=(//ng-transclude[contains(normalize-space(), 'Archived')])[2]"
+Doc_External_links_loc="xpath=(//ng-transclude[contains(normalize-space(), 'External Links')])[2]"
+Search_file_loc="xpath=//input[@data-cy='assets-search-input']"
+Email_body_more_option="xpath=//button[@test-id='asset-card-options-menu-email_body']"
+Email_body_dowload_option="xpath=//button[@test-id='asset-card-options-download-email_body']"

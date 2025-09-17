@@ -3,6 +3,7 @@ Resource   ../../utils/common_keywords.robot
 Variables  ../locators/submissions.py
 Variables  ../locators/all_submissions.py
 Variables    ../locators/summary_locators.py
+Library    ../../libraries/ScreenshotListener.py
 
 *** Keywords ***
 Verify All Side menu options are Displayed 
@@ -240,17 +241,30 @@ verify Account History are editable
     ...  ${Submission_Id}     We need to pass the Parent Submission Id 
     ...  ${Stage_Type}     we need to pass the Which Stage we Are Currently
     ...   ${policy_Detials}     we need to pass the Policy data       
-    [Arguments]    ${Submission_Id}    ${Stage_Type}    ${policy_Detials}
-    ${Product_type}    Get Text    ${Expected_Product_Type_Loc}
-    ${Status_type}    Get Text    ${Expected_Status_Type_Loc}
+    [Arguments]    ${policy_Detials}
+   
+    Switch To Email Tab
+   ${elements}    Get Elements    //aside//a
+   ${parent_length}    Get Length    ${elements}
+   Click Answers Tab
+   Switch to Summary
     Click    ${Expected_Product_Type_Loc}
+    
     ${element}    Catenate    SEPARATOR=    ${Expected_Product_Type_Loc}    //span    
     ${Product_type1}    Get Text    ${element}
     Run Keyword And Continue On Failure    Should Contain    ${Product_type1}    Current
-   Run Keyword And Continue On Failure    verify the entered Policy Information    ${policy_Detials}
-    Wait For Elements State    ${Convr_Home_Btn}    visible    5s
-    click    ${Convr_Home_Btn}
-    Select Submission using submission id    ${Submission_Id}    @{TC_E2E_001['SubmissionColumnNames']}
+#    Run Keyword And Continue On Failure    verify the entered Policy Information    ${policy_Detials}
+   Switch To Email Tab
+   ${elements}    Get Elements    //aside//a
+   ${child_length}    Get Length    ${elements}
+   Run Keyword And Continue On Failure    Should Be Equal    ${parent_length}    ${child_length}
+   Click Answers Tab
+    Switch to Summary
+    click    ${Excepted_parent_product_type}
+    ${element}    Catenate    SEPARATOR=    ${Excepted_parent_product_type}    //span    
+    ${Product_type1}    Get Text    ${element}
+    Run Keyword And Continue On Failure    Should Contain    ${Product_type1}    Current
+    # Select Submission using submission id    ${Submission_Id}    @{TC_E2E_001['SubmissionColumnNames']}
  
 
 Verify the workflow panel
@@ -374,3 +388,58 @@ Verify Schema for policy information and Available in Documents Tab
     END
     Log    ${actual_Policy_text}
     Lists Should Be Equal    ${actual_Policy_text}    ${Expected_Policy_text}    
+
+Reject Submission via summary tab 
+    [Documentation]    Rejects a submission,via inside the summary tab  option.
+    ...
+    ...    *Arguments:*
+    ...    - `${FailureReasons}`: A list of reasons for the rejection.
+    ...    - `${data_details}`: A text description of the rejection details.
+    ...    - `${action}`: Either 'Cancel' to cancel the rejection or any other value to proceed.
+    [Arguments]    ${FailureReasons}    ${data_details}    ${action}
+    Switch to Summary
+    Click    ${Loc_Header_Status}
+    Click    ${Summary_Reject_option}
+    FOR     ${failureReason}    IN    @{FailureReasons}
+    ${reason}    Catenate    SEPARATOR=    ${Summary_ReasonForReject1}    ${failureReason}    ']
+    Check Checkbox    ${reason}
+    END
+    Type Text    ${Summary_detials}    ${data_details}
+    IF    '${action}' == 'Cancel'
+        Get Element States    ${SelectReason}    validate    value & enabled    'SelectReason should be enabled.'
+        Click    ${CancelButtonInReject}
+        Verify WorkFlow Options Advance Stage and Reject
+        Get Element States    ${InDraftTag}    validate    value & visible    'InDraftTag should be visible.'
+    ELSE
+         Get Element States    ${Summary_Sumbit}    validate    value & enabled    'AcceptButton should be enabled.'
+         Click    ${Summary_Sumbit}
+         Sleep    2s    
+         ${text}    Get Text    ${Loc_Header_Status}
+         Run Keyword And Continue On Failure    Should Be Equal    ${text}    Rejected
+    END        
+
+Reactive the Submission via summary tab 
+    [Documentation]    Reactive the submission,via inside the summary tab  option.
+    ...
+    ...    *Arguments:*
+    ...    - `${data_details}`: A text description of the rejection details.
+    ...    - `${action}`: Either 'Cancel' to cancel the rejection or any other value to proceed.
+    [Arguments]    ${data_details}    ${action}
+    # Switch to Summary
+    Click    ${Loc_Header_Status}
+    Click    ${Summary_reactive}
+    IF    '${action}' == 'Cancel'
+        Get Element States    ${summary_cancel}    validate    value & enabled    'SelectReason should be enabled.'
+        Click    ${summary_cancel}
+     ELSE
+         Get Element States    ${Summary_accept}    validate    value & enabled    'AcceptButton should be enabled.'
+         Click    ${Summary_accept}
+          
+     END    
+     Get Element States    ${Summary_reactive_error_msg}    validate    value & visible    'Summary_reactive_error_msg should be enabled.'
+     Type Text    ${Summary_detials}    ${data_details}
+      Get Element States    ${Summary_accept}    validate    value & enabled    'AcceptButton should be enabled.'
+         Click    ${Summary_accept}
+         Sleep    2s
+         ${text}    Get Text    ${Loc_Header_Status}
+        Run Keyword And Continue On Failure     Should Be Equal    ${text}    In Draft    

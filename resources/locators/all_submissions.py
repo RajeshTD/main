@@ -302,7 +302,11 @@ Producer_Phone_number="xpath=//button[@test-id='clearance-field-input-btn-Produc
 Facultative_Reinsurance_loc="xpath=(//button[@test-id='clearance-field-input-btn-Facultative Reinsurance']//span)[1]"
 
 # 
-Product_DropDownElement="(//div[@ng-show='$ctrl.open === $index'])[1]//button"
-Product_segment_DropDownElement="(//div[@ng-show='$ctrl.open === $index'])[2]//button"
+Product_DropDownElement="xpath=(//div[@ng-show='$ctrl.open === $index'])[1]//button"
+Product_segment_DropDownElement="xpath=(//div[@ng-show='$ctrl.open === $index'])[2]//button"
+Task_Attachement_loc="xpath=//a[@test-id='task-tabs-Attachments']"
+Task_Attachement_upload_file="xpath=//button[@test-id='task-upload-file']"
+Task_Attachement_delete_file="xpath=//button[@test-id='delete-upload-btn']"
+Task_Attachement_upload_file_Name="xpath=//a[@ng-click='$ctrl.downloadAttachment(attachment)']//div"
 
 
