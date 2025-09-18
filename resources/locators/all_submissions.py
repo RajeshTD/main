@@ -309,4 +309,7 @@ Task_Attachement_upload_file="xpath=//button[@test-id='task-upload-file']"
 Task_Attachement_delete_file="xpath=//button[@test-id='delete-upload-btn']"
 Task_Attachement_upload_file_Name="xpath=//a[@ng-click='$ctrl.downloadAttachment(attachment)']//div"
 
+# 
+enter_detials_button="xpath=(//*[text()='Update Workflow Stage']//following::button//*[normalize-space()='Enter details'])[1]"
+
 

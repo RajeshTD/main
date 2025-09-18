@@ -404,13 +404,19 @@ Reject Submission via summary tab
     ${reason}    Catenate    SEPARATOR=    ${Summary_ReasonForReject1}    ${failureReason}    ']
     Check Checkbox    ${reason}
     END
-    Type Text    ${Summary_detials}    ${data_details}
+    ${other_option}=    Run Keyword And Return Status    List Should Contain Value    ${FailureReasons}    Other
+    IF    '${other_option}' == 'True'
+        ${state}=    Get Element States    ${Summary_Sumbit}
+        Run Keyword And Continue On Failure    Should Contain    ${state}    disabled
+        Type Text    ${Summary_detials}    ${data_details}
+
+     END     
     IF    '${action}' == 'Cancel'
         Get Element States    ${SelectReason}    validate    value & enabled    'SelectReason should be enabled.'
         Click    ${CancelButtonInReject}
         Verify WorkFlow Options Advance Stage and Reject
         Get Element States    ${InDraftTag}    validate    value & visible    'InDraftTag should be visible.'
-    ELSE
+    ELSE     
          Get Element States    ${Summary_Sumbit}    validate    value & enabled    'AcceptButton should be enabled.'
          Click    ${Summary_Sumbit}
          Sleep    2s    
@@ -432,14 +438,25 @@ Reactive the Submission via summary tab
         Get Element States    ${summary_cancel}    validate    value & enabled    'SelectReason should be enabled.'
         Click    ${summary_cancel}
      ELSE
-         Get Element States    ${Summary_accept}    validate    value & enabled    'AcceptButton should be enabled.'
-         Click    ${Summary_accept}
-          
+        Get Element States    ${Summary_accept}    validate    value & enabled    'AcceptButton should be enabled.'
+        Click    ${Summary_accept}
+        Get Element States    ${Summary_reactive_error_msg}    validate    value & visible    'Summary_reactive_error_msg should be enabled.'
+        Click    ${summary_cancel}
+        Click Answers Tab
+        # Type Text    ${Summary_detials}    ${data_details}
+        # Get Element States    ${Summary_accept}    validate    value & enabled    'AcceptButton should be enabled.'
+        # Click    ${Summary_accept}
+        # Sleep    2s
+        # ${text}    Get Text    ${Loc_Header_Status}
+        # Run Keyword And Continue On Failure     Should Be Equal    ${text}    In Draft 
      END    
-     Get Element States    ${Summary_reactive_error_msg}    validate    value & visible    'Summary_reactive_error_msg should be enabled.'
-     Type Text    ${Summary_detials}    ${data_details}
-      Get Element States    ${Summary_accept}    validate    value & enabled    'AcceptButton should be enabled.'
-         Click    ${Summary_accept}
-         Sleep    2s
-         ${text}    Get Text    ${Loc_Header_Status}
-        Run Keyword And Continue On Failure     Should Be Equal    ${text}    In Draft    
+
+
+Verify Element State
+    [Arguments]    ${locator}    ${expected_state}
+    ${state}=    Get Element States    ${locator}
+    Run Keyword If    '${expected_state}' == 'enabled'    Should Contain    ${state}    enabled
+    ...    ELSE IF    '${expected_state}' == 'disabled'    Should Contain    ${state}    disabled
+    ...    ELSE    Fail    Invalid expected_state value: ${expected_state}     
+     
+        

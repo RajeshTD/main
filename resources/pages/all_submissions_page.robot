@@ -747,6 +747,7 @@ Reactive the Rejected Submission
     Sleep    3s
     ${reactiveButtonStatus}    Run Keyword And Return Status    Wait For Elements State    ${Reactive}    visible    timeout=10s
     IF    ${reactiveButtonStatus}
+
         Switch to Documents
         Click    ${Side_Bar_Risk360_Button}
         Click    ${Reactive}
@@ -1670,16 +1671,56 @@ Verify Product field dropdown values in coverage tab
 
 
 Get Colour Name
+    [Documentation]    this method is used to conver the rgb value to colour name 
+    ...    ${rgb_value}    we need to pass the rgp value 
     [Arguments]    ${rgb_value}
    
-    # ${colour_name}=    Set Variable    ${ColourCode['ColourName']['${rgb_value}']}
-    # [Return]    ${colour_name}
-
-     
-    # ${colour_name}    Catenate    SEPARATOR=    ${    ColourCode['ColourName']    ['    ${rgb_value}    ']}
-    
     ${colour_map}=    Get From Dictionary    ${ColourCode}    ColourName
     ${colour_name}=   Get From Dictionary    ${colour_map}    ${rgb_value}
     [Return]    ${colour_name}
 
-
+Reject Submission and Verify the error msg 
+    [Documentation]    Rejects a submission, fills out the rejection reason, and verifies the submission tag changes accordingly.
+    ...
+    ...    *Arguments:*
+    ...    - `${FailureReasons}`: A list of reasons for the rejection.
+    ...    - `${data_details}`: A text description of the rejection details.
+    ...    - `${action}`: Either 'Cancel' to cancel the rejection or any other value to proceed.
+    [Arguments]    ${FailureReasons}    ${data_details}    ${action}
+    Click    ${Workflow_Reject}
+    Wait For Elements State    ${UpdateWorkflowStage}    visible
+    Get Element States    ${SelectReason}    validate    value & visible    'SelectReason should be visible.'
+    FOR     ${failureReason}    IN    @{FailureReasons}
+    ${reason}    Catenate    SEPARATOR=    ${ReasonForReject1}    ${failureReason}    ${ReasonForReject2}
+    Check Checkbox    ${reason}
+    END
+        ${other_option}=    Run Keyword And Return Status    List Should Contain Value    ${FailureReasons}    Other
+        
+    IF    '${other_option}' == 'True'
+        ${state}=    Get Element States    ${enter_detials_button}
+        Run Keyword And Continue On Failure    Should Contain    ${state}    disabled
+    END 
+        Click    ${CancelButtonInReject}   
+    
+verify Reactive the Rejected Submission error msg appear 
+    [Documentation]    Activates a submission that was previously rejected.
+    ...    It handles clicking the 'Reactive' button and any confirmation dialogs, waiting for the submission to leave the rejected state.
+    # [Arguments]    ${detials}
+    Sleep    3s
+    ${status}    Run Keyword And Return Status    Wait For Elements State    ${processingStageInLeftMenu}    visible    timeout=5s
+    ${rejectStatus}    Run Keyword And Return Status    Wait For Elements State    ${RejectProcessing}    visible    timeout=5s
+    IF    ${status} == True or ${rejectStatus} == True
+        Log    'Processing Stage is visible'
+        Wait For Processing Stage    ""
+    END
+    Click    ${Reactive}
+    Wait For Elements State    ${ReactivatePopup}    visible    timeout=30s
+    ${acceptButton}    Run Keyword and Return Status    Wait For Elements State    ${AcceptButtonInReactive}    visible    timeout=${element_timeout}
+    IF    ${acceptButton}
+        Click    ${AcceptButtonInReactive}
+        Run Keyword And Continue On Failure    Get Element States    ${Summary_reactive_error_msg}    validate    value & visible    'Summary_reactive_error_msg should be enabled.'
+    ELSE
+        Click    ${Reactive}
+        Click    ${AcceptButtonInReactive}
+        Run Keyword And Continue On Failure    Get Element States    ${Summary_reactive_error_msg}    validate    value & visible    'Summary_reactive_error_msg should be enabled.'
+    END
