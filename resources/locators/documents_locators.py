@@ -33,3 +33,13 @@ Doc_External_links_loc="xpath=(//ng-transclude[contains(normalize-space(), 'Exte
 Search_file_loc="xpath=//input[@data-cy='assets-search-input']"
 Email_body_more_option="xpath=//button[@test-id='asset-card-options-menu-email_body']"
 Email_body_dowload_option="xpath=//button[@test-id='asset-card-options-download-email_body']"
+
+Email_body_info_option="xpath=//button[@test-id='asset-card-options-info-email_body']"
+Document_more_options_fields="xpath=//div[@ng-if='$ctrl.menuOpen']//button"
+Document_info_detials_field="xpath=//div[@test-id='asset-card-details-email_body']//div[@class='font-semibold']"
+Document_info_detials_value="xpath=//div[@test-id='asset-card-details-email_body']//div[@class='text-gray-500 ng-binding']"
+Email_Body_1="xpath=//a[@data-cy='assets-files-"
+Docment_delete_option="xpath=//button[@test-id='asset-card-options-delete-email_body']"
+Document_Back_button="xpath=//a[text()='BACK']"
+more_option="xpath=//button[@test-id='asset-card-options-menu-"
+Docment_delete_option1="xpath=//button[@test-id='asset-card-options-delete-"

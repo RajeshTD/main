@@ -265,7 +265,8 @@ Remove Document after Upload
      ${remove}    Catenate    SEPARATOR=    ${CloseIconInDocumentsPrefix}    ${file}    ${CloseIconInDocumentsSuffix}
            
             ${isPDF} =  Run Keyword And Return Status    Should Contain    ${file}    pdf   
-            ${isExcel} =  Run Keyword And Return Status    Should Contain    ${file}    xls 
+            ${isExcel} =  Run Keyword And Return Status    Should Contain    ${file}    xls
+            ${isEml} =  Run Keyword And Return Status    Should Contain    ${file}    eml
             IF    ${isPDF}
                 Run Keyword And Continue On Failure     Get Element States    ${PDFIcon}    Validate    value & visible
                  Click    ${remove}
@@ -273,6 +274,13 @@ Remove Document after Upload
                 Sleep    1s
                 Run Keyword And Continue On Failure    Get Element States    ${PDFIcon}    Validate    hidden 
             ELSE IF    ${isExcel}
+                Run Keyword And Continue On Failure    Get Element States    ${ExcelIcon}    Validate    value & visible
+                Click    ${remove}
+                Run Keyword And Continue On Failure    Get Element States    ${remove}    Validate    hidden    'Remove button should be visible for Excel file.'
+               Sleep    1s
+                Run Keyword And Continue On Failure    Get Element States    ${ExcelIcon}    Validate    hidden
+            
+            ELSE IF    ${isEml}
                 Run Keyword And Continue On Failure    Get Element States    ${ExcelIcon}    Validate    value & visible
                 Click    ${remove}
                 Run Keyword And Continue On Failure    Get Element States    ${remove}    Validate    hidden    'Remove button should be visible for Excel file.'
@@ -307,23 +315,49 @@ verify that the Reprocess button is not Available in Document Tab
 
 
 
+# verify the Email Body Document
+
+#     [Documentation]    This method is used to verify the Email Body Documents
+
+#     [Arguments]    ${file_name}    ${expected_body_Msg}    
+    
+#     Switch to Documents
+#     ${element}    Catenate    SEPARATOR=    ${Email_Body_1}    ${file_name}']
+#     Scroll To Element    ${element}
+#     Click    ${element}
+#     ${text1}    Get Text    ${Email_Body_msg}
+#     ${actual_normalized}=    Replace String    ${text1}    \n    ${EMPTY}
+#     ${Exceptedvalue}    Strip String    ${expected_body_Msg}
+#     Log    ${Exceptedvalue}
+#     Log    ${actual_normalized}
+#     Run Keyword And Continue On Failure    Should Be Equal As Strings    ${Exceptedvalue.strip()}    ${actual_normalized.strip()}
 verify the Email Body Document
 
     [Documentation]    This method is used to verify the Email Body Documents
-
-    [Arguments]    ${expected_body_Msg}    
-    
+    [Arguments]    ${file_name}    ${expected_body_Msg}    
+ 
     Switch to Documents
-    Scroll To Element    ${Email_Body_Doc}
-    Click    ${Email_Body_Doc}
-    ${text1}    Get Text    ${Email_Body_msg}
-    ${actual_normalized}=    Replace String    ${text1}    \n    ${EMPTY}
-    ${Exceptedvalue}    Strip String    ${expected_body_Msg}
-    Log    ${Exceptedvalue}
-    Log    ${actual_normalized}
-    Run Keyword And Continue On Failure    Should Be Equal As Strings    ${Exceptedvalue.strip()}    ${actual_normalized.strip()}
-
-
+    ${element}    Catenate    SEPARATOR=    ${Email_Body_1}    ${file_name}']
+    Scroll To Element    ${element}
+    Click    ${element}
+    ${text1}=    Get Text    ${Email_Body_msg}
+ 
+    # Normalize actual text (remove newlines, collapse spaces)
+    ${actual_normalized}=    Replace String    ${text1}    \n    ${SPACE}
+    ${actual_normalized}=    Replace String    ${actual_normalized}    \r    ${EMPTY}
+    ${actual_normalized}=    Replace String Using Regexp    ${actual_normalized}    \\s+    ${SPACE}
+    ${actual_normalized}=    Strip String    ${actual_normalized}
+ 
+    # Normalize expected text (remove newlines, collapse spaces)
+    ${expected_clean}=    Replace String    ${expected_body_Msg}    \n    ${SPACE}
+    ${expected_clean}=    Replace String    ${expected_clean}    \r    ${EMPTY}
+    ${expected_clean}=    Replace String Using Regexp    ${expected_clean}    \\s+    ${SPACE}
+    ${expected_clean}=    Strip String    ${expected_clean}
+ 
+    # Final check
+    Run Keyword And Continue On Failure    Should Be Equal    ${expected_clean}    ${actual_normalized}
+    Click    ${Document_Back_button}
+ 
 # Verify The Email Body Document
 #     [Documentation]    This method is used to verify the Email Body Documents
 #     [Arguments]    ${expected_body_Msg}    
@@ -383,7 +417,73 @@ verify the Msg file dowload in msg format
     ${fileObject}    Wait For     ${promise}
     File Should Exist    ${fileObject}[saveAs]
     Should Contain    ${fileObject}[suggestedFilename]    ${filename}  
-    Should Contain    ${fileObject}[suggestedFilename]    ${extension}  
+    Should Contain    ${fileObject}[suggestedFilename]    ${extension}
+
+verify the more options fields
+    [Documentation]    This method is used for the verify the more options
+    [Arguments]    ${Expected_value}
+    ${Actual_value}    Create List
+    Click    ${Email_body_more_option}
+    ${elements}    Get Elements    ${Document_more_options_fields}
+    FOR    ${element}    IN    @{elements}
+        ${values}    Get Text    ${element}
+        ${values}    Strip String    ${values}
+        Append To List    ${Actual_value}    ${values}  
+    END       
+        Lists Should Be Equal    ${Expected_value}    ${Actual_value}
+
+verify the file info details
+    [Documentation]    This method is used for verify the document info detials
+    [Arguments]    ${file_name}    ${data}
+
+    verify the more options fields    ${data['More_fields']}
+    ${today}=    Get Current Date    result_format=%b %d, %Y
+    Insert Into List    ${data['expected_data']}    5    ${today}
+    Insert Into List    ${data['expected_data']}    6    ${today}
+    Insert Into List    ${data['expected_data']}    0    ${file_name}
+    Append To List    ${data['expected_data']}    ${file_name}    
+    ${Actual_Fields_name}    Create List
+    ${Actual_info_value}    Create List
+    Click    ${Email_body_info_option}
+    ${info_fields}    Get Elements    ${Document_info_detials_field}
+    FOR    ${element}    IN    @{info_fields}
+        ${Info_field_name}    Get Text    ${element}
+        ${Info_field_name}    Strip String    ${Info_field_name}
+        Append To List    ${Actual_Fields_name}    ${Info_field_name}    
+    END
+    Run Keyword And Continue On Failure    Lists Should Be Equal    ${data['info_fields']}    ${Actual_Fields_name}
+    ${info_values}    Get Elements    ${Document_info_detials_value}
+    FOR    ${element}    IN    @{info_values}
+        ${Info_field_value}    Get Text    ${element}
+        ${Info_field_value}    Strip String    ${Info_field_value}
+        Append To List    ${Actual_info_value}    ${Info_field_value}  
+    END
+    Log    ${data['expected_data']}
+    Log    ${Actual_info_value}
+    ${length}    Get Length    ${Actual_info_value}
+    FOR    ${counter}    IN RANGE    0    ${length}    
+       ${expected_item}=    Get From List    ${data['expected_data']}    ${counter}
+        ${actual_item}=      Get From List    ${Actual_info_value}    ${counter}
+        Run Keyword And Continue On Failure    Should Contain    ${actual_item}    ${expected_item}
+    END
+delete the given file in documentTab
+    [Documentation]    This method is used to delete the given type file 
+    [Arguments]    @{document_type_data}
+    
+    FOR    ${type}    IN    @{document_type_data}
+    ${locator}    Catenate    SEPARATOR=    ${more_option}    ${type}'] 
+    ${Documents}    Get Elements    ${locator}
+        FOR    ${element}    IN    @{Documents}
+        ${locator_delete}    Catenate    SEPARATOR=    ${Docment_delete_option1}    ${type}'] 
+         Click    ${element}
+         Click    ${locator_delete}
+        
+        END   
+   
+    END
+  
+
+
 
 
 

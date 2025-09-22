@@ -284,8 +284,8 @@ TC_E2E_023
        #Complete Forms Tab Details Filling    ${TC_Forms_01}
     # Click Answers Tab
     # Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_02}
-    # Run Keyword And Continue On Failure    Complete Forms Tab Details Filling    ${TC_Forms_01}
-    # Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_01}
+    Run Keyword And Continue On Failure    Complete Forms Tab Details Filling    ${TC_Forms_01}
+    Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_01}
     # Click and verify Clearance tab
     #  Answer Tab
     Click Answers Tab
@@ -2051,9 +2051,23 @@ TC_email_060
     [Documentation]    upload the different email submission 
     Run Keyword And Continue On Failure    Verify My Assignments Tab is displayed as a default tab
     # ${submission_id}    Create New Submission    ${TC_E2E_001['FileName']}    @{TC_E2E_001['SubmissionColumnNames']}
-    Set Suite Variable   ${submission_id_1}    16d56555-5e24-4827-a36e-c9f42a4cf446
+    Set Suite Variable   ${submission_id_1}    49702c8c-1f3e-46c1-a63e-f5115168cd4e    
     Select Submission using submission id    ${submission_id_1}    @{TC_E2E_001['SubmissionColumnNames']}
     Run Keyword And Continue On Failure    Verify Submission page is displayed
     Click Edit Submission
-    Switch to Documents   
-    Remove Document after Upload    eml_no_attachments 1        
+    # Switch to Documents
+    # Run Keyword And Continue On Failure    Upload SOV and Loss Run Documents    ${TC_email_060['eml_no_data']['file_name']}
+    # Wait For Processing Stage
+    # Run Keyword And Continue On Failure    verify the Email Body Document    ${TC_email_060['eml_no_data']['file_name']}    ${TC_email_060['eml_no_data']['Expected_email_Msg']}
+    
+    # Run Keyword And Continue On Failure    verify the file info details    ${TC_email_060['eml_no_data']['file_name']}    ${TC_email_060['eml_no_data']}
+    # Run Keyword And Continue On Failure    delete the given file in documentTab    @{TC_email_060['eml_no_data']['document_type']}
+
+    # Remove Document after Upload    eml_no_attachments_1.eml 
+           
+    Run Keyword And Continue On Failure    Upload SOV and Loss Run Documents    ${TC_email_060['eml_normal_data']['file_name']}
+    Wait For Processing Stage
+    Run Keyword And Continue On Failure    verify the Email Body Document    ${TC_email_060['eml_normal_data']['file_name']}    ${TC_email_060['eml_normal_data']['Expected_email_Msg']}
+    
+    Run Keyword And Continue On Failure    verify the file info details    ${TC_email_060['eml_normal_data']['file_name']}    ${TC_email_060['eml_normal_data']}
+    Run Keyword And Continue On Failure    delete the given file in documentTab    @{TC_email_060['eml_normal_data']['document_type']}
