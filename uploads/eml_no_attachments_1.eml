@@ -1,0 +1,155 @@
+Return-Path: <prvs=615765ef68=Wendy.Garrison@everestre.com>
+Received: from mail3.everestglobal.com (mail3.everestglobal.com [146.20.196.136])
+ by inbound-smtp.us-west-2.amazonaws.com with SMTP id 03132u1tbie0a6nf0lbf6o52ihqi9d4hu20h4b01
+ for everest@datacubes.us;
+ Wed, 11 Sep 2019 10:46:23 +0000 (UTC)
+X-SES-Spam-Verdict: PASS
+X-SES-Virus-Verdict: PASS
+Received-SPF: pass (spfCheck: domain of everestre.com designates 146.20.196.136 as permitted sender) client-ip=146.20.196.136; envelope-from=prvs=615765ef68=Wendy.Garrison@everestre.com; helo=mail3.everestglobal.com;
+Authentication-Results: amazonses.com;
+ spf=pass (spfCheck: domain of everestre.com designates 146.20.196.136 as permitted sender) client-ip=146.20.196.136; envelope-from=prvs=615765ef68=Wendy.Garrison@everestre.com; helo=mail3.everestglobal.com;
+ dmarc=none header.from=everestre.com;
+X-SES-RECEIPT: AEFBQUFBQUFBQUFHb0cwODYwRW5hdTBOQ0pMZEVrelkvbmRUamVJYmgxVE1XeXlOb0ptNSt1WWliUnVIcXQvYURjZFpmcDl2Q01Zd2ExeUdWbDBCNmZaQlBJOFYvT0Z3VWpLL2RaczZpVVNWY0prdE1PTXB0c3VqRkRDOUJBNjFhNWk3OHl6RXMvSElPVUdPVU5XUWpFY0M3WG5tbklwaDlFbGVYSGRJK2dFcDBiYlNrK0lZQUpMR3J3VFRQQkR5a0J1NGZING56VGYxc2tNVFF3c0ExWVF2Qzg3cWxSMDNFM3BhVXcraUlpUi9HcDU0TlhCWkV4T0VlbVRsWWV0OWpHaEEzdGhkb1NQT0Zjd1p1VnNZMXpRVG1ya2E3WEdxZTJLdU9DRTcxanNEVmE5Tk1tRVBXSGVWTm00YVc2UFRTSXU3K1ZnaFFzdzg9
+X-SES-DKIM-SIGNATURE: a=rsa-sha256; q=dns/txt; b=hpAdX5Ypx/p+N3DN9z3jFwwsVUpqqHprtZAhykKstyz9tW8IymzW1Zg3PHP10/TDWSxeJNMQ1/wUGau9VEO2naFfjRLftcxxX6iaEV2r8KFQz8KtSpoxtQrba7kF53g4GCPGiDpUlj3MrHnYuw61HtM12nIwBMibvTiKj7LV8lo=; c=relaxed/simple; s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1568198783; v=1; bh=qdhwt6Zk1MPpVP67EjteCwkW0Gu82uZEdWT9pMA2/qE=; h=From:To:Cc:Bcc:Subject:Date:Message-ID:MIME-Version:Content-Type:X-SES-RECEIPT;
+X-AuditID: 0a5c0488-afbfb70000000e4e-01-5d78d04e7b28
+Received: from ERMAILP04.everestre.net (Unknown_Domain [10.80.0.11])
+	by mail3.everestglobal.com (Symantec Mail Security) with SMTP id 9F.A2.03662.E40D87D5; Wed, 11 Sep 2019 06:45:34 -0400 (EDT)
+Received: from ERMAILP03.everestre.net (10.80.0.159) by
+ ERMAILP03.everestre.net (10.80.0.159) with Microsoft SMTP Server (TLS) id
+ 15.0.1395.4; Wed, 11 Sep 2019 06:46:21 -0400
+Received: from ERMAILP03.everestre.net ([fe80::697f:f12b:3dd5:e626]) by
+ ERMAILP03.everestre.net ([fe80::697f:f12b:3dd5:e626%32]) with mapi id
+ 15.00.1395.000; Wed, 11 Sep 2019 06:46:21 -0400
+From: <Wendy.Garrison@everestre.com>
+To: <casualtyfacility@evinsurancegroup.com>
+Subject: Bayou Concrete Pumping LLC File No. 1337274-1
+Thread-Topic: Bayou Concrete Pumping LLC File No. 1337274-1
+Thread-Index: AdVojiZYadf+Yy8kRxGsOg/WBGZgsw==
+Date: Wed, 11 Sep 2019 10:46:21 +0000
+Message-ID: <3454e23ad77a45c38e379e774424efad@ERMAILP03.everestre.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.80.5.146]
+Content-Type: multipart/alternative;
+	boundary="_000_3454e23ad77a45c38e379e774424efadERMAILP03everestrenet_"
+MIME-Version: 1.0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrHLMWRmVeSWpSXmKPExsXCFcDAret3oSLW4NZ+YYuGK9+YHRg9ds2b
+	xhjAGMVtk5RYUhacmZ6nb5fAnbHw1km2gkPyFYcuXmVrYFwo3cXIwSEhYCLxdZ9LFyMXh5DA
+	YUaJ6w2HGCGcTYwSrY/+QDkHGSW2rf3E3sXIycEmoCJxaEozC4gtIqAtMe/OezYQW1jATGLD
+	g21sEHFriQ3X90HZehJzNnxlA9nGIqAqMe2fEIjJK+AmcW+JE0gFo4CYxPdTa5hAbGYBcYlb
+	T+aD2RICAhJL9pxnhrBFJV4+/scKYRtIbF26jwXClpc4fu0SI8hIZoFciav3LUHCvAKCEidn
+	PmGZwCg8C8nUWQhVs5BUQZToSCzY/YkNwtaWWLbwNTOMfebAYyZk8QWM7KsYxXMTM3OM9VLL
+	UotSi0vSc/KTEnP0kvNzNzGCYiWGpWMH45zu5EOMAhyMSjy89w5WxAqxJpYVV+YeYpTmYFES
+	5500ITBWSCA9sSQ1OzW1ILUovqg0J7X4ECMTB+chRgkOLimR4tS8lNSixNKSjHhQRMYXA2NS
+	qoExdpJxG+OxF/VBaksDpeYdZ3gvurTh7BuFFMZPsxKuKt4/unXyHH2W8GmiymZbVghafrqY
+	vPodo9yapOqGfLvJ69z7P7In2Xw5Njcsyfqv172+ihVis4wqUwU/7ltV6SbEN7W1XyVlXYVh
+	TUhV/VJrbhkFeWnRtrC72hsLF0VLHOORePTqNJMSS3FGoqEWc1FxIgBcxfmWkQIAAA==
+
+--_000_3454e23ad77a45c38e379e774424efadERMAILP03everestrenet_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+Please order MVR's for the above new policy.
+
+Thank you,
+
+Wendy Garrison
+CX Insurance Services
+
+
+________________________________
+
+This e-mail is intended only for the person or entity to whom it is address=
+ed and may contain information that is privileged, confidential, or otherwi=
+se protected from disclosure. If you are not the intended recipient, or an =
+employee or agent responsible for delivering this message to the intended r=
+ecipient, you are notified that any disclosure, copying, distribution, or t=
+he taking of any action in reliance on the contents of this message is proh=
+ibited. If you have received this e-mail in error, please contact the sende=
+r immediately and delete the original message and all copies from your syst=
+em. Statements and representations made in this message are not necessarily=
+ that of the Company.
+
+--_000_3454e23ad77a45c38e379e774424efadERMAILP03everestrenet_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 14 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:purple;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri","sans-serif";
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri","sans-serif";}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"blue" vlink=3D"purple">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal">Please order MVR&#8217;s for the above new policy. <=
+o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Thank you, <o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Wendy Garrison<o:p></o:p></p>
+<p class=3D"MsoNormal">CX Insurance Services<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<br>
+<hr>
+<font face=3D"Arial" color=3D"Blue" size=3D"1"><br>
+This e-mail is intended only for the person or entity to whom it is address=
+ed and may contain information that is privileged, confidential, or otherwi=
+se protected from disclosure. If you are not the intended recipient, or an =
+employee or agent responsible for
+ delivering this message to the intended recipient, you are notified that a=
+ny disclosure, copying, distribution, or the taking of any action in relian=
+ce on the contents of this message is prohibited. If you have received this=
+ e-mail in error, please contact
+ the sender immediately and delete the original message and all copies from=
+ your system. Statements and representations made in this message are not n=
+ecessarily that of the Company.<br>
+</font>
+</body>
+</html>
+
+--_000_3454e23ad77a45c38e379e774424efadERMAILP03everestrenet_--

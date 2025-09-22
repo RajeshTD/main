@@ -1,0 +1,34 @@
+Content-Type: multipart/mixed; boundary="===============6294346866187263619=="
+MIME-Version: 1.0
+From: sender@example.com
+To: recipient@example.com
+Subject: Test email with PDF and nameless EML attachment
+
+--===============6294346866187263619==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+This is a test email with two attachments:
+- a PDF
+- an EML without filename
+--===============6294346866187263619==
+Content-Type: application/pdf
+MIME-Version: 1.0
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="test.pdf"
+
+JVBERi0xLjQKJSBEdW1teSBQREYKMSAwIG9iago8PD4+CmVuZG9iagp0cmFpbGVyCjw8Pj4KJSVF
+T0YK
+
+--===============6294346866187263619==
+Content-Type: message/rfc822
+MIME-Version: 1.0
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment
+
+RnJvbTogdGVzdEBleGFtcGxlLmNvbQpUbzogb3RoZXJAZXhhbXBsZS5jb20KU3ViamVjdDogRHVt
+bXkgYXR0YWNoZWQgZW1haWwKClRoaXMgaXMgdGhlIGJvZHkgb2YgdGhlIGF0dGFjaGVkIGVtYWls
+Lgo=
+
+--===============6294346866187263619==--
