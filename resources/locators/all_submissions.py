@@ -311,4 +311,4 @@ Task_Attachement_upload_file_Name="xpath=//a[@ng-click='$ctrl.downloadAttachment
 
 # 
 enter_detials_button="xpath=(//*[text()='Update Workflow Stage']//following::button//*[normalize-space()='Enter details'])[1]"
-
+EMLIcon="xpath=//div[@data-cy='assets-files-aside-drag-over']//i[contains(@ng-class,'emailFile')]"

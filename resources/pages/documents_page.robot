@@ -255,6 +255,7 @@ Remove Document after Upload
     FOR    ${file}    IN    @{FileName}
             # ${AbsolutePath}=    Normalize Path    ${path}${file}
             ${isArchive} =   Run Keyword And Return Status    Get Element States    ${ArchiveIcon}    validate    value & visible    'ArchiveIcon should be visible.'
+            Run Keyword And Return Status    Should Be True    ${isArchive}
             IF   ${isArchive}
             ${ArchieveFile}=    Catenate    SEPARATOR=    ${ArchiveButton1}    ${file}    ${ArchiveButton2}
             Click    ${ArchieveFile}
@@ -264,9 +265,9 @@ Remove Document after Upload
     FOR    ${file}    IN    @{FileName}
      ${remove}    Catenate    SEPARATOR=    ${CloseIconInDocumentsPrefix}    ${file}    ${CloseIconInDocumentsSuffix}
            
-            ${isPDF} =  Run Keyword And Return Status    Should Contain    ${file}    pdf   
-            ${isExcel} =  Run Keyword And Return Status    Should Contain    ${file}    xls
-            ${isEml} =  Run Keyword And Return Status    Should Contain    ${file}    eml
+            ${isPDF} =  Run Keyword And Return Status    Should Contain    ${file}    .pdf   
+            ${isExcel} =  Run Keyword And Return Status    Should Contain    ${file}    .xls
+            ${isEml} =  Run Keyword And Return Status    Should Contain    ${file}    .eml
             IF    ${isPDF}
                 Run Keyword And Continue On Failure     Get Element States    ${PDFIcon}    Validate    value & visible
                  Click    ${remove}
@@ -281,11 +282,11 @@ Remove Document after Upload
                 Run Keyword And Continue On Failure    Get Element States    ${ExcelIcon}    Validate    hidden
             
             ELSE IF    ${isEml}
-                Run Keyword And Continue On Failure    Get Element States    ${ExcelIcon}    Validate    value & visible
+                Run Keyword And Continue On Failure    Get Element States    ${EMLIcon}    Validate    value & visible
                 Click    ${remove}
                 Run Keyword And Continue On Failure    Get Element States    ${remove}    Validate    hidden    'Remove button should be visible for Excel file.'
                Sleep    1s
-                Run Keyword And Continue On Failure    Get Element States    ${ExcelIcon}    Validate    hidden
+                Run Keyword And Continue On Failure    Get Element States    ${EMLIcon}    Validate    hidden
             END
         END
 
@@ -416,8 +417,8 @@ verify the Msg file dowload in msg format
     Click    ${Email_body_dowload_option}
     ${fileObject}    Wait For     ${promise}
     File Should Exist    ${fileObject}[saveAs]
-    Should Contain    ${fileObject}[suggestedFilename]    ${filename}  
-    Should Contain    ${fileObject}[suggestedFilename]    ${extension}
+    Run Keyword And Continue On Failure    Should Contain    ${fileObject}[suggestedFilename]    ${filename}  
+    Run Keyword And Continue On Failure    Should Contain    ${fileObject}[suggestedFilename]    ${extension}
 
 verify the more options fields
     [Documentation]    This method is used for the verify the more options
@@ -430,7 +431,7 @@ verify the more options fields
         ${values}    Strip String    ${values}
         Append To List    ${Actual_value}    ${values}  
     END       
-        Lists Should Be Equal    ${Expected_value}    ${Actual_value}
+    Run Keyword And Continue On Failure    Lists Should Be Equal    ${Expected_value}    ${Actual_value}
 
 verify the file info details
     [Documentation]    This method is used for verify the document info detials
@@ -466,21 +467,77 @@ verify the file info details
         ${actual_item}=      Get From List    ${Actual_info_value}    ${counter}
         Run Keyword And Continue On Failure    Should Contain    ${actual_item}    ${expected_item}
     END
-delete the given file in documentTab
-    [Documentation]    This method is used to delete the given type file 
+delete the given file in processed Tab
+    [Documentation]    This method is used to delete the given type file processed tab 
     [Arguments]    @{document_type_data}
-    
     FOR    ${type}    IN    @{document_type_data}
     ${locator}    Catenate    SEPARATOR=    ${more_option}    ${type}'] 
     ${Documents}    Get Elements    ${locator}
-        FOR    ${element}    IN    @{Documents}
+    # Reverse the list so it runs from last → first
+    ${rev_documents}=    Evaluate    list(reversed(${Documents}))
+    FOR    ${element}    IN    @{rev_documents}
         ${locator_delete}    Catenate    SEPARATOR=    ${Docment_delete_option1}    ${type}'] 
-         Click    ${element}
-         Click    ${locator_delete}
-        
-        END   
-   
+        Scroll To Element    ${element}
+        Click    ${element}
+        Click    ${locator_delete}
     END
+    END
+
+verify the no of files in Archived      
+    [Documentation]    This method is used to verify the number of file present in archived tab
+    [Arguments]    ${expected_length}
+    Click    ${Doc_Archived_loc}
+    ${elements}    Get Elements    ${Archived_document_files}
+    ${Actual_legth}    Get Length    ${elements}
+    Run Keyword And Continue On Failure    Should Be Equal    ${Actual_legth}    ${expected_length}
+
+verify files are deleted 
+    [Documentation]    This method is used to verify the verify the filed are deleted or not 
+
+    Click    ${Doc_Processed_loc}
+    [Arguments]    @{document_type_data}
+    FOR    ${type}    IN    @{document_type_data}
+    ${locator}    Catenate    SEPARATOR=    ${more_option}    ${type}'] 
+    ${states}=    Get Element States    ${locator}
+    Log    ${states}
+# Validate it contains "hidden"
+    Run Keyword And Continue On Failure    Should Contain    ${states}    hidden
+
+    END
+
+delete the archived files
+    [Documentation]    This method is used for the delete all file in archived tab
+    Click    ${Doc_Archived_loc}
+    ${Documents}    Get Elements    ${Archived_document_files}
+    ${rev_documents}=    Evaluate    list(reversed(${Documents}))
+    FOR    ${element}    IN    @{rev_documents}
+        Scroll To Element    ${element}
+        Click    ${element}
+        Click    ${Archived_delete_button}
+    END
+    Click    ${Doc_Processed_loc}
+
+verify sub attachement files in document while uploading 
+    [Documentation]    this mwthod is used for the verify the sub attachment files are present are not 
+    [Arguments]    ${filename}
+    ${status}    Run Keyword And Return Status    ${Document_Sub_files}    
+    IF    ${status}
+    ${actual_file_name}    Create List
+    ${Sub_files}    Get Elements    ${Document_Sub_files}
+    FOR    ${element}    IN    @{Sub_files}
+        ${file_name}    Get Text    ${element}
+    Run Keyword And Continue On Failure    Should Not Contain    ${file_name}    .jpg
+    Run Keyword And Continue On Failure    Should Not Contain    ${file_name}    .jpeg
+    Run Keyword And Continue On Failure    Should Not Contain    ${file_name}    .png
+    Run Keyword And Continue On Failure    Should Not Contain    ${file_name}    .gif
+    Append To List    ${actual_file_name}    ${file_name}
+    END
+    Lists Should Be Equal    ${actual_file_name}    ${filename}
+    END
+
+
+
+     
   
 
 

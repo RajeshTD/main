@@ -26,65 +26,65 @@ TC_E2E_001
     Switch to Summary
     Enter the Policy Information    ${TC_E2E_011['PolicyInfo']}
    
-    # Run Keyword And Continue On Failure    Verify Summary Table Data    ${TC_E2E_001['SummaryTableHeader']}    ${TC_E2E_001['SummaryTableData']}
-    # Run Keyword And Continue On Failure    Verify Policy Information Fields In Summary Tab     ${TC_E2E_001['PolicyFields']}   
-    # Run Keyword And Continue On Failure    Verify the Workflow Reflected in Summary tab    ${TC_E2E_001['AdvanceTo']}
-    # Click Edit Submission
+    Run Keyword And Continue On Failure    Verify Summary Table Data    ${TC_E2E_001['SummaryTableHeader']}    ${TC_E2E_001['SummaryTableData']}
+    Run Keyword And Continue On Failure    Verify Policy Information Fields In Summary Tab     ${TC_E2E_001['PolicyFields']}   
+    Run Keyword And Continue On Failure    Verify the Workflow Reflected in Summary tab    ${TC_E2E_001['AdvanceTo']}
+    Click Edit Submission
    
-    # Run Keyword And Continue On Failure    verify Header Displayed    Home    WIN-CON ENTERPRISES, INC    In Draft    Summary
+    Run Keyword And Continue On Failure    verify Header Displayed    Home    WIN-CON ENTERPRISES, INC    In Draft    Summary
     
-    # Run Keyword And Continue On Failure    Enter the Policy Information    ${TC_E2E_011['PolicyInfo']}
+    Run Keyword And Continue On Failure    Enter the Policy Information    ${TC_E2E_011['PolicyInfo']}
 
-    # Click Answers Tab
-    # Run Keyword And Continue On Failure    Click and verify Clearance tab
-    # Run Keyword And Continue On Failure     Verify the Error popup when mandate fields left empty    ${TC_E2E_001}
-    # Click Insured Tab
-    # Run Keyword And Continue On Failure    Verify PDF Data in Insured Tab    @{TC_E2E_001['expectedPDFText']}
-    # Fill the data for issue fields    ${TC_E2E_001['SicCode']}    ${TC_E2E_001['SicDescription']}    ${TC_E2E_001['NAICSCode']}
-    # Run Keyword And Continue On Failure    Verify User Mod is message for updated fields
-    # Click Processing Tab                    
-    # Fill the data for issue fields in processing    ${TC_E2E_001['UnderwriterName']}    ${TC_E2E_001['UnderwriterEmail']}    ${TC_E2E_001['OperationsName']}        ${TC_E2E_001['OperationsEmail']}    ${TC_E2E_001['UnderwrittingOffice']}    ${TC_E2E_001['Channel']}
-    # Click Producer Tab
-    # Run Keyword And Continue On Failure    Verify PDF Data in Producer Tab    @{TC_E2E_001['expectedTextInProducer']}
-    # Fill the data for issues field in Producer    ${TC_E2E_001['ProducerName']}      ${TC_E2E_001['ProducerEmail']} 
-    # Click Coverage Tab
-    # Run Keyword And Continue On Failure    Verify the Coverage data    ${TC_E2E_001['EffectiveDate']}     ${TC_E2E_001['ExpirationDate']}     ${TC_E2E_001['Product']}
-    # Fill the data for issues field in Coverage    ${TC_E2E_001['Covered']}    
-    # Click Issues Tab
-    # @{expectedIssues}    Create List    ${TC_E2E_001['SicCode']}    ${TC_E2E_001['SicDescription']}    ${TC_E2E_001['NAICSCode']}    ${TC_E2E_001['UnderwriterName']}    ${TC_E2E_001['UnderwriterEmail']}    ${TC_E2E_001['UnderwrittingOffice']}     ${TC_E2E_001['OperationsName']}    ${TC_E2E_001['OperationsEmail']}    ${TC_E2E_001['Channel']}    ${TC_E2E_001['ProducerName']}
-    # Run Keyword And Continue On Failure    Verify updated datas in Issues Tab    @{expectedIssues}
-    # Click Finish Tab
-    # Run Keyword And Continue On Failure    Verify and click the save and close button
-    # Switch to Documents
+    Click Answers Tab
+    Run Keyword And Continue On Failure    Click and verify Clearance tab
+    Run Keyword And Continue On Failure     Verify the Error popup when mandate fields left empty    ${TC_E2E_001}
+    Click Insured Tab
+    Run Keyword And Continue On Failure    Verify PDF Data in Insured Tab    @{TC_E2E_001['expectedPDFText']}
+    Fill the data for issue fields    ${TC_E2E_001['SicCode']}    ${TC_E2E_001['SicDescription']}    ${TC_E2E_001['NAICSCode']}
+    Run Keyword And Continue On Failure    Verify User Mod is message for updated fields
+    Click Processing Tab                    
+    Fill the data for issue fields in processing    ${TC_E2E_001['UnderwriterName']}    ${TC_E2E_001['UnderwriterEmail']}    ${TC_E2E_001['OperationsName']}        ${TC_E2E_001['OperationsEmail']}    ${TC_E2E_001['UnderwrittingOffice']}    ${TC_E2E_001['Channel']}
+    Click Producer Tab
+    Run Keyword And Continue On Failure    Verify PDF Data in Producer Tab    @{TC_E2E_001['expectedTextInProducer']}
+    Fill the data for issues field in Producer    ${TC_E2E_001['ProducerName']}      ${TC_E2E_001['ProducerEmail']} 
+    Click Coverage Tab
+    Run Keyword And Continue On Failure    Verify the Coverage data    ${TC_E2E_001['EffectiveDate']}     ${TC_E2E_001['ExpirationDate']}     ${TC_E2E_001['Product']}
+    Fill the data for issues field in Coverage    ${TC_E2E_001['Covered']}    
+    Click Issues Tab
+    @{expectedIssues}    Create List    ${TC_E2E_001['SicCode']}    ${TC_E2E_001['SicDescription']}    ${TC_E2E_001['NAICSCode']}    ${TC_E2E_001['UnderwriterName']}    ${TC_E2E_001['UnderwriterEmail']}    ${TC_E2E_001['UnderwrittingOffice']}     ${TC_E2E_001['OperationsName']}    ${TC_E2E_001['OperationsEmail']}    ${TC_E2E_001['Channel']}    ${TC_E2E_001['ProducerName']}
+    Run Keyword And Continue On Failure    Verify updated datas in Issues Tab    @{expectedIssues}
+    Click Finish Tab
+    Run Keyword And Continue On Failure    Verify and click the save and close button
+    Switch to Documents
     @{expectedModification}    Create List    "${TC_E2E_001['SicCode']}"    "${TC_E2E_001['SicDescription']}"    "${TC_E2E_001['NAICSCode']}"    "${TC_E2E_001['UnderwriterName']}"    "${TC_E2E_001['UnderwriterEmail']}"    "${TC_E2E_001['UnderwrittingOffice']}"     "${TC_E2E_001['OperationsName']}"    "${TC_E2E_001['OperationsEmail']}"    "${TC_E2E_001['Channel']}"    "${TC_E2E_001['ProducerName']}"    "${TC_E2E_001['ProducerEmail']}"    "${TC_E2E_001['Covered']['Product']}"    "${TC_E2E_001['Covered']['ProductSegment']}"    
     Run Keyword And Continue On Failure    Verify datas in UserModification file    @{expectedModification}
-    # Run Keyword And Continue On Failure    Verify Schema by downloading the json file    ${TC_E2E_001['queryList']}    @{expectedModification}
+    Run Keyword And Continue On Failure    Verify Schema by downloading the json file    ${TC_E2E_001['queryList']}    @{expectedModification}
     #    (need to add ) Verify Schema for policy information and Available in Documents Tab    ${TC_E2E_001['policy_headers']}    ${TC_E2E_001['PolicyInfo']}
-    # Click    ${TasksMenu}
-    # Create New Task    ${TC_E2E_001['taskdata']}
-    # upload file on created task    ${TC_E2E_001['FileName']}    ${TC_E2E_001['taskdata']}
-    # Complete Task without the reason
+    Click    ${TasksMenu}
+    Create New Task    ${TC_E2E_001['taskdata']}
+    upload file on created task    ${TC_E2E_001['FileName']}    ${TC_E2E_001['taskdata']}
+    Complete Task without the reason
     
-    # verify the colour of the processed and archived
+    verify the colour of the processed and archived
        
-    # Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_001['taskDetails']}
+    Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_001['taskDetails']}
     
-    # Run Keyword And Continue On Failure    verify Edit Delete and Complete task Buttons are present on the right side of task list
-    # Run Keyword And Continue On Failure    Verify Edit Icon is Clickable and Functional    ${TC_E2E_001['priority']}
-    # # Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_001['taskupdateddetails']}
-    # # Click Answers Tab
-    # # Run Keyword And Continue On Failure    Select the Created Task    ${TC_E2E_001['taskdata']}
-    # Run Keyword And Continue On Failure    Verify Delete Icon is Clickable and Functional    ${TC_E2E_001['taskupdateddetails']}
-    # # Create New Mail    ${TC_E2E_001['emailData']}
-    # # Run Keyword And Continue On Failure    Verify Email Sent Successfully
-    # # Run Keyword And Continue On Failure    Verify Sent Email    ${TC_E2E_001['emailVerify']}
-    # Run Keyword And Continue On Failure    Save and verify mail in Draft    ${TC_E2E_001['emailData']} 
-    # Run Keyword And Continue On Failure    Discard the Created Email    ${TC_E2E_001['emailData']}      
-    # Run Keyword And Continue On Failure    Create New Mail With Missing Data    ${TC_E2E_001['emailData_Mising']}    ${TC_E2E_001['Expected_PopUp']}  
-    # Run Keyword And Continue On Failure    Verify WorkFlow History    ${TC_E2E_001['expectedWorkFlowHistory']}
-    # Run Keyword And Continue On Failure    Save Submission And verify popup
-    # Run Keyword And Continue On Failure    Verify Submission updated
-    # Run Keyword And Continue On Failure    Verify WorkFlow Options Advance Stage and Reject
+    Run Keyword And Continue On Failure    verify Edit Delete and Complete task Buttons are present on the right side of task list
+    Run Keyword And Continue On Failure    Verify Edit Icon is Clickable and Functional    ${TC_E2E_001['priority']}
+    # Run Keyword And Continue On Failure    Verify the created task details    ${TC_E2E_001['taskupdateddetails']}
+    # Click Answers Tab
+    # Run Keyword And Continue On Failure    Select the Created Task    ${TC_E2E_001['taskdata']}
+    Run Keyword And Continue On Failure    Verify Delete Icon is Clickable and Functional    ${TC_E2E_001['taskupdateddetails']}
+    # Create New Mail    ${TC_E2E_001['emailData']}
+    # Run Keyword And Continue On Failure    Verify Email Sent Successfully
+    # Run Keyword And Continue On Failure    Verify Sent Email    ${TC_E2E_001['emailVerify']}
+    Run Keyword And Continue On Failure    Save and verify mail in Draft    ${TC_E2E_001['emailData']} 
+    Run Keyword And Continue On Failure    Discard the Created Email    ${TC_E2E_001['emailData']}      
+    Run Keyword And Continue On Failure    Create New Mail With Missing Data    ${TC_E2E_001['emailData_Mising']}    ${TC_E2E_001['Expected_PopUp']}  
+    Run Keyword And Continue On Failure    Verify WorkFlow History    ${TC_E2E_001['expectedWorkFlowHistory']}
+    Run Keyword And Continue On Failure    Save Submission And verify popup
+    Run Keyword And Continue On Failure    Verify Submission updated
+    Run Keyword And Continue On Failure    Verify WorkFlow Options Advance Stage and Reject
 
 TC_E2E_007
     [Tags]    E2E-WithoutSov    
@@ -394,11 +394,11 @@ TC_E2E_024
 TC_E2E_025
     [Tags]    E2E-WithoutSov
     [Documentation]    End to End Testing for New Submission - (Under Review stage + Child submission)  with SOV and LR upload"
-    Create User If the User is not present    ${NewUser}
-    Select Impersonate option from the actions    ${NewUser['email']}    ${NewUser['search_user']}
+    # Create User If the User is not present    ${NewUser}
+    # Select Impersonate option from the actions    ${NewUser['email']}    ${NewUser['search_user']}
     Run Keyword And Continue On Failure    Verify My Assignments Tab is displayed as a default tab
     Click All submissions option
-    Select Submission using submission id    ${new_submission_id_1}    @{TC_E2E_017['SubmissionColumnNames']}
+    Select Submission using submission id    60e29c22-bc7a-405b-893d-a3720433383a    @{TC_E2E_017['SubmissionColumnNames']}
     Run Keyword And Continue On Failure    Verify Submission page is displayed
     # Run Pre-requiste for Step 1 2 3 & 4
     Advance Stage    ${TC_E2E_025['stageNo']} 
@@ -1601,7 +1601,7 @@ TC_E2E_050
     ${submission_id}    Create New Submission    ${TC_E2E_050['FileName']}    @{TC_E2E_050['SubmissionColumnNames']}
     Select Submission using submission id     ${submission_id}    @{TC_E2E_050['SubmissionColumnNames']}
     Verify All Side menu options are Displayed    ${TC_E2E_050['excepted_Field']}
-    Run Keyword And Continue On Failure    verify the Email Body Document    ${TC_E2E_050['Expected_email_Msg']}
+    Run Keyword And Continue On Failure    verify the Email Body Document    ${TC_E2E_050['FileName']}    ${TC_E2E_050['Expected_email_Msg']}
     Switch to Summary    
     Run Keyword And Continue On Failure    Verify datas in Underwriter Reference file    ${TC_E2E_050['Expected_UnderWriter_Value']}   
     Click and verify Clearance tab 
@@ -1627,7 +1627,7 @@ TC_E2E_051
       ${submission_id}    Create New Submission    ${TC_E2E_051['FileName']}    @{TC_E2E_006['SubmissionColumnNames']}
     Select Submission using submission id     ${submission_id}    @{TC_E2E_006['SubmissionColumnNames']}
     Verify All Side menu options are Displayed    ${TC_E2E_051['excepted_Field']}
-    Run Keyword And Continue On Failure    verify the Email Body Document    ${TC_E2E_051['Expected_email_Msg']}
+    Run Keyword And Continue On Failure    verify the Email Body Document    ${TC_E2E_051['FileName']}    ${TC_E2E_051['Expected_email_Msg']}
     Switch to Summary    
     Run Keyword And Continue On Failure    Verify datas in Underwriter Reference file    ${TC_E2E_051['Expected_UnderWriter_Value']}   
     Click and verify Clearance tab 
@@ -1661,7 +1661,7 @@ TC_E2E_052
     Select Submission using submission id     ${Email_submission_id}    @{TC_E2E_006['SubmissionColumnNames']}
     Click Edit Submission
     Run Keyword And Continue On Failure    Verify AttachmentPoint Must Accept Numeric values
-    Run Keyword And Continue On Failure    verify the Email Body Document    ${TC_E2E_052['Expected_email_Msg']}
+    Run Keyword And Continue On Failure    verify the Email Body Document    ${TC_E2E_052['FileName']}    ${TC_E2E_052['Expected_email_Msg']}
     Click Answers Tab
     Switch to Documents
     Run Keyword And Continue On Failure    Get Element States    ${Acord_125_loc}    validate    value & visible
@@ -1954,10 +1954,10 @@ TC_BUG_FIX_202
     
     Click Answers Tab
     # Switch to Summary
-    # verify the Msg file dowload in msg format    Great_Western_Lumber_effective    .msg
+    verify the Msg file dowload in msg format    Great_Western_Lumber_effective    .msg
     Reject Submission via summary tab    ${TC_E2E_002['FailureReasons']}    ${TC_E2E_002['FailureDetails']}    ${TC_E2E_002['Action']}
-    # Verify Summary Table Data    ${TC_E2E_056['SummaryTableHeader']}    ${TC_E2E_060['SummaryTableData1']}
-    # Reactive the Submission via summary tab    ${TC_E2E_002['FailureDetails']}    ${TC_E2E_002['Action']}
+    Verify Summary Table Data    ${TC_E2E_056['SummaryTableHeader']}    ${TC_E2E_060['SummaryTableData1']}
+    Reactive the Submission via summary tab    ${TC_E2E_002['FailureDetails']}    ${TC_E2E_002['Action']}
 TC_reject_001
     [Documentation]    this test cases for the  verify the reject submission 
 
@@ -1992,7 +1992,7 @@ TC_reject_001
 #     Click Producer Tab
 #     Fill the data for issues field in Producer    ${TC_E2E_001['ProducerName']}      ${TC_E2E_001['ProducerEmail']}
 #     Click Coverage Tab
-#     Fill the data for issues field in Coverage    ${TC_E2E_001['Covered']} 
+    Fill the data for issues field in Coverage    ${TC_E2E_001['Covered']} 
 #     Click Finish Tab
 #     Run Keyword And Continue On Failure    Verify and click the save and close button
 #     Save Submission And verify popup
@@ -2050,24 +2050,46 @@ TC_reject_001
 TC_email_060
     [Documentation]    upload the different email submission 
     Run Keyword And Continue On Failure    Verify My Assignments Tab is displayed as a default tab
-    # ${submission_id}    Create New Submission    ${TC_E2E_001['FileName']}    @{TC_E2E_001['SubmissionColumnNames']}
-    Set Suite Variable   ${submission_id_1}    49702c8c-1f3e-46c1-a63e-f5115168cd4e    
+    ${submission_id}    Create New Submission    ${TC_E2E_001['FileName']}    @{TC_E2E_001['SubmissionColumnNames']}
+    Set Suite Variable   ${submission_id_1}    ${submission_id}    
     Select Submission using submission id    ${submission_id_1}    @{TC_E2E_001['SubmissionColumnNames']}
     Run Keyword And Continue On Failure    Verify Submission page is displayed
     Click Edit Submission
-    # Switch to Documents
-    # Run Keyword And Continue On Failure    Upload SOV and Loss Run Documents    ${TC_email_060['eml_no_data']['file_name']}
-    # Wait For Processing Stage
-    # Run Keyword And Continue On Failure    verify the Email Body Document    ${TC_email_060['eml_no_data']['file_name']}    ${TC_email_060['eml_no_data']['Expected_email_Msg']}
-    
-    # Run Keyword And Continue On Failure    verify the file info details    ${TC_email_060['eml_no_data']['file_name']}    ${TC_email_060['eml_no_data']}
-    # Run Keyword And Continue On Failure    delete the given file in documentTab    @{TC_email_060['eml_no_data']['document_type']}
-
-    # Remove Document after Upload    eml_no_attachments_1.eml 
-           
+    Switch to Documents
+    Run Keyword And Continue On Failure    Remove Document after Upload    ${TC_email_060['eml_no_data']['file_name']}
+    Run Keyword And Continue On Failure    Upload SOV and Loss Run Documents    ${TC_email_060['eml_no_data']['file_name']}
+    Wait For Processing Stage
+    Run Keyword And Continue On Failure    verify the Email Body Document    ${TC_email_060['eml_no_data']['file_name']}    ${TC_email_060['eml_no_data']['Expected_email_Msg']}
+    Run Keyword And Continue On Failure    verify the file info details    ${TC_email_060['eml_no_data']['file_name']}    ${TC_email_060['eml_no_data']}
+    Run Keyword And Continue On Failure    delete the given file in processed Tab    @{TC_email_060['eml_no_data']['document_type']}
+    Run Keyword And Continue On Failure    verify files are deleted    @{TC_email_060['eml_no_data']['document_type']}
+    Run Keyword And Continue On Failure    delete the archived files
+#   
+    Run Keyword And Continue On Failure    Remove Document after Upload    ${TC_email_060['eml_normal_data']['file_name']}          
     Run Keyword And Continue On Failure    Upload SOV and Loss Run Documents    ${TC_email_060['eml_normal_data']['file_name']}
     Wait For Processing Stage
     Run Keyword And Continue On Failure    verify the Email Body Document    ${TC_email_060['eml_normal_data']['file_name']}    ${TC_email_060['eml_normal_data']['Expected_email_Msg']}
-    
     Run Keyword And Continue On Failure    verify the file info details    ${TC_email_060['eml_normal_data']['file_name']}    ${TC_email_060['eml_normal_data']}
-    Run Keyword And Continue On Failure    delete the given file in documentTab    @{TC_email_060['eml_normal_data']['document_type']}
+    Run Keyword And Continue On Failure    delete the given file in processed Tab    @{TC_email_060['eml_normal_data']['document_type']}
+    Run Keyword And Continue On Failure    verify files are deleted    @{TC_email_060['eml_normal_data']['document_type']}
+    Run Keyword And Continue On Failure    delete the archived files
+# eml_pdf_plus_nameless
+    Run Keyword And Continue On Failure    Remove Document after Upload    ${TC_email_060['eml_pdf_plus_nameless']['file_name']}
+    Run Keyword And Continue On Failure    Upload SOV and Loss Run Documents    ${TC_email_060['eml_pdf_plus_nameless']['file_name']}
+    Wait For Processing Stage
+    Run Keyword And Continue On Failure    verify the Email Body Document    ${TC_email_060['eml_pdf_plus_nameless']['file_name']}    ${TC_email_060['eml_pdf_plus_nameless']['Expected_email_Msg']}
+    Run Keyword And Continue On Failure    verify the file info details    ${TC_email_060['eml_pdf_plus_nameless']['file_name']}    ${TC_email_060['eml_pdf_plus_nameless']}
+    Run Keyword And Continue On Failure    delete the given file in processed Tab    @{TC_email_060['eml_pdf_plus_nameless']['document_type']}
+    Run Keyword And Continue On Failure    verify files are deleted    @{TC_email_060['eml_pdf_plus_nameless']['document_type']}
+    Run Keyword And Continue On Failure    delete the archived files
+# eml_normal_plus
+    Run Keyword And Continue On Failure    Remove Document after Upload    ${TC_email_060['eml_normal_plus']['file_name']}
+    Run Keyword And Continue On Failure    Upload SOV and Loss Run Documents    ${TC_email_060['eml_normal_plus']['file_name']}
+    Wait For Processing Stage
+    Run Keyword And Continue On Failure    verify the Email Body Document    ${TC_email_060['eml_normal_plus']['file_name']}    ${TC_email_060['eml_normal_plus']['Expected_email_Msg']}
+    Run Keyword And Continue On Failure    verify the file info details    ${TC_email_060['eml_normal_plus']['file_name']}    ${TC_email_060['eml_normal_plus']}
+    Run Keyword And Continue On Failure    delete the given file in processed Tab    @{TC_email_060['eml_normal_plus']['document_type']}
+    Run Keyword And Continue On Failure    verify files are deleted    @{TC_email_060['eml_normal_plus']['document_type']}
+    Run Keyword And Continue On Failure    delete the archived files
+    # Run Keyword And Continue On Failure    verify the no of files in Archived    0
+    
