@@ -279,7 +279,7 @@ TC_E2E_023
     #Issue: The Child Submission in the Summary Tab is not stable.
     #Impact: We are unable to verify if the dependent child is displayed/present as expected
     Run Keyword And Continue On Failure    Verify Child Submission Should be Displayed in Summary Tab    ${TC_E2E_017['product']}
-    Run Keyword And Continue On Failure    verify Account History are editable    ${new_submission_id_1}    ${TC_E2E_024['stage']}    ${TC_E2E_023['PolicyInfo']} 
+    # Run Keyword And Continue On Failure    verify Account History are editable    ${new_submission_id_1}    ${TC_E2E_024['stage']}    ${TC_E2E_023['PolicyInfo']} 
     # Step No 11 to 13[Forms Verification Pending, Changes need to be done]
        #Complete Forms Tab Details Filling    ${TC_Forms_01}
     # Click Answers Tab
@@ -347,7 +347,7 @@ TC_E2E_024
     #Issue: The Child Submission in the Summary Tab is not stable.
     #Impact: We are unable to verify if the dependent child is displayed/present as expected
     Run Keyword And Continue On Failure    Verify Child Submission Should be Displayed in Summary Tab    ${TC_E2E_017['product']}
-    Run Keyword And Continue On Failure    verify Account History are editable    ${new_submission_id_1}    ${TC_E2E_024['stage']}    ${TC_E2E_024['PolicyInfo']}
+    # Run Keyword And Continue On Failure    verify Account History are editable    ${new_submission_id_1}    ${TC_E2E_024['stage']}    ${TC_E2E_024['PolicyInfo']}
     # Step No 11 to 13[Forms Verification Pending, Changes need to be done]
     # Click Answers Tab
     Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_01}
@@ -420,7 +420,7 @@ TC_E2E_025
     Run Keyword And Continue On Failure    Enter the Policy Information    ${TC_E2E_025['PolicyInfo']}
     Run Keyword And Continue On Failure    verify the entered Policy Information    ${TC_E2E_025['PolicyInfo']}
     Run Keyword And Continue On Failure    Verify Child Submission Should be Displayed in Summary Tab    ${TC_E2E_017['product']}
-    Run Keyword And Continue On Failure    verify Account History are editable    ${new_submission_id_1}    ${TC_E2E_024['stage']}    ${TC_E2E_025['PolicyInfo']} 
+    # Run Keyword And Continue On Failure    verify Account History are editable    ${new_submission_id_1}    ${TC_E2E_024['stage']}    ${TC_E2E_025['PolicyInfo']} 
     # Step No 11 to 13[Forms Verification Pending, Changes need to be done]
     # Click Answers Tab
     # Run Keyword And Continue On Failure    Complete Forms Tab Details Verification    ${TC_Forms_02}
@@ -484,7 +484,7 @@ TC_E2E_026
     Run Keyword And Continue On Failure    Enter the Policy Information    ${TC_E2E_026['PolicyInfo']}
     Run Keyword And Continue On Failure    verify the entered Policy Information    ${TC_E2E_026['PolicyInfo']}
     Run Keyword And Continue On Failure    Verify Child Submission Should be Displayed in Summary Tab    ${TC_E2E_017['product']}
-    Run Keyword And Continue On Failure    verify Account History are editable    ${new_submission_id_1}    ${TC_E2E_026['stage']}    ${TC_E2E_026['PolicyInfo']} 
+    # Run Keyword And Continue On Failure    verify Account History are editable    ${new_submission_id_1}    ${TC_E2E_026['stage']}    ${TC_E2E_026['PolicyInfo']} 
     #  Answer Tab
     # Click Answers Tab
     # Run Keyword And Continue On Failure    Verify Answers Lists    ${TC_E2E_026['expectedQuestion']}
@@ -1972,81 +1972,6 @@ TC_reject_001
     Run Keyword And Continue On Failure    Reactive the Submission via summary tab    ${TC_E2E_002['FailureDetails']}    ${TC_E2E_002['Action']}   
     Run Keyword And Continue On Failure    verify Reactive the Rejected Submission error msg appear
     Wait For Processing Stage
-    
-
-# *** Keywords ***
-# Run Pre-requiste Steps for Stage 1
-#     Create User If the User is not present    ${NewUser}
-#     Create User If the User is not present    ${ReferralUser}
-#     Select Impersonate option from the actions    ${NewUser['email']}    ${NewUser['search_user']}
-#     Run Keyword And Continue On Failure    Verify My Assignments Tab is displayed as a default tab
-#     ${submission_id}    Create New Submission    ${TC_E2E_001['FileName']}    @{TC_E2E_001['SubmissionColumnNames']}
-#     Select Submission using submission id    ${submission_id}    @{TC_E2E_001['SubmissionColumnNames']}
-#     Run Keyword And Continue On Failure    Verify Submission page is displayed
-#     Click Edit Submission
-#     Click and verify Clearance tab
-#     Click Insured Tab
-#     Fill the data for issue fields    ${TC_E2E_001['SicCode']}    ${TC_E2E_001['SicDescription']}    ${TC_E2E_001['NAICSCode']}
-#     Click Processing Tab
-#     Fill the data for issue fields in processing    ${TC_E2E_001['UnderwriterName']}    ${TC_E2E_001['UnderwriterEmail']}    ${TC_E2E_001['OperationsName']}        ${TC_E2E_001['OperationsEmail']}    ${TC_E2E_001['UnderwrittingOffice']}    ${TC_E2E_001['Channel']}
-#     Click Producer Tab
-#     Fill the data for issues field in Producer    ${TC_E2E_001['ProducerName']}      ${TC_E2E_001['ProducerEmail']}
-#     Click Coverage Tab
-    Fill the data for issues field in Coverage    ${TC_E2E_001['Covered']} 
-#     Click Finish Tab
-#     Run Keyword And Continue On Failure    Verify and click the save and close button
-#     Save Submission And verify popup
-#     Run Keyword And Continue On Failure    Verify Submission updated
-#     RETURN    ${submission_id}
-# Run Pre-requiste Steps for Stage 1 & 2
-#     Create User If the User is not present    ${NewUser}
-#     Create User If the User is not present    ${ReferralUser}
-#     Select Impersonate option from the actions    ${NewUser['email']}    ${NewUser['search_user']}
-#     Run Keyword And Continue On Failure    Verify My Assignments Tab is displayed as a default tab
-#     ${submission_id}    Create New Submission    ${TC_E2E_001['FileName']}    @{TC_E2E_001['SubmissionColumnNames']}
-#     Select Submission using submission id    ${submission_id}    @{TC_E2E_001['SubmissionColumnNames']}
-#     Run Keyword And Continue On Failure    Verify Submission page is displayed
-#     Click Edit Submission
-#     Click and verify Clearance tab
-#     Click Insured Tab
-#     Fill the data for issue fields    ${TC_E2E_001['SicCode']}    ${TC_E2E_001['SicDescription']}    ${TC_E2E_001['NAICSCode']}
-#     Click Processing Tab
-#     Fill the data for issue fields in processing    ${TC_E2E_001['UnderwriterName']}    ${TC_E2E_001['UnderwriterEmail']}    ${TC_E2E_001['OperationsName']}        ${TC_E2E_001['OperationsEmail']}    ${TC_E2E_001['UnderwrittingOffice']}    ${TC_E2E_001['Channel']}
-#     Click Producer Tab
-#     Fill the data for issues field in Producer    ${TC_E2E_001['ProducerName']}      ${TC_E2E_001['ProducerEmail']}
-#     Click Coverage Tab
-#     Fill the data for issues field in Coverage    ${TC_E2E_001['Covered']} 
-#     Click Finish Tab
-#     Run Keyword And Continue On Failure    Verify and click the save and close button
-#     Save Submission And verify popup
-#     Run Keyword And Continue On Failure    Verify Submission updated
-#     Advance Stage 2
-#     Run Keyword And Continue On Failure    Verify Stage is updated in the submission    ${TC_E2E_007['stage']}
-#     Click Edit Submission
-#     Save Submission And verify popup
-#     Run Keyword And Continue On Failure    Verify Submission updated in Stage 2
-#     RETURN    ${submission_id}
-
-# Run Pre-requiste for Step 1 2 & 3
-#     ${submission_id}    Run Pre-requiste Steps for Stage 1 & 2
-#     Click Answers Tab
-#     Advance Stage    ${TC_E2E_011['stageNo']}    
-#     Click Answers Tab
-#     Run Keyword And Continue On Failure    Verify Stage is updated in the submission    ${TC_E2E_011['stage']}
-#     Click Edit Submission
-#     Click and verify Clearance tab
-#     Create Child Submission    ${TC_E2E_011['productName']}
-#     Wait For Processing Stage    ${TC_E2E_011['stageNo']} 
-#     Navigate To All Submissions page from submissions 
-#     Select Submission using submission id    ${submission_id}    @{TC_E2E_011['SubmissionColumnNames']}
-#     Wait For Processing Stage    ${TC_E2E_011['stageNo']}
-#     Click Answers Tab
-#     Click Edit Submission
-#     Save Submission And verify popup
-#     Run Keyword And Continue On Failure    Verify Submission updated in the Current Stage    ${TC_E2E_011['stageNo']}
-#     ${newSubmissionID}    Get New Submission ID After Child Submission
-#     RETURN    ${newSubmissionID}
-
 TC_email_060
     [Documentation]    upload the different email submission 
     Run Keyword And Continue On Failure    Verify My Assignments Tab is displayed as a default tab
@@ -2091,5 +2016,80 @@ TC_email_060
     Run Keyword And Continue On Failure    delete the given file in processed Tab    @{TC_email_060['eml_normal_plus']['document_type']}
     Run Keyword And Continue On Failure    verify files are deleted    @{TC_email_060['eml_normal_plus']['document_type']}
     Run Keyword And Continue On Failure    delete the archived files
-    # Run Keyword And Continue On Failure    verify the no of files in Archived    0
+    # Run Keyword And Continue On Failure    verify the no of files in Archived    0    
+
+*** Keywords ***
+Run Pre-requiste Steps for Stage 1
+    Create User If the User is not present    ${NewUser}
+    Create User If the User is not present    ${ReferralUser}
+    Select Impersonate option from the actions    ${NewUser['email']}    ${NewUser['search_user']}
+    Run Keyword And Continue On Failure    Verify My Assignments Tab is displayed as a default tab
+    ${submission_id}    Create New Submission    ${TC_E2E_001['FileName']}    @{TC_E2E_001['SubmissionColumnNames']}
+    Select Submission using submission id    ${submission_id}    @{TC_E2E_001['SubmissionColumnNames']}
+    Run Keyword And Continue On Failure    Verify Submission page is displayed
+    Click Edit Submission
+    Click and verify Clearance tab
+    Click Insured Tab
+    Fill the data for issue fields    ${TC_E2E_001['SicCode']}    ${TC_E2E_001['SicDescription']}    ${TC_E2E_001['NAICSCode']}
+    Click Processing Tab
+    Fill the data for issue fields in processing    ${TC_E2E_001['UnderwriterName']}    ${TC_E2E_001['UnderwriterEmail']}    ${TC_E2E_001['OperationsName']}        ${TC_E2E_001['OperationsEmail']}    ${TC_E2E_001['UnderwrittingOffice']}    ${TC_E2E_001['Channel']}
+    Click Producer Tab
+    Fill the data for issues field in Producer    ${TC_E2E_001['ProducerName']}      ${TC_E2E_001['ProducerEmail']}
+    Click Coverage Tab
+    Fill the data for issues field in Coverage    ${TC_E2E_001['Covered']} 
+    Click Finish Tab
+    Run Keyword And Continue On Failure    Verify and click the save and close button
+    Save Submission And verify popup
+    Run Keyword And Continue On Failure    Verify Submission updated
+    RETURN    ${submission_id}
+Run Pre-requiste Steps for Stage 1 & 2
+    Create User If the User is not present    ${NewUser}
+    Create User If the User is not present    ${ReferralUser}
+    Select Impersonate option from the actions    ${NewUser['email']}    ${NewUser['search_user']}
+    Run Keyword And Continue On Failure    Verify My Assignments Tab is displayed as a default tab
+    ${submission_id}    Create New Submission    ${TC_E2E_001['FileName']}    @{TC_E2E_001['SubmissionColumnNames']}
+    Select Submission using submission id    ${submission_id}    @{TC_E2E_001['SubmissionColumnNames']}
+    Run Keyword And Continue On Failure    Verify Submission page is displayed
+    Click Edit Submission
+    Click and verify Clearance tab
+    Click Insured Tab
+    Fill the data for issue fields    ${TC_E2E_001['SicCode']}    ${TC_E2E_001['SicDescription']}    ${TC_E2E_001['NAICSCode']}
+    Click Processing Tab
+    Fill the data for issue fields in processing    ${TC_E2E_001['UnderwriterName']}    ${TC_E2E_001['UnderwriterEmail']}    ${TC_E2E_001['OperationsName']}        ${TC_E2E_001['OperationsEmail']}    ${TC_E2E_001['UnderwrittingOffice']}    ${TC_E2E_001['Channel']}
+    Click Producer Tab
+    Fill the data for issues field in Producer    ${TC_E2E_001['ProducerName']}      ${TC_E2E_001['ProducerEmail']}
+    Click Coverage Tab
+    Fill the data for issues field in Coverage    ${TC_E2E_001['Covered']} 
+    Click Finish Tab
+    Run Keyword And Continue On Failure    Verify and click the save and close button
+    Save Submission And verify popup
+    Run Keyword And Continue On Failure    Verify Submission updated
+    Advance Stage 2
+    Run Keyword And Continue On Failure    Verify Stage is updated in the submission    ${TC_E2E_007['stage']}
+    Click Edit Submission
+    Save Submission And verify popup
+    Run Keyword And Continue On Failure    Verify Submission updated in Stage 2
+    RETURN    ${submission_id}
+
+Run Pre-requiste for Step 1 2 & 3
+    ${submission_id}    Run Pre-requiste Steps for Stage 1 & 2
+    Click Answers Tab
+    Advance Stage    ${TC_E2E_011['stageNo']}    
+    Click Answers Tab
+    Run Keyword And Continue On Failure    Verify Stage is updated in the submission    ${TC_E2E_011['stage']}
+    Click Edit Submission
+    Click and verify Clearance tab
+    Create Child Submission    ${TC_E2E_011['productName']}
+    Wait For Processing Stage    ${TC_E2E_011['stageNo']} 
+    Navigate To All Submissions page from submissions 
+    Select Submission using submission id    ${submission_id}    @{TC_E2E_011['SubmissionColumnNames']}
+    Wait For Processing Stage    ${TC_E2E_011['stageNo']}
+    Click Answers Tab
+    Click Edit Submission
+    Save Submission And verify popup
+    Run Keyword And Continue On Failure    Verify Submission updated in the Current Stage    ${TC_E2E_011['stageNo']}
+    ${newSubmissionID}    Get New Submission ID After Child Submission
+    RETURN    ${newSubmissionID}
+
+
     
